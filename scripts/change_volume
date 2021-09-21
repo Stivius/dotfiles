@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ "$1" == "m" ]; then
+	pulsemixer --toggle-mute
+	status=`pulsemixer --get-mute`
+	if [ "$status" == "0" ]; then
+		notify-send --icon=gtk-info Volume "Unmuted"
+	else
+		notify-send --icon=gtk-info Volume "Muted"
+	fi
+else
+	pulsemixer --change-volume $1
+	volume=`pulsemixer --get-volume | awk '{print $1}'`
+	notify-send --icon=gtk-info Volume "Level is $volume"
+fi

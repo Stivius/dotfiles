@@ -1,0 +1,9 @@
+set selection-clipboard clipboard
+set window-height 3000
+set window-width 3000
+set font "mono 17"
+
+set recolor-lightcolor \#222222
+
+map d scroll half-down
+map u scroll half-up

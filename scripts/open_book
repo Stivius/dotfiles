@@ -1,0 +1,11 @@
+#!/bin/bash
+BOOKS=$HOME/Books
+book=`ls $BOOKS | rofi -dmenu -i`
+if [ -n "$book" ]; then
+	brightness=`brightnessctl -l | grep intel -A 1 | egrep -o '[0-9]+%' | egrep -o '[0-9]+'`
+	if [ "$brightness" -gt 50 ]; then
+		zathura "$BOOKS/$book"
+	else
+		zathura -c ~/.config/zathura/inverted "$BOOKS/$book"
+	fi
+fi

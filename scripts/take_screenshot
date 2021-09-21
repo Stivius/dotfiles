@@ -1,0 +1,23 @@
+#!/bin/bash
+
+case "$1" in
+
+ "f" )
+	import -window root png:- | xclip -selection clipboard -t image/png
+	notify-send --icon=gtk-info Screenshot "Fullscreen captured"
+ ;;
+
+ "w" )
+	 import -window "$(xdotool getwindowfocus -f)" png:- | xclip -selection clipboard -t image/png
+	 notify-send --icon=gtk-info Screenshot "Window captured"
+ ;;
+
+ "s" )
+	import png:- | xclip -selection clipboard -t image/png 
+	notify-send --icon=gtk-info Screenshot "Selection captured"
+ ;;
+
+esac
+
+
+

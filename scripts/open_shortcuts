@@ -1,0 +1,5 @@
+#!/bin/sh
+shortcut_file=`ls $SHORTCUTS | rofi -dmenu -i`
+if [ -n "$shortcut_file" ]; then
+	cat "$SHORTCUTS/$shortcut_file" | python3 $SCRIPTS/format_shortcuts.py | rofi -dmenu -i
+fi
