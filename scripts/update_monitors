@@ -1,0 +1,24 @@
+#!/bin/bash 
+
+export XAUTHORITY=/run/user/1000/gdm/Xauthority
+export DISPLAY=:1
+
+function ActivateHDMI {
+    echo "Switching to HDMI-1-2"
+    xrandr --output eDP-1-1 --primary --auto --output HDMI-1-2 --left-of eDP-1-1 --auto
+}
+function DeactivateHDMI {
+    echo "Switching to eDP-1-1"
+    xrandr --output eDP-1-1 --primary --auto --output HDMI-1-2 --off
+}
+
+function HDMIConnected {
+    ! xrandr | grep "^HDMI-1-2" | grep disconnected
+}
+
+if HDMIConnected
+then
+	ActivateHDMI
+else
+	DeactivateHDMI
+fi

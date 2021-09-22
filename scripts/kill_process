@@ -1,0 +1,3 @@
+#!/bin/bash
+
+ps -x -o "%c%p" | sed '/COMMAND/d; /(sd-pam)/d' | rofi -i -dmenu | awk '{print $1}' | xargs -I {} pkill {}
