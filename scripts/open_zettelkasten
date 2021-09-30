@@ -1,0 +1,3 @@
+#!/bin/bash
+
+gnome-terminal --title="Zettelkasten" -- bash -c "cd $HOME/Zettelkasten && nvim $1"

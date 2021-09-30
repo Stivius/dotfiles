@@ -1,0 +1,7 @@
+#!/bin/bash
+
+current_dt=`date +"%d-%m-%Y %T"`
+
+git add .
+git commit -m "Automatic backup $current_date" 
+git push origin master

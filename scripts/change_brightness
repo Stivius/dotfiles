@@ -4,4 +4,4 @@ sudo brightnessctl s $1
 
 source get_brightness
 
-notify-send --icon=gtk-info Brightness "Level is $brightness"
+dunstify -h string:x-dunst-stack-tag:brightness --icon=brightness Brightness "Level is $brightness"

@@ -1,0 +1,59 @@
+#!/bin/bash
+
+source $HOME/.profile
+
+status_file='/tmp/battery_status_notify'
+level_file='/tmp/battery_level_notify'
+
+if [ -f "$status_file" ]; then
+  read -r notify_status < "$status_file"
+fi
+
+if [ -f "$level_file" ]; then
+  read -r notify_level < "$level_file"
+fi
+
+battery_charging_icon="battery_charging"
+battery_icon="battery"
+battery_low_icon="battery_low"
+
+low_text="Low"
+low_level=30
+critical_text="Critical"
+critical_level=10
+charging_text="Charging"
+disharging_text="Discharging"
+
+function ShowStatusNotification {
+	if [ "$notify_status" != "$1" ]; then
+		echo $1 > $status_file
+		XDG_RUNTIME_DIR=/run/user/$(id -u) dunstify --icon=$1 Battery $2
+	fi
+}
+
+function ShowLevelNotification {
+	if [ "$notify_level" != "$1" ]; then
+		echo $1 > $level_file
+		XDG_RUNTIME_DIR=/run/user/$(id -u) dunstify --icon=$1 --urgency=$2 Battery $3
+	fi
+}
+
+status=`cat /sys/class/power_supply/AC0/online`
+if [ $status = 0 ]; then
+	level=`cat /sys/class/power_supply/BAT0/capacity`
+
+	if [ $level -gt $low_level ] ; then
+		ShowStatusNotification $battery_icon $disharging_text 
+	else
+		ShowStatusNotification $battery_low_icon $disharging_text 
+	fi
+
+	if [ $level -gt $critical_level ] && [ $level -le $low_level ] ; then
+		ShowLevelNotification $battery_low_icon normal $low_text
+	elif [ $level -ge 0 ] && [ $level -le $critical_level ] ; then
+		ShowLevelNotification $battery_low_icon critical $critical_text 
+	fi
+else
+	rm -f $level_file
+	ShowStatusNotification $battery_charging_icon $charging_text 
+fi

@@ -1,1 +1,41 @@
-i3lock -i /home/stivius/Pictures/Wallpapers/lock_screen.png
+#!/bin/sh
+
+BLANK='#00000000'
+CLEAR='#ffffff22'
+DEFAULT='#613d9ccc'
+TEXT='#d0d0d0'
+KEYPRESS='#d0d0d0aa'
+WRONG='#952a2abb'
+VERIFYING='#613d9ccc'
+
+i3lock \
+--insidever-color=$CLEAR     \
+--ringver-color=$VERIFYING   \
+\
+--insidewrong-color=$CLEAR   \
+--ringwrong-color=$WRONG     \
+\
+--inside-color=$BLANK        \
+--ring-color=$DEFAULT        \
+--line-color=$BLANK          \
+--separator-color=$DEFAULT   \
+\
+--verif-color=$TEXT          \
+--wrong-color=$TEXT          \
+--time-color=$TEXT           \
+--date-color=$TEXT           \
+--layout-color=$TEXT         \
+--keyhl-color=$KEYPRESS      \
+--bshl-color=$KEYPRESS       \
+\
+--blur 5                     \
+--clock                      \
+--indicator                  \
+--radius 120                 \
+--ring-width 15              \
+--time-str="%H:%M:%S"        \
+--date-str="%A, %m %Y"       \
+--verif-text="Verifying"     \
+--wrong-text="Wrong"         \
+--noinput-text="No input"    
+

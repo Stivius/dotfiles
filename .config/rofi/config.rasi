@@ -1,0 +1,13 @@
+configuration {
+	font: "mono 20";
+	color-normal: "#00181818, #d0d0d0, #00181818, #4e4e6a, #d0d0d0";
+	color-window: "#C0181818, #4e4e6a, #434d6a";
+	case-sensitive: false;
+	fake-transparency: true;
+	line-margin: 8;
+	padding: 15;
+	disable-history: false;
+	bw: 2;
+	width: 1500;
+	separator-style: "solid";
+}

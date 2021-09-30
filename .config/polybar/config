@@ -1,13 +1,13 @@
 [colors]
 ;background = ${xrdb:color0:#222}
-background = #222
-background-alt = #444
+background = #181818
+background-alt = #242424
 ;foreground = ${xrdb:color7:#222}
-foreground = #dfdfdf
-foreground-alt = #fff
-primary = #ffb52a
+foreground = #d0d0d0
+foreground-alt = #d0d0d0
+primary = #4e4e6a
 secondary = #e60053
-alert = #bd2c40
+alert = #4e4e6a
 
 [bar/default]
 monitor = ${env:MONITOR:}
@@ -39,7 +39,7 @@ font-2 = siji:pixelsize=12;1
 
 modules-left = i3
 modules-center = mpd xwindow
-modules-right = filesystem backlight-acpi pulseaudio wlan xkeyboard cpu battery date powermenu
+modules-right = filesystem backlight-acpi pulseaudio micro xkeyboard cpu battery date
 
 tray-position = right
 tray-padding = 2
@@ -102,7 +102,7 @@ wrapping-scroll = false
 pin-workspaces = true
 
 label-mode-padding = 2
-label-mode-foreground = #000
+label-mode-foreground = ${colors.foreground}
 label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
@@ -172,47 +172,30 @@ format-prefix-foreground = ${colors.foreground-alt}
 format-underline = #f90000
 label = %percentage:2%%
 
-[module/wlan]
-type = internal/network
-interface = 
-interval = 3.0
+[module/micro]
+type = custom/script
 
-format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
-label-connected = %essid%
+; Available tokens:
+;   %counter%
+; Command to be executed (using "/bin/sh -c [command]")
+exec = micro_status
 
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+; Conditional command that, if defined, needs to exit successfully
+; before the main exec command is invoked.
+; Default: ""
+; exec-if = pgrep -x myservice
 
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
-ramp-signal-foreground = ${colors.foreground-alt}
+; Will the script output continous content?
+; Default: false
+; tail = true
 
-[module/eth]
-type = internal/network
-interface = 
-interval = 3.0
-
-format-connected-underline = #55aa55
-format-connected-prefix = " "
-format-connected-prefix-foreground = ${colors.foreground-alt}
-label-connected = %local_ip%
-
-format-disconnected =
-;format-disconnected = <label-disconnected>
-;format-disconnected-underline = ${self.format-connected-underline}
-;label-disconnected = %ifname% disconnected
-;label-disconnected-foreground = ${colors.foreground-alt}
+; Seconds to sleep between updates
+; Default: 5 (0 if `tail = true`)
+; interval = 90
 
 [module/date]
 type = internal/date
-interval = 5
+interval = 2
 
 date =
 date-alt = " %Y-%m-%d"
@@ -287,35 +270,6 @@ animation-discharging-1 = 
 animation-discharging-2 = 
 animation-discharging-foreground = ${colors.foreground-alt}
 animation-discharging-framerate = 750
-
-[module/powermenu]
-type = custom/menu
-
-expand-right = true
-
-format-spacing = 1
-
-label-open = 
-label-open-foreground = ${colors.secondary}
-label-close =  cancel
-label-close-foreground = ${colors.secondary}
-label-separator = |
-label-separator-foreground = ${colors.foreground-alt}
-
-menu-0-0 = reboot
-menu-0-0-exec = menu-open-1
-menu-0-1 = power off
-menu-0-1-exec = menu-open-2
-
-menu-1-0 = cancel
-menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = sudo reboot
-
-menu-2-0 = power off
-menu-2-0-exec = sudo poweroff
-menu-2-1 = cancel
-menu-2-1-exec = menu-open-0
 
 [settings]
 screenchange-reload = true

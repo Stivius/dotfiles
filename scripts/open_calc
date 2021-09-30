@@ -1,0 +1,3 @@
+#!/bin/bash
+
+gnome-terminal --title="Math" -- bash -c "python3"

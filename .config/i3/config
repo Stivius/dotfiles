@@ -17,36 +17,49 @@ font pango:monospace 12
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+# Autolock in 15 minutes of inactivity
+exec --no-startup-id xautolock -time 15 -locker "i3lock_screen"
 
-# NetworkManager is the most popular way to manage wireless networks on Linux, and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
-
+# Set wallpaper
 exec --no-startup-id feh --bg-scale $HOME/Pictures/Wallpapers/space.png
 
-exec_always --no-startup-id polybar_launch
+# Update monitors
+exec --no-startup-id update_monitors
 
-# Autostart
+# Launch polybar (sleep 1s waiting for monitors update)
+exec_always --no-startup-id "sleep 1; polybar_launch"
+
+# Run compositor (sleep 1s waiting for monitors update)
+exec_always --no-startup-id "killall -q picom; sleep 1; picom"
+
+# Autostart apps
+exec --no-startup-id nm-applet
 exec --no-startup-id blueman-manager
-exec --no-startup-id firefox
-exec --no-startup-id telegram-desktop
-
-exec autolock -time 5 -locker "i3lock_screen"
+exec firefox
+exec spotify
+exec telegram-desktop
+exec open_calc
+exec open_term
 
 # Layout Switcher
-exec_always "setxkbmap -layout us,ru -variant ,, -option grp:alt_shift_toggle"
+exec_always --no-startup-id "setxkbmap -layout us,ru -variant ,, -option grp:alt_shift_toggle"
 
-# start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
+# enable laptop monitor in emergency case
+bindsym $mod+Mod1+m exec --no-startup-id enable_laptop_monitor
 
-# kill focused window
+# process management
+bindsym $mod+d exec --no-startup-id rofi -show drun
+bindsym $mod+Shift+q exec --no-startup-id kill_process
 bindsym $mod+q kill
 
-bindsym $mod+d exec --no-startup-id rofi -show drun
-bindsym $mod+Shift+p exec --no-startup-id kill_process
+# useful stuff
+bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Shift+b exec --no-startup-id "$SCRIPTS/external/rofi_bluetooth"
+bindsym $mod+Shift+f exec --no-startup-id rofi_finder
+bindsym $mod+Shift+n exec --no-startup-id dunstctl close-all
 
-for_window [class="^.*"] border pixel 1
-
-set $mode_launcher (f)irefox, (t)elegram, (o)bsidian, (b)ooks, (s)horcuts, (z)ettelkasten, s(p)otify, (r)dp, (m)icrosft teams
+# Launch apps
+set $mode_launcher (f)irefox, (t)elegram, (o)bsidian, (b)ooks, (s)horcuts, (z)ettelkasten, s(p)otify, (r)dp, (m)icrosft teams, m(a)th, t(e)rminal, (c)isco
 bindsym $mod+o mode "$mode_launcher"
 
 mode "$mode_launcher" {
@@ -56,15 +69,19 @@ mode "$mode_launcher" {
 	bindsym b exec open_book; mode "default"
 	bindsym s exec open_shortcuts; mode "default"
 	bindsym p exec spotify; mode "default"
-	bindsym z exec gnome-terminal --title="Zettelkasten" -- bash -c "cd $HOME/Zettelkasten && nvim"; mode "default"
+	bindsym z exec open_zettelkasten; mode "default"
+	bindsym a exec open_calc; mode "default"
+	bindsym e exec open_term; mode "default"
 
 	bindsym r exec remmina; mode "default"
 	bindsym m exec teams; mode "default"
+	bindsym c exec /opt/cisco/anyconnect/bin/vpnui; mode "default"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
 
+# Power off
 set $mode_logout (s)uspend, (l)ock screen, l(o)gout, (r)eboot, (p)oweroff
 bindsym $mod+p mode "$mode_logout"
 
@@ -78,8 +95,6 @@ mode "$mode_logout" {
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
-
-bindsym $mod+Shift+f exec rofi_finder
 
 # Screenshots
 set $mode_screenshot (f)ullscreen, (w)indow, (s)election
@@ -98,9 +113,20 @@ mode "$mode_screenshot" {
 bindsym XF86AudioRaiseVolume exec --no-startup-id change_volume +5
 bindsym XF86AudioLowerVolume exec --no-startup-id change_volume -5 
 bindsym XF86AudioMute exec --no-startup-id change_volume m 
+bindsym $mod+Shift+m exec --no-startup-id mute_volume default micro
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
+
+set $mode_volume toggle apps: (s)ound mute, (m)icro mute
+bindsym $mod+Shift+v mode "$mode_volume"
+mode "$mode_volume" {
+	bindsym s exec --no-startup-id mute_volume app sound; mode "default"
+	bindsym m exec --no-startup-id mute_volume app micro; mode "default"
+
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
 
 # Brightness Control
 bindsym XF86MonBrightnessUp exec change_brightness +5% 
@@ -119,8 +145,7 @@ bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
 # split in horizontal orientation
-bindsym $mod+g split h
-
+bindsym $mod+semicolon split h
 # split in vertical orientation
 bindsym $mod+v split v
 
@@ -130,7 +155,7 @@ bindsym $mod+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+Shift+s layout stacking
 bindsym $mod+Shift+t layout tabbed
-bindsym $mod+e layout toggle split
+bindsym $mod+Shift+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -138,49 +163,54 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-#bindsym $mod+a focus parent
+bindsym $mod+Shift+a focus parent
 # focus the child container
-#bindsym $mod+d focus child
+bindsym $mod+Shift+d focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "term"
-set $ws2 "chat"
-set $ws3 "web1"
-set $ws4 "web2"
-set $ws5 "code"
-set $ws6 "knowledge"
-set $ws7 "books"
-set $ws8 "work"
-set $ws9 "teams"
-set $ws10 "others"
+set $ws1 "1:term"
+set $ws2 "2:chat"
+set $ws3 "3:web1"
+set $ws4 "4:web2"
+set $ws5 "5:code"
+set $ws6 "6:knowledge"
+set $ws7 "7:books"
+set $ws8 "8:work"
+set $ws9 "9:teams"
+set $ws10 "10:others"
 
-for_window [title="Terminal"] move to workspace $ws1, focus
-for_window [class="Telegram"] move to workspace $ws2, focus
-for_window [class="Firefox"] move to workspace $ws3, focus
-for_window [class="code"] move to workspace $ws5, focus
-for_window [class="obsidian"] move to workspace $ws6, focus
-for_window [class="Zathura"] move to workspace $ws7, focus
-for_window [title="^Zettelkasten$"] move to workspace $ws7, focus
-for_window [title="Quick Connect"] move to workspace $ws8, focus
-for_window [class="Teams"] move to workspace $ws9, focus
+for_window [class="^.*"] border pixel 1
+for_window [title="Terminal"] move --no-auto-back-and-forth to workspace $ws1, focus
+for_window [class="Telegram"] move --no-auto-back-and-forth to workspace $ws2, focus
+for_window [class="Firefox"] move --no-auto-back-and-forth to workspace $ws3, focus
+for_window [class="code"] move --no-auto-back-and-forth to workspace $ws5, focus
+for_window [class="obsidian"] move --no-auto-back-and-forth to workspace $ws6, focus
+for_window [class="Zathura"] move --no-auto-back-and-forth to workspace $ws7, focus
+for_window [title="^Zettelkasten$"] move --no-auto-back-and-forth to workspace $ws7, focus
+for_window [title="^Math$"] floating enable, move --no-auto-back-and-forth scratchpad
+for_window [title="^HandyTerm$"] floating enable, move --no-auto-back-and-forth scratchpad
+for_window [title="Quick Connect"] move --no-auto-back-and-forth to workspace $ws8, focus
+for_window [class="Teams"] move --no-auto-back-and-forth to workspace $ws9, focus
 
 for_window [class="Spotify"] floating enable, resize set 1500 900, move position center
 for_window [class="AnyConnect"] floating enable
-for_window [class="Blueman-manager"] floating enable, move scratchpad
-for_window [title="Remmina Remote"] floating enable, move scratchpad
+for_window [class="Blueman-manager"] floating enable, move --no-auto-back-and-forth scratchpad
+for_window [title="Remmina Remote"] floating enable, move --no-auto-back-and-forth scratchpad
 
 bindsym $mod+plus scratchpad show
-bindsym $mod+minus move scratchpad
+bindsym $mod+minus move --no-auto-back-and-forth scratchpad
 
-set $mode_scratchpad (c)isco, (r)dp connections, (b)luetooth, s(p)otify
+set $mode_scratchpad (c)isco, (r)dp connections, (m)ath, (t)erminal, (b)luetooth, s(p)otify
 bindsym $mod+c mode "$mode_scratchpad"
 
 mode "$mode_scratchpad" {
     bindsym c [class="AnyConnect"] scratchpad show; mode "default"
     bindsym r [title="Remmina Remote"] scratchpad show; mode "default"
+    bindsym m [title="Math"] scratchpad show; mode "default"
+    bindsym t [title="^HandyTerm$"] scratchpad show; mode "default"
     bindsym b [class="Blueman-manager"] scratchpad show; mode "default"
-    bindsym s [class="Spotify"] scratchpad show; mode "default"
+    bindsym p [class="Spotify"] scratchpad show; mode "default"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
@@ -195,8 +225,8 @@ workspace $ws2 output $laptop
 workspace $ws3 output $monitor
 workspace $ws4 output $laptop
 workspace $ws5 output $monitor
-workspace $ws6 output $monitor
-workspace $ws7 output $laptop
+workspace $ws6 output $laptop
+workspace $ws7 output $monitor
 workspace $ws8 output $monitor
 workspace $ws9 output $laptop
 workspace $ws10 output $laptop
@@ -214,25 +244,25 @@ bindsym $mod+9 workspace $ws9
 bindsym $mod+0 workspace $ws10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8
-bindsym $mod+Shift+9 move container to workspace $ws9
-bindsym $mod+Shift+0 move container to workspace $ws10
+bindsym $mod+Shift+1 move --no-auto-back-and-forth container to workspace $ws1
+bindsym $mod+Shift+2 move --no-auto-back-and-forth container to workspace $ws2
+bindsym $mod+Shift+3 move --no-auto-back-and-forth container to workspace $ws3
+bindsym $mod+Shift+4 move --no-auto-back-and-forth container to workspace $ws4
+bindsym $mod+Shift+5 move --no-auto-back-and-forth container to workspace $ws5
+bindsym $mod+Shift+6 move --no-auto-back-and-forth container to workspace $ws6
+bindsym $mod+Shift+7 move --no-auto-back-and-forth container to workspace $ws7
+bindsym $mod+Shift+8 move --no-auto-back-and-forth container to workspace $ws8
+bindsym $mod+Shift+9 move --no-auto-back-and-forth container to workspace $ws9
+bindsym $mod+Shift+0 move --no-auto-back-and-forth container to workspace $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+   
+workspace_auto_back_and_forth yes
 
-# resize window (you can also use the mouse for that)
+bindsym $mod+r mode "resize"
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
@@ -251,7 +281,132 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-bindsym $mod+r mode "resize"
+set $mode_gaps Gaps: (o)uter, (i)nner, (h)orizontal, (v)ertical, (t)op, (r)ight, (b)ottom, (l)eft
+set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_horiz Horizontal Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_verti Vertical Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_top Top Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_right Right Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_bottom Bottom Gaps: +|-|0 (local), Shift + +|-|0 (global)
+set $mode_gaps_left Left Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym $mod+Shift+g mode "$mode_gaps"
+
+mode "$mode_gaps" {
+        bindsym o      mode "$mode_gaps_outer"
+        bindsym i      mode "$mode_gaps_inner"
+        bindsym h      mode "$mode_gaps_horiz"
+        bindsym v      mode "$mode_gaps_verti"
+        bindsym t      mode "$mode_gaps_top"
+        bindsym r      mode "$mode_gaps_right"
+        bindsym b      mode "$mode_gaps_bottom"
+        bindsym l      mode "$mode_gaps_left"
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+
+mode "$mode_gaps_outer" {
+        bindsym plus  gaps outer current plus 5
+        bindsym minus gaps outer current minus 5
+        bindsym 0     gaps outer current set 0
+
+        bindsym Shift+plus  gaps outer all plus 5
+        bindsym Shift+minus gaps outer all minus 5
+        bindsym Shift+0     gaps outer all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_inner" {
+        bindsym plus  gaps inner current plus 5
+        bindsym minus gaps inner current minus 5
+        bindsym 0     gaps inner current set 0
+
+        bindsym Shift+plus  gaps inner all plus 5
+        bindsym Shift+minus gaps inner all minus 5
+        bindsym Shift+0     gaps inner all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_horiz" {
+        bindsym plus  gaps horizontal current plus 5
+        bindsym minus gaps horizontal current minus 5
+        bindsym 0     gaps horizontal current set 0
+
+        bindsym Shift+plus  gaps horizontal all plus 5
+        bindsym Shift+minus gaps horizontal all minus 5
+        bindsym Shift+0     gaps horizontal all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_verti" {
+        bindsym plus  gaps vertical current plus 5
+        bindsym minus gaps vertical current minus 5
+        bindsym 0     gaps vertical current set 0
+
+        bindsym Shift+plus  gaps vertical all plus 5
+        bindsym Shift+minus gaps vertical all minus 5
+        bindsym Shift+0     gaps vertical all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_top" {
+        bindsym plus  gaps top current plus 5
+        bindsym minus gaps top current minus 5
+        bindsym 0     gaps top current set 0
+
+        bindsym Shift+plus  gaps top all plus 5
+        bindsym Shift+minus gaps top all minus 5
+        bindsym Shift+0     gaps top all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_right" {
+        bindsym plus  gaps right current plus 5
+        bindsym minus gaps right current minus 5
+        bindsym 0     gaps right current set 0
+
+        bindsym Shift+plus  gaps right all plus 5
+        bindsym Shift+minus gaps right all minus 5
+        bindsym Shift+0     gaps right all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_bottom" {
+        bindsym plus  gaps bottom current plus 5
+        bindsym minus gaps bottom current minus 5
+        bindsym 0     gaps bottom current set 0
+
+        bindsym Shift+plus  gaps bottom all plus 5
+        bindsym Shift+minus gaps bottom all minus 5
+        bindsym Shift+0     gaps bottom all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+mode "$mode_gaps_left" {
+        bindsym plus  gaps left current plus 5
+        bindsym minus gaps left current minus 5
+        bindsym 0     gaps left current set 0
+
+        bindsym Shift+plus  gaps left all plus 5
+        bindsym Shift+minus gaps left all minus 5
+        bindsym Shift+0     gaps left all set 0
+
+        bindsym Return mode "$mode_gaps"
+        bindsym Escape mode "default"
+}
+
+smart_gaps on
+smart_gaps inverse_outer
+
+workspace $ws1 gaps inner 15
+workspace $ws7 gaps inner 15
 
 # class                 border  bground text    indicator child_border
 client.focused          #6272A4 #6272A4 #F8F8F2 #6272A4   #6272A4

@@ -70,7 +70,7 @@ function! s:OpenMetaNote()
 endfunction
 
 function! s:GetTag()
-	let result = system("grep -oP Tags::.+ Notes/*.md | grep -oP '(?<=\\[\\[)[^\\[\\]]+' | sort | uniq -d | rofi -dmenu")
+	let result = system("grep -oP Tags::.+ Notes/*.md | grep -oP '(?<=\\[\\[)[^\\[\\]]+' | sort | uniq -d | rofi -dmenu -i")
 	if result != ""
 		let resultNoLine = substitute(result, '\n', '', '')
 		call setreg('t', '[[' . resultNoLine . ']]')
@@ -80,7 +80,7 @@ function! s:GetTag()
 endfunction
 
 function! s:GetName()
-	let result = system("ls Notes/*.md | sed 's/Notes\\///g' | sed 's/.md//g' | sort | rofi -dmenu")
+	let result = system("ls Notes/*.md | sed 's/Notes\\///g' | sed 's/.md//g' | sort | rofi -dmenu -i")
 	if result != ""
 		let resultNoLine = substitute(result, '\n', '', '')
 		call setreg('t', '[[' . resultNoLine . ']]')

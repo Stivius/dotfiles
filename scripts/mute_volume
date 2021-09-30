@@ -1,0 +1,54 @@
+#!/bin/bash
+
+Mute()
+{
+	mute_type="$1"
+	app_direction="$2"
+	app_name="$3"
+
+	if [ "$mute_type" = "micro" ]; then
+		volume_icon="micro"
+		mute_icon="micro_mute"
+	else
+		volume_icon="volume_high"
+		mute_icon="volume_mute"
+	fi
+
+	pulsemixer --id $app_direction --toggle-mute
+	mute_status=`pulsemixer --id $app_direction --get-mute`
+
+	if [ $mute_status = 0 ]; then
+		dunstify -h string:x-dunst-stack-tag:volume --icon=$volume_icon Volume "$app_name $mute_type unmuted"
+	else
+		dunstify -h string:x-dunst-stack-tag:volume --icon=$mute_icon Volume "$app_name $mute_type muted"
+	fi
+}
+
+MuteApp()
+{
+	mute_type="$1"
+	app_directions="$2"
+
+	selected_app=`pulsemixer --list-$app_directions | grep -P "input|output" | awk '{print $6 "\t" $4 "\t" $8}' | sed 's/,//g; s/\t0/\tunmuted/g; s/\t1/\tmuted/g' | rofi -dmenu`
+
+	if [[ ! -z "$selected_app" ]]; then
+		app_name=`echo $selected_app | awk '{print $1}'`	
+		app_direction=`echo $selected_app | awk '{print $2}'`	
+
+		Mute "$mute_type" "$app_direction" "$app_name"
+	fi
+}
+
+mute_type="$2"
+if [ "$mute_type" == "micro" ]; then
+	directions="sources"
+elif [ "$mute_type" == "sound" ]; then
+	directions="sinks"
+fi
+
+if [ "$1" == "app" ]; then
+	MuteApp "$mute_type" "$directions"
+elif [ "$1" == "default" ]; then
+	selected_direction=`pulsemixer --list-$directions | grep Default | awk -F[,:] '{print $3}'`
+	Mute "$mute_type" "$selected_direction" "Default"
+fi

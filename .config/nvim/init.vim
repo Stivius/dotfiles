@@ -14,6 +14,9 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
   Plug 'altercation/vim-colors-solarized'
   Plug 'tpope/vim-surround'
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+  Plug 'easymotion/vim-easymotion'
+  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+  Plug 'ryanoasis/vim-devicons'
 call plug#end()
 
 filetype plugin on
@@ -22,7 +25,7 @@ filetype plugin on
 autocmd Filetype markdown source ~/.config/nvim/zettelkasten.vim
 
 " let g:auto_save = 1  " enable AutoSave on Vim startup 
-let g:airline_powerline_fonts = 1 " use powerline fonts
+" let g:airline_powerline_fonts = 1 " use powerline fonts
 let g:Powerline_symbols='unicode' " support unicode
 
 " solarized theme
@@ -42,6 +45,8 @@ set wrap linebreak " wrap words
 set tabstop=4
 set shiftwidth=4
 set relativenumber
+set number
+set encoding=UTF-8
 set autoindent
 set splitright " for vnew to work to the right 
 
@@ -52,6 +57,16 @@ let mapleader=" "
 " search
 noremap <F9> :nohl<CR>
 noremap <F8> :set ignorecase! ingorecase?<CR>
+
+"map <Leader> <Plug>(easymotion-prefix)
+nmap f <Plug>(easymotion-fl)
+nmap F <Plug>(easymotion-Fl)
+nmap <Leader><Leader>f <Plug>(easymotion-f2)
+nmap <Leader><Leader>F <Plug>(easymotion-F2)
+nmap t <Plug>(easymotion-tl)
+nmap T <Plug>(easymotion-Tl)
+nmap <Leader><Leader>t <Plug>(easymotion-t2)
+nmap <Leader><Leader>T <Plug>(easymotion-T2)
 
 " navigation
 noremap <C-k> <C-w>k
@@ -74,6 +89,10 @@ nnoremap <Leader>o :Files<CR>
 " ripgrep search
 nnoremap <Leader>ff :Rg 
 nnoremap <Leader>fw :Rg <C-r><C-w><CR>
+
+" copy/paste to system clipboard
+nnoremap <Leader>p "+p
+nnoremap <Leader>y "+y
 
 " vimrc
 nnoremap <Leader>rv :source $MYVIMRC<CR>
