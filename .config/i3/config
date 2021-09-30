@@ -64,6 +64,7 @@ bindsym $mod+o mode "$mode_launcher"
 
 mode "$mode_launcher" {
     bindsym f exec firefox; mode "default"
+    bindsym n exec gnome-calculator; move --no-auto-back-and-forth to workspace number 4, mode "default"
     bindsym t exec telegram-desktop; mode "default"
     bindsym o exec obsidian; mode "default"
 	bindsym b exec open_book; mode "default"
