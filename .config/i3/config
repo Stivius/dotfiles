@@ -198,8 +198,8 @@ for_window [class="AnyConnect"] floating enable
 for_window [class="Blueman-manager"] floating enable, move --no-auto-back-and-forth scratchpad
 for_window [title="Remmina Remote"] floating enable, move --no-auto-back-and-forth scratchpad
 
-bindsym $mod+plus scratchpad show
-bindsym $mod+minus move --no-auto-back-and-forth scratchpad
+bindsym $mod+minus scratchpad show
+bindsym $mod+Shift+minus move --no-auto-back-and-forth scratchpad
 
 set $mode_scratchpad (c)isco, (r)dp connections, (m)ath, (t)erminal, (b)luetooth, s(p)otify
 bindsym $mod+c mode "$mode_scratchpad"
