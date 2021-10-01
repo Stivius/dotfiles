@@ -28,15 +28,15 @@ charging_text="Charging"
 disharging_text="Discharging"
 
 function ShowStatusNotification {
-	if [ "$notify_status" != "$1" ]; then
-		echo $1 > $status_file
+	if [ "$notify_status" != "$2" ]; then
+		echo $2 > $status_file
 		dunstify --icon=$1 Battery $2
 	fi
 }
 
 function ShowLevelNotification {
-	if [ "$notify_level" != "$1" ]; then
-		echo $1 > $level_file
+	if [ "$notify_level" != "$3" ]; then
+		echo $3 > $level_file
 		dunstify --icon=$1 --urgency=$2 Battery $3
 	fi
 }
