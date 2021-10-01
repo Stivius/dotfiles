@@ -2,6 +2,9 @@
 
 source $HOME/.profile
 
+export PATH=$PATH:/usr/local/bin
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+
 status_file='/tmp/battery_status_notify'
 level_file='/tmp/battery_level_notify'
 
@@ -27,14 +30,14 @@ disharging_text="Discharging"
 function ShowStatusNotification {
 	if [ "$notify_status" != "$1" ]; then
 		echo $1 > $status_file
-		XDG_RUNTIME_DIR=/run/user/$(id -u) dunstify --icon=$1 Battery $2
+		dunstify --icon=$1 Battery $2
 	fi
 }
 
 function ShowLevelNotification {
 	if [ "$notify_level" != "$1" ]; then
 		echo $1 > $level_file
-		XDG_RUNTIME_DIR=/run/user/$(id -u) dunstify --icon=$1 --urgency=$2 Battery $3
+		dunstify --icon=$1 --urgency=$2 Battery $3
 	fi
 }
 
