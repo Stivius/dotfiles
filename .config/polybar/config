@@ -191,7 +191,7 @@ exec = micro_status
 
 ; Seconds to sleep between updates
 ; Default: 5 (0 if `tail = true`)
-; interval = 90
+interval = 1
 
 [module/date]
 type = internal/date
