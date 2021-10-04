@@ -1,11 +1,5 @@
 #!/bin/bash
 
-volume=`pulsemixer --get-volume | awk '{print $1}'`
-if [ $volume -gt 50 ]; then
-	volume_icon="volume_high"
-else
-	volume_icon="volume_low"
-fi
 
 mute_icon="volume_mute"
 
@@ -13,5 +7,13 @@ if [ "$1" == "m" ]; then
 	mute_volume default sound
 else
 	pulsemixer --change-volume $1
+
+	volume=`pulsemixer --get-volume | awk '{print $1}'`
+	if [ $volume -gt 50 ]; then
+		volume_icon="volume_high"
+	else
+		volume_icon="volume_low"
+	fi
+
 	dunstify -h string:x-dunst-stack-tag:volume --icon=$volume_icon Volume "Level is $volume"
 fi
