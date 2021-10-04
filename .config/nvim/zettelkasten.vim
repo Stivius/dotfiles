@@ -98,7 +98,7 @@ let g:fzf_action = {
   \ 'ctrl-i': function('s:PasteFromFile'),
   \ 'ctrl-b': function('s:MoveFile')}
 
-nnoremap <buffer> <C-p> <Plug>MarkdownPreviewToggle
+nmap <buffer> <C-p> <Plug>MarkdownPreviewToggle
 
 inoremap <buffer> <C-t> <ESC>:call <SID>GetTag()<CR>a<C-r>t
 inoremap <buffer> <C-k> <ESC>:call <SID>GetName()<CR>a<C-r>t
