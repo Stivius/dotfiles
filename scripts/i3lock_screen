@@ -33,6 +33,7 @@ i3lock \
 --indicator                  \
 --radius 120                 \
 --ring-width 15              \
+--keylayout 2                \
 --time-str="%H:%M:%S"        \
 --date-str="%A, %m %Y"       \
 --verif-text="Verifying"     \
