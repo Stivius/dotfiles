@@ -101,9 +101,9 @@ set $mode_screenshot (f)ullscreen, (w)indow, (s)election
 bindsym $mod+s mode "$mode_screenshot"
 
 mode "$mode_screenshot" {
-    bindsym --release f exec take_screenshot f; mode "default"
-    bindsym --release w exec take_screenshot w; mode "default"
-    bindsym --release s exec take_screenshot s; mode "default"
+    bindsym --release f exec --no-startup-id take_screenshot f; mode "default"
+    bindsym --release w exec --no-startup-id take_screenshot w; mode "default"
+    bindsym --release s exec --no-startup-id take_screenshot s; mode "default"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
