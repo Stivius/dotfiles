@@ -128,6 +128,18 @@ mode "$mode_volume" {
     bindsym Return mode "default"
 }
 
+# Music Control
+set $mode_music song: (p)revious, (s)top/play, (n)ext
+bindsym $mod+Shift+p mode "$mode_music"
+mode "$mode_music" {
+	bindsym p exec --no-startup-id playerctl previous
+	bindsym s exec --no-startup-id playerctl play-pause; mode "default"
+	bindsym n exec --no-startup-id playerctl next
+
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+
 # Brightness Control
 bindsym XF86MonBrightnessUp exec change_brightness +5% 
 bindsym XF86MonBrightnessDown exec change_brightness 5%-
