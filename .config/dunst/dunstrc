@@ -38,9 +38,6 @@
     # The transparency of the window
     transparency = 0
 
-    # The height of the entire notification.
-	notification_height = 0
-
     # Draw a line of "separator_height" pixel height between two
     # notifications.
     separator_height = 2
@@ -142,12 +139,6 @@
     # Define the class of the windows spawned by dunst
     class = Dunst
 
-    # Print a notification on startup.
-    startup_notification = false
-
-    # Manage dunst's desire for talking
-    verbosity = mesg
-
     # Define the corner radius of the notification window
     corner_radius = 0
 
@@ -184,11 +175,11 @@
 [urgency_normal]
     background = "#181818B4"
     foreground = "#d0d0d0"
-    highlight = "#4e4e6a"
+    highlight = "#ffffff"
     timeout = 10
 
 [urgency_critical]
-    background = "#ffffff"
+    background = "#952a2aB4"
     foreground = "#d0d0d0"
     frame_color = "#181818"
     timeout = 60
@@ -204,11 +195,11 @@
     set_stack_tag = "volume"
 
 [spotify]
-    desktop-entry = "Spotify"
+    desktop_entry = "Spotify"
     background = "#181818B4"
     foreground = "#d0d0d0"
 
 [teams]
-    desktop-entry = "*Teams*"
+    desktop_entry = "*Teams*"
     background = "#181818B4"
     foreground = "#d0d0d0"
