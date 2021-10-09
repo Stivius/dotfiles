@@ -57,6 +57,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+b exec --no-startup-id "$SCRIPTS/external/rofi_bluetooth"
 bindsym $mod+Shift+f exec --no-startup-id rofi_finder
 bindsym $mod+Shift+n exec --no-startup-id dunstctl close-all
+bindsym $mod+Shift+p exec --no-startup-id rofi-pass
+bindsym $mod+Shift+z exec --no-startup-id "$SCRIPTS/external/layout_manager"
 
 # Launch apps
 set $mode_launcher (f)irefox, (t)elegram, (o)bsidian, (b)ooks, (s)horcuts, (z)ettelkasten, s(p)otify, (r)dp, (m)icrosft teams, m(a)th, t(e)rminal, (c)isco
@@ -130,7 +132,7 @@ mode "$mode_volume" {
 
 # Music Control
 set $mode_music song: (p)revious, (s)top/play, (n)ext
-bindsym $mod+Shift+p mode "$mode_music"
+bindsym $mod+m mode "$mode_music"
 mode "$mode_music" {
 	bindsym p exec --no-startup-id playerctl previous
 	bindsym s exec --no-startup-id playerctl play-pause; mode "default"
