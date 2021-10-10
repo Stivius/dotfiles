@@ -23,6 +23,9 @@ exec --no-startup-id xautolock -time 15 -locker "i3lock_screen"
 # Set wallpaper
 exec --no-startup-id feh --bg-scale $HOME/Pictures/Wallpapers/space.png
 
+# load resources
+exec_always --no-startup-id xrdb $HOME/.Xresources
+
 # Update monitors
 exec --no-startup-id update_monitors
 
