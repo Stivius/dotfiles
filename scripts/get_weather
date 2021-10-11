@@ -1,0 +1,9 @@
+#!/bin/bash
+
+weather_json=`curl -s "https://api.openweathermap.org/data/2.5/weather?q=Kyiv&units=metric&appid=4bdac748869ecbd195cb05e9bce26006"`
+
+current=`echo $weather_json | jq -r '.main.temp'`
+current_feels=`echo $weather_json | jq -r '.main.feels_like'`
+sky=`echo $weather_json | jq -r '.weather[0].main'`
+
+echo " $current/$current_feels $sky"
