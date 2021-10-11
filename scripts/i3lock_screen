@@ -1,12 +1,12 @@
 #!/bin/sh
 
 BLANK='#00000000'
-CLEAR='#ffffff22'
-DEFAULT='#613d9ccc'
-TEXT='#d0d0d0'
-KEYPRESS='#d0d0d0aa'
-WRONG='#952a2abb'
-VERIFYING='#613d9ccc'
+CLEAR=`xrdb -query | grep primary | cut -f2`'22'
+DEFAULT=`xrdb -query | grep primary | cut -f2`
+TEXT=`xrdb -query | grep foreground | cut -f2`
+KEYPRESS=`xrdb -query | grep foreground | cut -f2`'aa'
+WRONG=`xrdb -query | grep urgent | cut -f2`'bb'
+VERIFYING=`xrdb -query | grep primary | cut -f2`
 
 i3lock \
 --insidever-color=$CLEAR     \

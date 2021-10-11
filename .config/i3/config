@@ -425,11 +425,16 @@ smart_gaps inverse_outer
 workspace $ws1 gaps inner 15
 workspace $ws7 gaps inner 15
 
-# class                 border  bground text    indicator child_border
-client.focused          #6272A4 #6272A4 #F8F8F2 #6272A4   #6272A4
-client.focused_inactive #44475A #44475A #F8F8F2 #44475A   #44475A
-client.unfocused        #282A36 #282A36 #BFBFBF #282A36   #282A36
-client.urgent           #44475A #FF5555 #F8F8F2 #FF5555   #FF5555
-client.placeholder      #282A36 #282A36 #F8F8F2 #282A36   #282A36
+set_from_resource $background background #000000
+set_from_resource $foreground foreground #ffffff
+set_from_resource $urgent urgent #ff0000
+set_from_resource $primary primary #9300ff
 
-client.background       #F8F8F2
+# class                 border  bground text    indicator child_border
+client.focused          $primary $primary $foreground $primary $primary
+client.focused_inactive $background $background $foreground $background $background
+client.unfocused        $background $background $foreground $background $background
+client.urgent           $urgent $urgent $foreground $urgent $urgent
+client.placeholder      $background $background $background $background $bacgkround
+
+client.background       $background
