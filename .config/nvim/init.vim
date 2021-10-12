@@ -28,11 +28,6 @@ autocmd Filetype markdown source ~/.config/nvim/zettelkasten.vim
 " let g:airline_powerline_fonts = 1 " use powerline fonts
 let g:Powerline_symbols='unicode' " support unicode
 
-" solarized theme
-syntax enable
-set background=dark
-colorscheme solarized
-
 " enable russian layout
 set keymap=russian-jcukenwin  
 set iminsert=0 " default - enlgish
