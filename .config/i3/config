@@ -198,6 +198,12 @@ set $ws9 "9:teams"
 set $ws10 "10:others"
 
 for_window [class="^.*"] border pixel 1
+for_window [window_role="tooltip"] floating enable
+for_window [window_role="popup_menu"] floating enable
+for_window [window_role="dialog"] floating enable
+
+focus_on_window_activation urgent
+
 for_window [title="Terminal"] move --no-auto-back-and-forth to workspace $ws1, focus
 for_window [class="Telegram"] move --no-auto-back-and-forth to workspace $ws2, focus
 for_window [class="Firefox"] move --no-auto-back-and-forth to workspace $ws3, focus
@@ -210,7 +216,7 @@ for_window [title="^HandyTerm$"] floating enable, move --no-auto-back-and-forth 
 for_window [title="Quick Connect"] move --no-auto-back-and-forth to workspace $ws8, focus
 for_window [class="Teams"] move --no-auto-back-and-forth to workspace $ws9, focus
 
-for_window [class="Spotify"] floating enable, resize set 1500 900, move position center
+for_window [class="Spotify"] floating enable, resize set 1500 900, move position center, move --no-auto-back-and-forth scratchpad
 for_window [class="AnyConnect"] floating enable
 for_window [class="Blueman-manager"] floating enable, move --no-auto-back-and-forth scratchpad
 for_window [title="Remmina Remote"] floating enable, move --no-auto-back-and-forth scratchpad
