@@ -64,13 +64,14 @@ bindsym $mod+Shift+p exec --no-startup-id rofi-pass
 bindsym $mod+Shift+z exec --no-startup-id "$SCRIPTS/external/layout_manager"
 
 # Launch apps
-set $mode_launcher (f)irefox, (t)elegram, (o)bsidian, (b)ooks, (s)horcuts, (z)ettelkasten, s(p)otify, (r)dp, (m)icrosft teams, m(a)th, t(e)rminal, (c)isco
+set $mode_launcher (f)irefox, (t)g, (o)bsidian, (b)ooks, (c)ode, (s)horcuts, (z)ettel, s(p)otify, (r)dp, (m)icrosft teams, m(a)th, t(e)rminal, (v)pn
 bindsym $mod+o mode "$mode_launcher"
 
 mode "$mode_launcher" {
     bindsym f exec firefox; mode "default"
     bindsym t exec telegram-desktop; mode "default"
     bindsym o exec obsidian; mode "default"
+    bindsym c exec code; mode "default"
 	bindsym b exec open_book; mode "default"
 	bindsym s exec open_shortcuts; mode "default"
 	bindsym p exec spotify; mode "default"
@@ -80,7 +81,7 @@ mode "$mode_launcher" {
 
 	bindsym r exec remmina; mode "default"
 	bindsym m exec teams; mode "default"
-	bindsym c exec /opt/cisco/anyconnect/bin/vpnui; mode "default"
+	bindsym v exec /opt/cisco/anyconnect/bin/vpnui; mode "default"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
@@ -216,7 +217,7 @@ focus_on_window_activation urgent
 for_window [title="Terminal"] move --no-auto-back-and-forth to workspace $ws1, focus
 for_window [class="Telegram"] move --no-auto-back-and-forth to workspace $ws2, focus
 for_window [class="Firefox"] move --no-auto-back-and-forth to workspace $ws3, focus
-for_window [class="code"] move --no-auto-back-and-forth to workspace $ws5, focus
+for_window [class="Code"] move --no-auto-back-and-forth to workspace $ws5, focus
 for_window [class="obsidian"] move --no-auto-back-and-forth to workspace $ws6, focus
 for_window [class="Zathura"] move --no-auto-back-and-forth to workspace $ws7, focus
 for_window [title="^Zettelkasten$"] move --no-auto-back-and-forth to workspace $ws7, focus
