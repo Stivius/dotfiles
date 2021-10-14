@@ -1,15 +1,17 @@
 #!/bin/bash
 
 type=$1
-val=$2
 
-if [ type = "l" ]; then
+if [ "$type" = "l" ]; then
+	val="$2"
 	sudo brightnessctl s $val
-	type="Laptop"
+	name="Laptop"
 else
-	ddcutil setvcp 10 $val
-	type="Monitor"
+	direction="$2"
+	val="$3"
+	ddcutil setvcp 10 $direction $val
+	name="Monitor"
 fi
 
-level=`get_brightness $1`
-dunstify -h string:x-dunst-stack-tag:brightness --icon=brightness Brightness "[$type] Level is $level"
+level=`get_brightness $type`
+dunstify -h string:x-dunst-stack-tag:brightness --icon=brightness Brightness "[$name] Level is $level"

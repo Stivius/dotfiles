@@ -146,12 +146,13 @@ mode "$mode_music" {
 }
 
 # Brightness Control
-bindsym XF86MonBrightnessUp exec --no-statup-id change_brightness l +5% 
-bindsym XF86MonBrightnessDown exec --no-statup-id change_brightness l 5%-
-bindsym $mod+b mode "$mode_brightness"
+bindsym XF86MonBrightnessUp exec "change_brightness l +5%"
+bindsym XF86MonBrightnessDown exec "change_brightness l 5%-"
+set $mode_brightness (i)nc monitor britghtness, (d)ec monitor brightness
+bindsym $mod+b mode "$mode_brightness" 
 mode "$mode_brightness" {
-	bindsym XF86MonBrightnessUp exec --no-startup-id change_brightness m +5
-	bindsym XF86MonBrightnessDown exec --no-startup-id change_brightness m -5
+	bindsym i exec change_brightness m + 20
+	bindsym d exec change_brightness m - 15
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
