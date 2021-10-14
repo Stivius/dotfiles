@@ -29,7 +29,7 @@ autocmd Filetype markdown source ~/.config/nvim/zettelkasten.vim
 let g:Powerline_symbols='unicode' " support unicode
 
 set t_Co=256
-set background=dark
+set background=light
 
 " enable russian layout
 set keymap=russian-jcukenwin  
