@@ -3,17 +3,20 @@
 export XAUTHORITY=/run/user/1000/gdm/Xauthority
 export DISPLAY=:1
 
+MONITOR=`xrandr | grep -P -o "^HDMI(-1)?-2"`
+LAPTOP=`xrandr | grep -P -o "^eDP(-1)?-1"`
+
 function ActivateHDMI {
-    echo "Switching to HDMI-1-2"
-    xrandr --output eDP-1-1 --primary --auto --output HDMI-1-2 --left-of eDP-1-1 --auto
+    echo "Switching to $MONITOR"
+    xrandr --output $LAPTOP --primary --auto --output $MONITOR --left-of $LAPTOP --auto
 }
 function DeactivateHDMI {
-    echo "Switching to eDP-1-1"
-    xrandr --output eDP-1-1 --primary --auto --output HDMI-1-2 --off
+    echo "Switching to $LAPTOP"
+    xrandr --output $LAPTOP --primary --auto --output $MONITOR --off
 }
 
 function HDMIConnected {
-    ! xrandr | grep "^HDMI-1-2" | grep disconnected
+	! xrandr | grep $MONITOR | grep disconnected
 }
 
 if HDMIConnected
