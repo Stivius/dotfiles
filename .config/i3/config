@@ -146,8 +146,16 @@ mode "$mode_music" {
 }
 
 # Brightness Control
-bindsym XF86MonBrightnessUp exec change_brightness +5% 
-bindsym XF86MonBrightnessDown exec change_brightness 5%-
+bindsym XF86MonBrightnessUp exec --no-statup-id change_brightness l +5% 
+bindsym XF86MonBrightnessDown exec --no-statup-id change_brightness l 5%-
+bindsym $mod+b mode "$mode_brightness"
+mode "$mode_brightness" {
+	bindsym XF86MonBrightnessUp exec --no-startup-id change_brightness m +5
+	bindsym XF86MonBrightnessDown exec --no-startup-id change_brightness m -5
+
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
 
 # Focus window
 bindsym $mod+h focus left

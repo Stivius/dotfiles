@@ -1,7 +1,15 @@
 #!/bin/bash
 
-sudo brightnessctl s $1
+type=$1
+val=$2
 
-source get_brightness
+if [ type = "l" ]; then
+	sudo brightnessctl s $val
+	type="Laptop"
+else
+	ddcutil setvcp 10 $val
+	type="Monitor"
+fi
 
-dunstify -h string:x-dunst-stack-tag:brightness --icon=brightness Brightness "Level is $brightness"
+level=`get_brightness $1`
+dunstify -h string:x-dunst-stack-tag:brightness --icon=brightness Brightness "[$type] Level is $level"
