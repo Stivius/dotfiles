@@ -25,3 +25,6 @@ then
 else
 	DeactivateHDMI
 fi
+
+sleep 1
+i3-msg restart

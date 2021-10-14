@@ -74,7 +74,7 @@ mode "$mode_launcher" {
 	bindsym b exec open_book; mode "default"
 	bindsym s exec open_shortcuts; mode "default"
 	bindsym p exec spotify; mode "default"
-	bindsym z exec open_zettelkasten; mode "default"
+	bindsym z exec --no-startup-id open_zettelkasten; mode "default"
 	bindsym a exec open_calc; mode "default"
 	bindsym e exec open_term; mode "default"
 
