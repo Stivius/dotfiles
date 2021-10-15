@@ -25,7 +25,7 @@ filetype plugin on
 autocmd Filetype markdown source ~/.config/nvim/zettelkasten.vim
 
 " let g:auto_save = 1  " enable AutoSave on Vim startup 
-" let g:airline_powerline_fonts = 1 " use powerline fonts
+let g:airline_powerline_fonts = 1 " use powerline fonts
 let g:Powerline_symbols='unicode' " support unicode
 
 set t_Co=256
