@@ -214,7 +214,7 @@ for_window [window_role="dialog"] floating enable
 
 focus_on_window_activation urgent
 
-for_window [title="Terminal"] move --no-auto-back-and-forth to workspace $ws1, focus
+for_window [title="urxvt"] move --no-auto-back-and-forth to workspace $ws1, focus
 for_window [class="Telegram"] move --no-auto-back-and-forth to workspace $ws2, focus
 for_window [class="Firefox"] move --no-auto-back-and-forth to workspace $ws3, focus
 for_window [class="Code"] move --no-auto-back-and-forth to workspace $ws5, focus
