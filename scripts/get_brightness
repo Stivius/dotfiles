@@ -1,7 +1,25 @@
-#/bin/bash
+#!/bin/bash
 
-if [ "$1" = "l" ]; then
+#source $SCRIPTS/helpers/get_active_monitor
+
+function laptop_brightness {
 	echo `brightnessctl -l | grep intel -A 1 | egrep -o '[0-9]+%' | egrep -o '[0-9]+'`
-else
+}
+
+function monitor_brightness {
 	echo `ddcutil getvcp 10 | egrep -o "current[^,]+" | egrep -o "[0-9]+"`
-fi
+}
+
+case "$1" in
+	"l")
+		laptop_brightness
+	;;
+
+	"m")
+		monitor_brightness		
+	;;
+
+	*)
+		echo "determine automatically"
+	;;
+esac
