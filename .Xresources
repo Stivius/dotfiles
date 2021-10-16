@@ -30,7 +30,7 @@ URxvt.scrollTtyKeypress: true
 URxvt.saveline: 2048
 URxvt.modifier: alt
 ! URvt.skipBuiltinGlyphs: true
-URxvt.font: xft:Source Code Pro:style=Regular:size=26,xft:PowerlineSymbols:style=Medium,xft:Iosevka Nerd Font Mono:style=Regular:size=20
+URxvt.font: xft:Source Code Pro:style=Regular:size=26,xft:PowerlineSymbols:style=Medium,xft:Iosevka Nerd Font Mono:style=Regular:size=20,xft:Noto Color Emoji:style=Regular
 URxvt.letterSpace: 0
 URxvt.lineSpace: 0
 URxvt.cursorBlink:	true
