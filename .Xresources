@@ -16,7 +16,7 @@ URxvt.url-launcher: /usr/bin/xdg-open
 URxvt.matcher.button: 1
 URxvt.matcher.rend.0: Uline Bold fg3
 URxvt.keysym.M-o: perl:matcher:list
-URxvt.vim-scrollback: M-s
+URxvt.vim-scrollback: M-w
 URxvt.vim-scrollback-paste: M-p
 ! index-2 to get the actual color index (0..15)
 ! 1 leads to transparent color (not planned but outcome is perfect :)
