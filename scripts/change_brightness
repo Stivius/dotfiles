@@ -13,5 +13,5 @@ else
 	name="Monitor"
 fi
 
-get_brightness $type
-dunstify -h string:x-dunst-stack-tag:brightness --icon=brightness Brightness "[$name] Level is $brightness"
+level=`get_brightness $type`
+dunstify -h string:x-dunst-stack-tag:brightness --icon=brightness Brightness "[$name] Level is $level"

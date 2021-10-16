@@ -1,1 +1,0 @@
-result=`xwininfo -id $(xdotool getactivewindow) | grep Absolute | grep X`
