@@ -1,0 +1,600 @@
+# Vim Notes
+---
+Type:: 📋
+Status:: 🟨
+Tags:: [[Vim]] - [[Shortcuts]]
+References::
+	- [[vim-surround - parenthesizing made simple]]
+	- [[Practical Vim - Edit Text at the Speed of Thought]]
+Date:: 12-08-2021
+
+---
+
+![[vim_cheetsheet.gif]]
+
+## General Info
+- Vim’s grammar has rule: when an operator command is invoked in duplicate, it acts upon the current line.
+- The expression register `=` can evaluate a piece of Vim script code and return the result.
+
+## Insert Mode
+
+- `<Up>,` `<Down>,` `<Left>,` or `<Right>` - will create a new undo chunk. This also has implications on the operation of the dot command.
+
+- `<C-o>` - switch to Insert Normal mode
+- `<C-r>reg` - paste from register
+
+- `<C-h>` - delete last symbol
+- `<C-w>` - delete last word
+- `<C-u>` - delete last line
+- `<C-a>` - paste the last inserted text (via `i` or `a`)
+- `<C-@>` - the same as `C-a` but also exit Insert Mode
+
+- `<C-t>` - add indent at the beginning of line
+- `<C-d>` - add indent at the end of line
+- `<C-y>` - past symbol that is located above cursor
+- `<C-a>` - past symbol that is located below cursor
+
+## Normal Mode
+
+### Going to Insert Mode
+- `i` - insert before cursor
+- `I` - insert at the beginning of line
+- `g{I|i}` - insert in the place of last insert
+- `a` - insert after cursor
+- `A` - insert at the end of line
+- `o` - insert new line below
+- `O` - insert new line above
+
+### Replace Mode
+- `r` - replace symbol under cursor
+- `R` - go to replace mode
+- `backspace` - undo character replace in replace-mode
+- `<C-w>` - undo word replace in replace-mode
+- `<C-u>` - undo line replace in replace-mode
+
+### Copy & Paste
+
+- `:reg` - show all registers content
+- `:reg {arg}` - show specific register content
+
+- `yy` - yank line
+- `y$` - yank until the end of line
+- `gp`/ `gP` - the same as `p` / `P` but cursor position is after pasted text 
+- `]{p|P}` - the same as `P` и `p` but respecting the indent of current line
+
+- `d{motion}` - cut text
+- `d\text` - cut until 'text'
+- `dd` - cut line
+- `D` / `d$` - cut until the end of line
+- `x` - cut symbol under the cursor 
+- `X` - cut symbol before the cursor
+
+- `cc` - cut line and go to Insert mode
+- `c{motion}` - cut and go to Insert mode
+- `s` - cut symbol and go to Insert mode
+- `S` - cut line and go to Insert mode
+
+#### Registers
+
+- `"xy{motion}` - copy text to `x` register
+- `"xp` - paste text from `x` register after cursor
+- `"xP` - paste text from `x` register before cursor
+
+When we address a named register with a lowercase letter, it overwrites the specified register, whereas when we use an uppercase letter, it appends to the specified register.
+
+**Usual registers**
+- `"` - default register for yank/cut/paste
+- `0` - last yanked (`y`) text
+- `1-9` - last cut text (`d` or `c`)
+- `a-z` - use to copy/paste from them
+- `A-Z` - the same as `a-z` but **appends** to the register
+**System registers**
+- `"+` The X11 clipboard, used with cut, copy, and paste
+- `"*` The X11 primary, used with middle mouse button
+**Read-only registers**
+- `"%` - name of the current file
+- `"#` - name of the alternate file
+- `".` - last inserted text
+- `":` - last Ex command
+- `"/` - last search pattern
+
+**Useful commands**
+- `"_d{motion}` - performs a true deletion (to black-hole `_` register)
+- `"+p` - command preserves the indentation of the text in the clipboard so you can expect no surprises, regardless of how the `paste` and `autoindent` options are set.
+
+A line-wise yank or delete operation (such as `dd`, `yy`, or `dap`) creates a line-wise register, whereas a character-wise yank or delete (such as `x`, `diw`, or `das`) creates a character-wise register.
+
+When we use the system paste command in Insert mode, Vim acts as though each character has been typed by hand. When the `autoindent` option is enabled, Vim preserves the same level of indentation each time we create a new line. When the `paste` option is enabled, Vim turns off all Insert mode mappings and abbreviations and resets a host of options, including `autoindent`. That allows us to safely paste from the system clipboard with no surprises.
+
+### Editing
+**Case**
+- `~` - change case for symbol
+- `gu{motion}` - change case to lower
+- `gU{motion}` - change case to upper
+- `g~{motion}` - change case
+
+**Formatting**
+- `=` - format code
+- `>>` - shift right
+- `<<` - shift left
+- `J` - join lines
+- `gJ` - join lines without spaces
+
+**Numbers**
+- `<C-a>` - find a number on line, jumps to it and increase value
+- `<C-x>` - find a number on line, jumps to it and decrease value
+
+**Undo/redo**
+- `u` - undo change
+- `U` - undo all changes on line
+- `Ctrl + r` - redo change
+- `.` - repeat comand
+
+**Surrounding (vim-surround)**
+- `ds"` - remove surrounding
+- `cs"'` - change surrounding
+- `ys{motion}"` - add surrounding
+
+### Moving cursor
+
+- `h` / `j` / `k` / `l` - move cursor right/down/up/left
+- `g{j|k}` - move cursor by display (not logical) line
+
+A word consists of a sequence of letters, digits, and underscores, or as a sequence of other nonblank characters separated with whitespace. The definition of a WORD is simpler: it consists of a sequence of nonblank characters separated with whitespace.
+
+- `w` / `b` - move cursor forward/backward at the beginning of the word
+- `e` / `ge` - move cursor forward/backward at the end of the WORD
+- `W` / `B` - move cursor forward/backward at the beginning of the WORD
+- `E` / `gE` - move cursor forward/backward at the end of the WORD
+
+- `0` / `$` - move at the beginning/end of line
+- `^` / `g_`- move at the beginning/end of line on first non-blank character
+- `g{0|^|$}` - the same as above but on display line
+- `gg` / `G` - move the first/last line of the buffer
+
+- `fx` / `Fx` - move cursor forward/backward to 'x' symbol
+- `tx` / `Tx` - move cursor forward/backward to symbol before 'x' symbol
+- `;` / `,` - repeat last search (`f/t/F/T`) forward/backward
+
+- `-` / `+` - [count] lines up/down on first non-black character
+
+- `(` / `)` - move by sentence forward/backward
+- `{` / `}` - move by paragraph (function in coding) forward/backward
+- `[[` / `]]` - move by section (or to next/previous `{`) forward/backward
+- `[]` / `][` - move by section (or to next/previous `}`) forward/backward
+
+- `[*` / `[/` - beginning of C-style comment `\*`
+- `]*` / `]/` - end of C-style comment `\*`
+
+## Moving screen
+
+- `<C-f>` / `<C-b>` - move by one screen forward/back
+- `<C-d>` / `<C-u>` - move by half screen forward/back
+
+- `zz` - change screen position to 'cursor in the center'
+- `zt` - change screen position to 'cursor in the top'
+- `zb` - change screen position to 'cursor in the bottom'
+
+## Visual Mode
+
+- `v` - character-wise selection
+- `V` - line-wise selectiob
+- `<C-v>` - block-wise selection
+
+- `o` / `O` - go to other start/end of highlighted text
+- `>` - shift indent to right
+- `<` - shift indent to left
+- `y` - copy selected text
+- `s` - delete select text and go to Insert mode
+- `p` - replace selected text with text from buffer
+- `d` / `x` - delete selected text character-wise
+- `D` / `X` - delete selected text line-wise
+- `~` - change register for selected text
+- `*` / `#` - extends selection in visual mode rather then doing search
+
+- `gR` / `gr` - virtual replace mode
+- In Virtual Replace, we overwrite characters of screen real estate rather than dealing with the actual characters that would eventually be saved in a file. 
+
+- `gv`- reselect the last visual selection
+
+## Commands
+
+- `:3` - move our cursor to the specified line.
+- `:.` - represents the current line
+- `:1` - represents the last first of file
+- `:$` - represents the last line of file
+- `:3p` - join the line number and command - print 3rd line.
+- `:2,5p` - operate on range of lines, inclusive
+- `:%`- execute command for all the lines in the file.
+- `:'m` - line containing mark `m`
+- `:'<,'>` - execute command for visually selected block
+- `:/<html>/,/<\/<html>/p` - pattern as an address for command
+- `:{address}+n` - offset for address
+
+- `@:` - execute the last command
+- `:[range] t {address}` - copy lines to address
+- `:[range] m {address}` - move lines to address
+- `:[range] norm {commands}` - execute normal commans on lines; before executing the specified Normal mode command on each line, Vim moves the cursor to the beginning of the line
+
+- `<C-d>` - in command-line reveals a list of possible completions. 
+- `<Tab>` / `<S-Tab>` - scroll forward/backward through the suggestions in comand-line
+- `wildmode` - option to tweak command autocompletion behaviour
+
+- `<C-r><C-w>` - copies the word under the cursor and inserts it at the command-line prompt
+
+Some Insert-mode commands are shared between Command-Line mode (e.g. `<C-w>`, `<C-u>`, `<C-r>{reg}`). 
+
+- `history` - option to store more commands in history
+- `q:` - open command-line window with Ex commands history
+- `q/` - open command-line window with Ex commands history
+
+- `<C-f>` - swich from command-line mode to command-line window
+Command-line window allows to change historical commands using the full modal editing power of Vim (normal mode/insert mode/visual mode/running Ex commands)
+
+- `<CR>` - in the command-line window in the context of the active window: that is, the window that was active before the command-line window was summoned
+
+- `:!{cmd}` - run shell commands
+- `:shell` - start an interactive shell session
+- `:[range]!{filter}` - the lines specified by [range] are passed as standard input for the {cmd}, and then the output from {cmd} overwrites the original contents of [range]; the [range] is filtered through the specified {cmd}.
+- `!{motion}` - drops into Command-Line mode and prepopulates the [range] with the lines covered by the specified {motion}
+
+## Buffers and windows
+
+Files are stored on the disk, whereas buffers exist in memory. When we open a file in Vim, its contents are read into a buffer, which takes the same name as the file. Initially, the contents of the buffer will be identical to those of the file, but the two will diverge as we make changes to the buffer. 
+
+`:e filename` - create file or open file for editing
+`:w` - save file
+`:w!` - save even if read-only
+`:wq` - save and close buffer
+`:q` - class buffer safely (if unsaved then error)
+`:q!` - close buffer unsafely
+`:qa` - close all buffers safely
+`:x` - saves the file, but only if it has been changed
+
+`hidden` - option to automatially hide buffers so we can navigate safely without saving them until closing editing session
+
+`:ls` - gives us a listing of all the buffers that have been loaded into memory
+- `%` - symbol indicates which of the buffers is visible in the current window
+- `#` - symbol represents the alternate file
+- `+` - symbol indicates that buffer has been modified.
+`<C-^>` - toggle between the current and alternate files
+
+`:bnext` / `:bprev` - go to next/previous buffer
+`:buffer {filename}` - open specific buffer
+`:bufdo` - execute Ex command in all buffers
+
+`:args` - list of files in argument list which can be changed, list can be populated by glob or by output of shell commands
+`:next` / `:prev` - go to next/previous file in argument list
+`:argodo` - execute Ex command in all argument list
+
+**Wildcards**
+`*` - match zero or more characters, but only in the scope of the specified directory
+`**` - matches zero or more characters, but it can recurse downward into directories below the specified directory 
+
+`<C-w>s` - divide window horizontally, producing two windows of equal height
+`:sp filename` - open file in horizontal split
+`<C-w>v` - split window vertically, producing two windows of equal width.  
+`:vsp filename` - open file in vertical split
+`<C-w>w` - cycle between open windows
+`<C-w>h` - focus the window to the left
+`<C-w>j` - focus the window below
+`<C-w>k` - focus the window above
+`<C-w>l` - focus the window to the right
+`:clo[se]` / `<C-w>c` - close the active window
+`:on[ly]` / `<C-w>o` - keep only the active window, closing all others
+
+`<C-w>=` - equalize width and height of all windows
+`<C-w>_` - maximize height of the active window
+`<C-w>|` - maximize width of the active window
+`[N]<C-w>_` - set active window height to [N] rows
+`[N]<C-w>|` - set active window width to [N] columns
+
+## Tabs
+
+Tab page as a container that can hold a collection of windows.
+
+`:lcd {path}` - applies locally to the current window, not to the current tab page
+
+`:tabnew {filname}` / `:tabe[dit] {filename}` - open {filename} in a new tab
+`<C-w>T` - move the current window into its own tab
+`:tabc[lose]` - close the current tab page and all of its windows
+`:tabo[nly]` - keep the active tab page, closing all others
+
+`:tabn[ext] {N}` / `{N}gt` - switch to tab page number {N}
+`:tabn[ext]` / `gt` - switch to the next tab page
+`:tabp[revious]` / `gT` - switch to the previous tab page
+
+`:tabmove [N]` - rearrange tab pages; when [N] is 0, the current tab page is moved to the beginning, and if we omit [N], the current tab page is moved to the end
+
+`%` - symbol is a shorthand for the filepath of the active buffer
+`:h` - modifier removes the filename while preserving the rest of the path
+`<C-g>` - echoes the name and status of the current file
+
+## Text objects
+
+Vim’s text objects consist of two characters, the first of which is always either `i` or `a`. Text objects are not motions themselves, but we can use text objects in Visual mode and in Operator-Pending mode.
+
+`i` - select inside the delimiters (inside)
+`a` - select everything including the delimiters (around/all)
+
+`a)` / `ab` - a pair of (parentheses) 
+`i)` / `ib` - inside of (parentheses)
+`a}` / `aB` - a pair of {braces} 
+`i}` / `iB` - inside of {braces}
+`a]` - a pair of [brackets] 
+`i]` - inside of [brackets]
+`a>` - a pair of <angle brackets> 
+`i>` - inside of <angle brackets>
+`a’` - a pair of 'single quotes' 
+`i’` - inside of 'single quotes'
+`a"` - a pair of "double quotes" 
+`i"` - inside of "double quotes"
+`` a` `` - a pair of \`backticks\` 
+`` i` `` - inside of \`backticks\`
+`at` - a pair of <xml>tags</xml> 
+`it` - inside of <xml>tags</xml>
+
+`iw` - word aw word plus space(s)
+`iW` - WORD aW WORD plus space(s)
+`is` - sentence as sentence plus space(s)
+`ip` - paragraph ap paragraph plus blank line(s)
+
+## Marks and Jumps
+
+Any command that changes the active file for the current window can be described as a jump. In the jump list, Vim records the cursor location before and after running such a command. Each separate window has its own jump list. 
+`:jumps` - list of jumps
+`:marks` - list of marks
+`:delmarks` - delete all marks
+
+`m{a-z}` - create mark in current buffer
+`m{A-Z}` - create global mark (accessible for all buffers)
+`’{mark}` - moves to the line where a mark was set, positioning the cursor on the first non-whitespace character
+`` `{mark} `` - moves the cursor to the exact position where a mark was set
+`<C-o>` / `<C-i>` - jump to previous/next place in jumplist
+
+`gt` - go to definition
+`gf` - go to file
+`gh` - see definition
+`gx` - go to link
+
+`suffixesadd` - option allows us to specify one or more file extensions, which Vim will attempt to use when looking up a filename with the `gf` command
+`path` - option to specify a comma-separated list of directories for `gf` to look into
+
+`` ` `` - position before the last jump within current file
+`` `. `` - location of last change
+`` `^ `` - location of last insertion
+`` `[ `` / `` `] `` - start/end of last change or yank
+`` `< `` / `` `> `` - start/end of last visual selection
+
+`:changes` - change list we make to each buffer during the course of an editing session
+`g;` / `g,` - traverse forward/backward through change list
+`gi` - return to last insertion (using `` `^ `` mark)
+
+## Macros
+
+`q{register}` - start macro redoring
+`q` - stop recording
+`@{register}` - executes the contents of the specified register 
+`@@` - repeats the macro that was invoked most recently
+`qq;.q` - search and repeat macro
+
+Vim always executes macros sequentially, no matter which of these two techniques we use. If a motion fails while a macro is executing, then Vim aborts the rest of the macro - no matter how many times we execute this macro.  
+`:normal @a` - execute the macro once for each line in the selection. Each invocation of the macro is independent from the others - so in parallel.
+
+`:argdo normal @a` - executes the macro in all of the buffers in the argument list, including the first one. When we reach the last buffer in the argument list, the :next command fails and the macro aborts.
+
+The registers that we use for recording macros are the very same with which the yank and put operations interact. So if we want to make changes to the macro saved in register a, we simply have to paste it into the document, where we can edit it as plain text.
+
+## Search
+
+`#` - поиск слова под курсором (вверх)
+`*` - поиск слова под курсором (вниз)
+`g{*|#}` - поиск слова под курсором, но необязательно всего слова целиком
+
+`/text` - find 'text' forwards; regexp can be used
+`?text` - find 'text' backwards; regexp can be used
+`/text/offset/` - find 'text' using offset
+`/<CR>` - repeat last search
+`:noh` - disable highlight
+`<C-g>` / `<C-t>` - move forward/backward in search preview
+`/lang/e` - places the cursor at the end of the search match
+`//` - reuse the pattern from the previous search
+
+`n` - go next match
+`N` - go to previous match
+`g{n|N}` 
+- If you are on top of a search match, it selects the match in _Visual mode_.
+- If you are in _Visual mode_, it extends your current selection until the end of the next match.
+- If you are in _Operator-pending mode_, **it operates on the next match**.
+
+If search hit BOTTOM, it will continue at TOP - so sometimes a forward search can take backward.
+`wrapscan` - enables/disables search from the current cursor position to the end of the document without wrapping around
+
+`ignorecase` - option to enable case insensitive search
+`smartcase` - option to cancel out the `ignorecase` setting any time that we include an uppercase character in our search pattern. In other words, if our pattern is all lowercase, then the search will be case insensitive. But as soon as we include an uppercase letter, the search becomes case sensitive.  
+`\c` - causes the search pattern to ignore case
+`\C` - forces case sensitivity
+The value of `ignorecase` is overridden for that search.
+
+### RegExp and special symbols
+
+Square brackets `[` and `]` - have a special meaning by default, so don’t need to escape them
+
+Parentheses `(` and `)` and curly braces `{` and `}` - represents characters literally, so have to escape them to make them take on a special meaning. We have to escape only the opening member of the pair.
+
+`\v` - enables very magic search, where all characters assume a special meaning, with the exception of ` _ `, uppercase and lowercase letters, and the digits 0 through 9
+`\V` - only the backslash has a special meaning
+If you want to search for a regular expression, use the `\v` pattern switch, and if you want to search for verbatim text, use the `\V` literal switch
+
+`\x` - the same as `[0-9a-fA-F]`
+
+If pattern contained more than one set of parentheses, then we could reference the submatch for each pair of `()` by using `\1`, `\2`, and so on, up to `\9`. The `\0` item always refers to the entire match, whether or not parentheses were used in the pattern.
+
+`/\v%(And|D)rew Neil` - `%` in front of the parentheses: don't put `\num` register by prepending
+`/\v<brack>` - match a whole word rather than a fragment
+
+Use the `\zs` and `\ze` items to crop the match, making it a subset of the entire pattern. The `\zs` item marks the start of a match, while the `\ze` item matches the end of a match. Together, they allow us to specify a pattern that entirely matches a range of characters and then zoom in on a subset of the match.
+`/Practical Vim` - any occurrences of 'Practical Vim' in our document would light up
+`/Practical \zsVim` - only the word 'Vim' would be highlighted. The word 'Practical' would be excluded from the match, even though it is still part of the pattern.
+
+## Substitute
+
+`:%s///gn`
+
+**Flags:**
+- `g` - makes the substitute command act globally, causing it to change all matches within a line rather than just changing the first one. 
+- `c` - gives us the opportunity to confirm or reject each change
+- `n` - suppresses the usual substitute behavior, causing the command to report the number of occurrences that would be affected if we ran the substitute command 
+- `e` - silence errors (e.g 'Pattern not found')
+- `&` - simply reuses the same flags from the previous substitute command
+- `i` - ignore case for the pattern.  
+- `I` - don't ignore case for the pattern.  
+- `p` - print the line containing the last substitute. 
+
+**Special Symbols:**
+- `\r` - insert a carriage return
+- `\t` - insert a tab character
+- `\\` - insert a single backslash
+- `\1` - insert the first submatch
+- `\2` - insert the second submatch (and so on, up to \9 )
+- `\0` - insert the entire matched pattern
+- `&` - insert the entire matched pattern
+- `~` - use {string} from the previous invocation of :substitute
+- `\={Vim script}` - evaluate {Vim script} expression; use result as replacement {string}
+
+By default, the substitute command only acts upon the first match on the current line.
+
+**Substitute dialog actions:**
+- `y` - substitute this match
+- `n` - skip this match
+- `q` - quit substituting
+- `l` - last—Substitute this match, then quit
+- `a` - all—Substitute this and any remaining matches
+- `<C-e>` - scroll the screen up
+- `<C-y>` - scroll the screen down
+
+Most buttons on the keyboard do nothing in Vim’s Substitute-Confirmation mode apart from `<Esc>`.
+
+`:%s//<C-r>{register}/g` - inserts contents of register, useful for multi-line searches
+
+`g&` - is equivalent to running the following: `:%s//~/&`, basically repeat then substitute globally on file
+`:&&` - the first and second `&` symbols have different meanings. The first one forms the `:&` Ex command, which repeats the last `:s` command, while the second one indicates that the flags from the previous `:s` command should be reuse
+
+`&` - repeats the last substitution. Unfortunately, if any flags were used, the & command disregards them. These mappings fix the `&` command in Normal mode and create a Visual mode equivalent:
+```
+nnoremap & :&&<CR>
+xnoremap & :&&<CR>
+```
+
+## Global Command
+
+``:vimgrep // **/*.txt`` - use the last search pattern and look inside all files contained in the current directory that use the .txt extension (``**/*.txt``). Each match returned by vimgrep is recorded in the quickfix list. 
+`:cfdo %s//Practical/g` - execute substitution command across all the files in the quickfix list
+
+`:[range] [v]global[!] /{pattern}/ [cmd]` - allows us to run an Ex command on each line that matches a particular pattern. The {pattern} field integrates with search history. 
+- `!` or `vglobal` executes [cmd] on each line that doesn’t match the specified pattern
+- `:global` works by making two passes through the lines specified by [range]. In the first pass, Vim marks each line that matches the specified {pattern}. Then on the second pass, the [cmd] is executed for each marked line.  
+- `:print` is the default [cmd] for the `:global` command
+
+`:g/{start}/ .,{finish} [cmd]` - for each range of lines beginning with {start} and ending with {finish}, run the specified [cmd]
+
+## Ctags
+
+Vim’s ctags support allows us to navigate around a codebase by quickly jumping to definitions of functions and classes. 
+`tags` - option specifies where Vim should look to find a tags file
+
+`<C-]>` - jump to the first tag that matches the word under the cursor
+`g<C-]>` - prompt user to select from multiple matches for the word under the cursor. If only one match exists, jump to it without prompting.
+`:tag {keyword}` - jump to the first tag that matches {keyword}
+`:tag /{pattern}` - jump to the first tag that matches {pattern} (with regexp)
+`:tjump {keyword}` - prompt user to select from multiple matches for {keyword}. If only one match exists, jump to it without prompting.
+`:tjump /{pattern}` - prompt user to select from multiple matches for {pattern} (with regexp). If only one match exists, jump to it without prompting.
+`:pop` / `<C-t>` - reverse through tag history
+`:tag` - advance through tag history
+`:tnext` / `:tprev` - jump to next/previous matching tag
+`:tfirst` / `:tlast` - jump to first/last matching tag
+`:tselect` - prompt user to choose an item from the tag match list
+
+## Quickfix List
+
+Vim’s quickfix list allows to integrate external tools into workflow. It maintains a sequence of annotated addresses comprising the filename, line number, column number (optional), and a message. Traditionally, these addresses would be a list of error messages generated by a compiler, but they could just as well be warnings from a syntax checker, linter, or any other tool that emits such output.
+
+`:cnext` - jump to next item
+`:cprev` - jump to previous item
+`:cfirst` - jump to first item
+`:clast` - jump to last item
+`:cnfile` - jump to first item in next file
+`:cpfile` - jump to last item in previous file
+`:cc n` - jump to nth item
+`:copen` - open the quickfix window
+`:cclose` - close the quickfix window
+`:cdo {cmd}` - execute {cmd} on each line listed in the quickfix list
+`:cfdo {cmd}` - execute {cmd} once for each file listed in the quickfix list
+`:colder` - recall an older version of the quickfix list (Vim holds onto the last ten lists)
+
+For every command that populates the quickfix list, there’s a variant that places the results in a location list instead. While `:make`, `:grep`, and `:vimgrep` use the quickfix list, `:lmake`, `:lgrep`, and `:lvimgrep` use the location list. At any given moment, there can be only one quickfix list, but we can create as many location lists as we want.
+
+## Make
+
+`:make` - can execute any compilers available on your machine.
+`makeprg` - option allows to specify the program that will be called when we run `:make`
+`errorformat` - option us to teach Vim how to parse the output generated by running `:make`
+
+## Vimgrep
+
+Vim’s `:grep` command is a wrapper for the external grep program. Behind the scenes, Vim executes `grep -n Waldo * ` in the shell for us. It parses the results and builds a quickfix list from them.
+
+`grepprg` - option specifies what to run in the shell when Vim’s `:grep` command is executed
+`grepformat` - tells Vim how to parse the output returned by the `:grep` command
+
+`vim[grep][!] /{pattern}/[g][j] {file} ...`
+	- g - flag will match all occurrences of the specified pattern, not just the first match on each line
+
+As well as being able to use ``*`` and ``**`` wildcards, we can use the `##` symbol, which is expanded to represent the names of each file in the argument list.
+`:vim /going/g ##` - run `:vimgrep` across each of the files in the argument list: `:args *.txt`
+The pattern field can be empty, which tells `:vimgrep` to use the current search pattern.
+
+## Autocompletion
+
+Vim’s autocomplete functionality is triggered from Insert mode. When invoked, Vim builds a word list from the contents of each buffer in the current editing session and then examines the characters to the left of the cursor, looking for a partial word.
+
+`<C-n>` - generic keywords
+`<C-x><C-n>` - current buffer keywords
+`<C-x><C-i>` - included (from `#include`, `import` etc.) file keywords
+`<C-x><C-]>` - Tags file (from ctags) keywords
+`<C-x><C-k>` - dictionary lookup
+`<C-x><C-l>` - whole line completion
+`<C-x><C-f>` - filename completion
+`<C-x><C-o>` - omni-completion provides a list of suggestions that’s tailored for the context of the cursor position
+
+`<C-n>` - use the next match from the word list (next match)
+`<C-p>` - use the previous match from the word list (previous match)
+`<Down>` - select the next match from the word list
+`<Up>` - select the previous match from the word list
+`<C-y>` - accept the currently selected match (yes)
+`<C-e>` - revert to the originally typed text (exit from autocompletion)
+`<C-h>` / `<BS>` - delete one character from current match
+`<C-l>` - add one character from current match
+`{char}` - stop completion and insert {char}
+
+`<C-n><C-p>` - first command invokes autocomplete, summons the pop-up menu, and selects the first item in the word list; second command selects the previous item in the word list, taking us back to where we started but without dismissing the pop-up menu. Now we can continue to type, and Vim will filter the word list in real time.
+
+`ignorecase` - when option is enabled, autocompletion also becomes case insensitive
+`complete` - option holds a comma-separated list of one-letter flags, whose presence enables scanning of a particular place. The default setting is `complete=.,w,b,u,t,i`.
+`:set complete-=i` - disable scanning of included files
+`:set complete+=k` - enable completion of words in the spelling dictionary 
+
+## Spell Checker
+
+`:set spell` - enable spell checker
+`dictionary` - option to specify one or more files containing word lists
+`spellfile` - specify the path of the file where Vim tracks words added or removed using the `zg` and `zw` commands
+`spelllang` - change language that's used for spell check (default = English)
+
+`]s` - jump to next spelling error
+`[s` - jump to previous spelling error
+`z=` - suggest corrections for current word
+`zg` / `zw` - add/remove current word to spell file
+`{n}zg` / `{n}zw` - add/remove current word to specific spell file (priority set by order in `spellfile` option)
+`zug` - revert `zg` or `zw` command for current word
+`<C-x><C-s>`- trigger spell checker autocompletion in Insert mode
