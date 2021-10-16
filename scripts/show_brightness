@@ -1,0 +1,42 @@
+#!/bin/bash 
+
+function display_level {
+	val="$1"
+	if ((0<=$val && $val<=19))
+	then
+		echo " $val"
+	elif ((20<=$val && $val<=39))
+	then
+		echo " $val"
+	elif ((40<=$val && $val<=59))
+	then
+		echo " $val"
+	elif ((60<=$val && $val<=79))
+	then
+		echo " $val"
+	else
+		echo " $val"
+	fi
+}
+
+function get_display_brightness {
+	case "$MONITOR" in
+		"eDP"*)
+			level=`get_brightness l`
+		;;
+
+		"HDMI"*)
+			level=`get_brightness m`
+		;;
+
+		*)
+			level="unknown"
+		;;
+	esac
+}
+
+echo "level is $level"
+
+display_level $level
+
+
