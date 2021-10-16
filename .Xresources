@@ -43,12 +43,9 @@ URxvt.background:   [75]#181818
 URxvt.keysym.Shift-Control-V: eval:paste_clipboard
 URxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
 
-URxvt.colorUL: #000000
-
 ! custom
 *.primary: prm
 *.urgent: urg
-
 
 ! special
 *.foreground:   #bcbcbc
