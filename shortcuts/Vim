@@ -598,3 +598,8 @@ Vim’s autocomplete functionality is triggered from Insert mode. When invoked, 
 `{n}zg` / `{n}zw` - add/remove current word to specific spell file (priority set by order in `spellfile` option)
 `zug` - revert `zg` or `zw` command for current word
 `<C-x><C-s>`- trigger spell checker autocompletion in Insert mode
+
+## Foldings
+`zR` - open all folds
+`zM` - close all folds
+`za` - open current closed fold
