@@ -28,7 +28,7 @@ fi
 
 ### BEGIN Custom configuration
 # Vars
-export TERMINAL="urxvt"
+export TERMINAL="kitty"
 export SHORTCUTS=$HOME/shortcuts
 export SCRIPTS=$HOME/Projects/dotfiles/scripts
 export PATH=$PATH:$SCRIPTS
