@@ -1,0 +1,3 @@
+#!/bin/bash
+
+kitty bash --rcfile ~/.bashrc -c "ranger"
