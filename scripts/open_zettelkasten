@@ -1,3 +1,3 @@
 #!/bin/bash
 
-kitty --title=Zettelkasten bash -c "cd $HOME/Zettelkasten && nvim $1"
+kitty --title=Zettelkasten bash -i -c "cd $HOME/Zettelkasten && nvim $1"
