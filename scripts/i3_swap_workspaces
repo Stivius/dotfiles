@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# requires jq
+# source: https://i3wm.org/docs/user-contributed/swapping-workspaces.html
+
+DISPLAY_CONFIG=($(i3-msg -t get_outputs | jq -r '.[]|"\(.name):\(.current_workspace)"'))
+
+for ROW in "${DISPLAY_CONFIG[@]}"
+do
+	echo "row: $ROW"
+	IFS=':'
+	read -ra CONFIG <<< "${ROW}"
+	if [ "${CONFIG[0]}" != "null" ] && [ "${CONFIG[1]}" != "null" ] && [ "${CONFIG[2]}" != "null" ]; then
+		workspace_id="${CONFIG[1]}:${CONFIG[2]}"
+		echo "moving $workspace_id right..."
+		i3-msg -- workspace --no-auto-back-and-forth "$workspace_id"
+		i3-msg -- move workspace to output right
+	fi
+done
