@@ -2,7 +2,7 @@
 
 project_id=`pomodoro_cli.py --projects | rofi -dmenu -i | awk '{print $1}'`
 if [[ ! -z "$project_id" ]]; then
-	selected_row=`{ pomodoro_cli.py --tasks $project_id; echo "New task"; } | rofi -dmenu -i`
+	selected_row=`{ echo "New task"; pomodoro_cli.py --tasks $project_id; } | rofi -dmenu -i`
 	if [[ ! -z "$selected_row" ]]; then
 		case "$selected_row" in
 			"New task")
