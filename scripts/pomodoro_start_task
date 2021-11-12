@@ -2,8 +2,17 @@
 
 project_id=`pomodoro_cli.py --projects | rofi -dmenu -i | awk '{print $1}'`
 if [[ ! -z "$project_id" ]]; then
-	task_id=`pomodoro_cli.py --tasks $project_id | rofi -dmenu -i | awk '{print $1}'`
-	if [[ ! -z "$task_id" ]]; then
+	selected_row=`{ pomodoro_cli.py --tasks $project_id; echo "New task"; } | rofi -dmenu -i`
+	if [[ ! -z "$selected_row" ]]; then
+		case "$selected_row" in
+			"New task")
+				task_name="test"
+				task_id=`pomodoro_cli.py --add-task $project_id $task_name`
+			;;
+			*)
+				task_id=`echo $selected_row | awk '{print $1}'`
+			;;
+		esac
 		pomodoro_cli.py --start-pomo $task_id
 	fi
 fi
