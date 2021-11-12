@@ -6,13 +6,18 @@ if [[ ! -z "$project_id" ]]; then
 	if [[ ! -z "$selected_row" ]]; then
 		case "$selected_row" in
 			"New task")
-				task_name="test"
-				task_id=`pomodoro_cli.py --add-task $project_id $task_name`
+				task_name=`rofi -dmenu -theme-str 'listview { enabled: false;}'`
+				if [[ ! -z "$task_name" ]]; then
+					task_id=`pomodoro_cli.py --add-task $project_id $task_name`
+				fi
 			;;
 			*)
 				task_id=`echo $selected_row | awk '{print $1}'`
 			;;
 		esac
-		pomodoro_cli.py --start-pomo $task_id
+		if [[ ! -z "$task_id" ]]; then
+			pomodoro_cli.py --start-pomo $task_id
+			dunstify "Pomodoro" "Task started"
+		fi
 	fi
 fi
