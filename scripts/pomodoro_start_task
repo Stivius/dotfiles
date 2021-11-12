@@ -1,0 +1,9 @@
+#!/bin/bash
+
+project_id=`pomodoro_cli.py --projects | rofi -dmenu -i | awk '{print $1}'`
+if [[ ! -z "$project_id" ]]; then
+	task_id=`pomodoro_cli.py --tasks $project_id | rofi -dmenu -i | awk '{print $1}'`
+	if [[ ! -z "$task_id" ]]; then
+		pomodoro_cli.py --start-pomo $task_id
+	fi
+fi
