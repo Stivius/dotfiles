@@ -16,6 +16,7 @@ parser.add_argument('--finish-task', metavar='task_id', help='add new task to pr
 parser.add_argument('--start-pomo', metavar='task_id', help='start pomodoro activity')
 parser.add_argument('--end-pomo', metavar='record_id', help='end pomodoro activity')
 parser.add_argument('--all-records', help='get all pomodoro records', action='store_true')
+parser.add_argument('--remove-record', metavar='task_id', help='remove record')
 parser.add_argument('--active-records', help='get pomodoro records in progress', action='store_true')
 
 args = parser.parse_args()
@@ -105,6 +106,10 @@ def finish_task(task_id, cursor):
     cursor.execute('''UPDATE tasks SET done=1 WHERE id={0} '''.format(task_id))
     sqlite_connection.commit()
 
+def remove_record(record_id, cursor):
+    cursor.execute('''DELETE FROM records WHERE id={0}'''.format(record_id))
+    sqlite_connection.commit()
+
 def get_records(active_only, cursor):
     if not active_only:
         cursor.execute('''SELECT * FROM records''')
@@ -155,6 +160,9 @@ try:
 
     if (args.all_records):
         get_records(False, cursor)
+
+    if (args.remove_record):
+        remove_record(args.remove_record, cursor)
 
     if (args.active_records):
         get_records(True, cursor)

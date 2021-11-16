@@ -13,6 +13,7 @@ timerRunning () { [ -e /tmp/polybar-timer/ ] ; }
 timerExpiry () { cat /tmp/polybar-timer/expiry ; }
 timerLabel () { cat /tmp/polybar-timer/label ; }
 timerAction () { cat /tmp/polybar-timer/action ; }
+recordId () { cat /tmp/polybar-timer/record-id ; }
 
 secondsLeft () { echo $(( $(timerExpiry) - $(now) )) ; }
 minutesLeft () { echo $(( ( $(secondsLeft)  + 59 ) / 60 )) ; }
