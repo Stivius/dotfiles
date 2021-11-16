@@ -2,30 +2,49 @@
 
 pushd $HOME/scripts
 
-RECORD_ID=`pomodoro_start_task`
-dunstify "Record ID is $RECORD_ID"
-
-if [[ -z "$RECORD_ID" ]]; then
-	exit
-fi
-
-
-
-#end_pomo() { pomodoro_cli --end_pomo $RECORD_ID }
+choose_task() {
+	project_id=`pomodoro_cli.py --projects | rofi -dmenu -i | awk '{print $1}'`
+	if [[ ! -z "$project_id" ]]; then
+		selected_row=`{ echo "New task"; pomodoro_cli.py --tasks $project_id; } | rofi -dmenu -i`
+		if [[ ! -z "$selected_row" ]]; then
+			case "$selected_row" in
+				"New task")
+					task_name=`rofi -dmenu -theme-str 'listview { enabled: false;}'`
+					if [[ ! -z "$task_name" ]]; then
+						task_id=`pomodoro_cli.py --add-task $project_id $task_name`
+					fi
+					;;
+				*)
+					task_id=`echo $selected_row | awk '{print $1}'`
+					;;
+			esac
+			if [[ ! -z "$task_id" ]]; then
+				record_id=`pomodoro_cli.py --start-pomo $task_id`
+				if [[ -z "$record_id" ]]; then
+					exit
+				fi
+				dunstify "Pomodoro" "Task started ($record_id)"
+			fi
+		fi
+	fi
+}
 
 ACTION="$1"
 PID="$2"
 case $ACTION in
 
 	"session" )
-		pomodoro_polybar new 25 '祥' 'notify-send "Session finished"'; pomodoro_polybar update $PID
+		choose_task
+		pomodoro_polybar new 1 '祥' 'dunstify "Session finished"; pomodoro_cli --end-current-pomo'; pomodoro_polybar update $PID
 	;;
 
 	"break" )
-		pomodoro_polybar new 5 '' 'notify-send "Break finished"' ; pomodoro_polybar update $PID
+		# support for long breaks
+		pomodoro_polybar new 5 '' 'dunstify "Break finished; pomodoro_cli --end-current-pomo"' ; pomodoro_polybar update $PID
 	;;
 
 	"cancel" )
+		# cancel current pomo
 		pomodoro_polybar cancel ; pomodoro_polybar update $PID
 	;;
 

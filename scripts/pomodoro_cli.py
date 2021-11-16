@@ -6,18 +6,23 @@ import datetime
 
 parser = argparse.ArgumentParser(description='Pomodoro actions')
 parser.add_argument('--init', help='initialize pomodro database', action='store_true')
+
 parser.add_argument('--projects', help='list of created projects', action='store_true')
 parser.add_argument('--add-project', metavar='project_name', help='add new project')
+
 parser.add_argument('--tasks', metavar='project_id', help='list of tasks in progress')
 parser.add_argument('--all-tasks', metavar='project_id', help='list of all tasks')
 parser.add_argument('--add-task', metavar=('project_id', 'task_name'), nargs=2, help='add new task to project')
-parser.add_argument('--remove-task', metavar='task_id', help='remove task')
-parser.add_argument('--finish-task', metavar='task_id', help='add new task to project')
-parser.add_argument('--start-pomo', metavar='task_id', help='start pomodoro activity')
-parser.add_argument('--end-pomo', metavar='record_id', help='end pomodoro activity')
-parser.add_argument('--all-records', help='get all pomodoro records', action='store_true')
-parser.add_argument('--remove-record', metavar='task_id', help='remove record')
-parser.add_argument('--active-records', help='get pomodoro records in progress', action='store_true')
+parser.add_argument('--remove-task', metavar='task_id')
+parser.add_argument('--finish-task', metavar='task_id')
+
+parser.add_argument('--start-pomo', metavar='task_id')
+parser.add_argument('--end-pomo', metavar='record_id')
+parser.add_argument('--end-current-pomo', action='store_true')
+parser.add_argument('--remove-pomo', metavar='record_id')
+parser.add_argument('--remove-current-pomo', action='store_true')
+parser.add_argument('--all-pomos', action='store_true')
+parser.add_argument('--active-pomos', action='store_true')
 
 args = parser.parse_args()
 
