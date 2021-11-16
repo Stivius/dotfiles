@@ -1,0 +1,41 @@
+#!/bin/bash
+
+pushd $HOME/scripts
+
+RECORD_ID=`pomodoro_start_task`
+dunstify "Record ID is $RECORD_ID"
+
+if [[ -z "$RECORD_ID" ]]; then
+	exit
+fi
+
+
+
+#end_pomo() { pomodoro_cli --end_pomo $RECORD_ID }
+
+ACTION="$1"
+PID="$2"
+case $ACTION in
+
+	"session" )
+		pomodoro_polybar new 25 '祥' 'notify-send "Session finished"'; pomodoro_polybar update $PID
+	;;
+
+	"break" )
+		pomodoro_polybar new 5 '' 'notify-send "Break finished"' ; pomodoro_polybar update $PID
+	;;
+
+	"cancel" )
+		pomodoro_polybar cancel ; pomodoro_polybar update $PID
+	;;
+
+	"increase" )
+		pomodoro_polybar increase 60 || pomodoro_polybar new 1 '祥' 'notify-send -u critical "Timer expired."' ; pomodoro_polybar update $PID
+	;;
+
+	"decrease" )
+		pomodoro_polybar increase -60 ; pomodoro_polybar update $PID
+	;;
+
+esac
+

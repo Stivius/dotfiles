@@ -16,7 +16,7 @@ if [[ ! -z "$project_id" ]]; then
 			;;
 		esac
 		if [[ ! -z "$task_id" ]]; then
-			pomodoro_cli.py --start-pomo $task_id
+			echo `pomodoro_cli.py --start-pomo $task_id`
 			dunstify "Pomodoro" "Task started"
 		fi
 	fi
