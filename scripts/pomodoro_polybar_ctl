@@ -57,12 +57,12 @@ case $ACTION in
 
 	"session" )
 		choose_task
-		pomodoro_polybar new 25 '祥' 'dunstify "Session finished"; pomodoro_cli.py --end-current-pomo'; pomodoro_polybar update $PID
+		pomodoro_polybar new 25 '祥' 'dunstify "Session finished"; pomodoro_cli.py --end-current-pomo; play $HOME/scripts/bell.wav'; pomodoro_polybar update $PID
 	;;
 
 	"break" )
 		choose_rest
-		pomodoro_polybar new $REST_TIME '' 'dunstify "Break finished; pomodoro_cli.py --end-current-pomo"' ; pomodoro_polybar update $PID
+		pomodoro_polybar new $REST_TIME '' 'dunstify "Break finished; pomodoro_cli.py --end-current-pomo; play $HOME/scripts/bell.wav"' ; pomodoro_polybar update $PID
 	;;
 
 	"cancel" )

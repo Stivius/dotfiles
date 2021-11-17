@@ -161,13 +161,12 @@ def get_pomos(active_only, cursor):
         cursor.execute('''SELECT * FROM pomos''')
     else:
         cursor.execute('''SELECT * FROM pomos WHERE end_dt IS NULL''')
-    pomos = cursor.fetchall()
+    records = cursor.fetchall()
     for record in records:
-        id, start_dt, end_dt, project_id, task_id = records
-        project_name = get_name_by_id('projects', project_id, cursor)
+        id, start_dt, end_dt, task_id = record
         task_name = get_name_by_id('tasks', task_id, cursor)
-        end_dt = end_dt if end_dt else "NotFinished"
-        print(id, start_dt, end_dt, project_name, task_name)
+        end_dt = end_dt if end_dt else "Not Finished"
+        print(id, start_dt, end_dt, task_name)
 
 try:
     sqlite_connection = sqlite3.connect('/home/stivius/scripts/pomodoro.db')
