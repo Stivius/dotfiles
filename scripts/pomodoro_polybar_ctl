@@ -62,7 +62,7 @@ case $ACTION in
 
 	"break" )
 		choose_rest
-		pomodoro_polybar new $REST_TIME '' 'dunstify "Break finished; pomodoro_cli.py --end-current-pomo; play $HOME/scripts/bell.wav"' ; pomodoro_polybar update $PID
+		pomodoro_polybar new $REST_TIME '' 'dunstify "Break finished"; pomodoro_cli.py --end-current-pomo; play $HOME/scripts/bell.wav"' ; pomodoro_polybar update $PID
 	;;
 
 	"cancel" )
