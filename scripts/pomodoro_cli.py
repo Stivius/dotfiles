@@ -47,6 +47,8 @@ def init(cursor):
     if (len(record) == 0):
         add_project("No Project", cursor)
         add_project("Rest", cursor)
+        add_task(2, "Short Break", cursor)
+        add_task(2, "Long Break", cursor)
 
 def list_projects(cursor):
     cursor.execute('''SELECT id, name FROM projects''')
@@ -138,6 +140,7 @@ def remove_pomo(pomo_id, cursor):
     if pomo_id > 0:
         cursor.execute('''DELETE FROM pomos WHERE id={0}'''.format(pomo_id))
         sqlite_connection.commit()
+        print("removed")
     else:
         print("remove_pomo: pomo_id is invalid")
 

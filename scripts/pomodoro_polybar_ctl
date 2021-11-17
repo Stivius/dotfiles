@@ -22,9 +22,16 @@ choose_task() {
 			;;
 	esac
 	check_param "$task_id"
-	record_id=`pomodoro_cli.py --start-pomo $task_id`
-	check_param "$record_id"
-	dunstify "Pomodoro" "Task started ($record_id)"
+	remove_current_pomo
+	pomodoro_cli.py --start-pomo $task_id
+	dunstify "Task started"
+}
+
+remove_current_pomo() {
+	result=`pomodoro_cli.py --remove-current-pomo`
+	if [[ "$result" = "removed" ]]; then
+		dunstify "Current task cancelled"
+	fi
 }
 
 ACTION="$1"
@@ -37,21 +44,21 @@ case $ACTION in
 	;;
 
 	"break" )
-		# support for long breaks
+		# support for long breaks and cancels
 		pomodoro_polybar new 5 '' 'dunstify "Break finished; pomodoro_cli.py --end-current-pomo"' ; pomodoro_polybar update $PID
 	;;
 
 	"cancel" )
-		# cancel current pomo
+		remove_current_pomo
 		pomodoro_polybar cancel ; pomodoro_polybar update $PID
 	;;
 
 	"increase" )
-		pomodoro_polybar increase 60 || pomodoro_polybar new 1 '祥' 'notify-send -u critical "Timer expired."' ; pomodoro_polybar update $PID
+		#pomodoro_polybar increase 60 || pomodoro_polybar new 1 '祥' 'notify-send -u critical "Timer expired."' ; pomodoro_polybar update $PID
 	;;
 
 	"decrease" )
-		pomodoro_polybar increase -60 ; pomodoro_polybar update $PID
+		#pomodoro_polybar increase -60 ; pomodoro_polybar update $PID
 	;;
 
 esac
