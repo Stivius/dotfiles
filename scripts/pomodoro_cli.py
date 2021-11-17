@@ -2,7 +2,7 @@
 
 import sqlite3
 import argparse
-import datetime
+from datetime import datetime
 
 parser = argparse.ArgumentParser(description='Pomodoro actions')
 parser.add_argument('--init', help='initialize pomodro database', action='store_true')
@@ -118,7 +118,7 @@ def remove_task(task_id, cursor):
 
 def start_pomo(task_id, cursor):
     if task_id > 0:
-        now = datetime.datetime.now().isoformat(sep=' ', timespec='seconds')
+        now = datetime.now().isoformat(sep=' ', timespec='seconds')
         cursor.execute('''INSERT INTO pomos (id, start_dt, end_dt, task_id) VALUES (NULL, '{0}', NULL, {1})'''.format(now, task_id))
         sqlite_connection.commit()
         print(get_last_id('pomos', cursor))
@@ -127,7 +127,7 @@ def start_pomo(task_id, cursor):
 
 def end_pomo(pomo_id, cursor):
     if pomo_id > 0:
-        now = datetime.datetime.now().isoformat(sep=' ', timespec='seconds')
+        now = datetime.now().isoformat(sep=' ', timespec='seconds')
         cursor.execute('''UPDATE pomos SET end_dt='{0}' WHERE id={1} AND end_dt IS NULL '''.format(now, pomo_id))
         sqlite_connection.commit()
     else:
@@ -165,8 +165,9 @@ def get_pomos(active_only, cursor):
     for record in records:
         id, start_dt, end_dt, task_id = record
         task_name = get_name_by_id('tasks', task_id, cursor)
-        end_dt = end_dt if end_dt else "Not Finished"
-        print(id, start_dt, end_dt, task_name)
+        start_dt = datetime.strptime(start_dt, '%Y-%m-%d %H:%M:%S')
+        end_dt = datetime.strptime(end_dt, '%Y-%m-%d %H:%M:%S') if end_dt else "Not Finished"
+        print(id, end_dt-start_dt, task_name)
 
 try:
     sqlite_connection = sqlite3.connect('/home/stivius/scripts/pomodoro.db')
