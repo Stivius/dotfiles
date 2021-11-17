@@ -12,6 +12,7 @@ parser.add_argument('--add-project', metavar='project_name', help='add new proje
 
 parser.add_argument('--tasks', metavar='project_id', help='list of tasks in progress', type=int)
 parser.add_argument('--all-tasks', metavar='project_id', help='list of all tasks', type=int)
+parser.add_argument('--rest', action='store_true')
 parser.add_argument('--add-task', metavar=('project_id', 'task_name'), nargs=2, help='add new task to project')
 parser.add_argument('--remove-task', metavar='task_id', type=int)
 parser.add_argument('--finish-task', metavar='task_id', type=int)
@@ -51,7 +52,7 @@ def init(cursor):
         add_task(2, "Long Break", cursor)
 
 def list_projects(cursor):
-    cursor.execute('''SELECT id, name FROM projects''')
+    cursor.execute('''SELECT id, name FROM projects WHERE id<>2''')
     record = cursor.fetchall()
     for item in record:
         id, name = item
@@ -73,6 +74,13 @@ def list_tasks(project_id, in_progress, cursor):
             id, name, done = item
             done = "In-Progress" if not done else "Done"
             print(id, name, done, sep='\t')
+
+def list_rest(cursor):
+    cursor.execute('''SELECT id, name FROM tasks WHERE project_id=2''')
+    record = cursor.fetchall()
+    for item in record:
+        id, name = item
+        print(id, name, sep='\t')
 
 def get_name_by_id(table, id, cursor):
     cursor.execute('''SELECT name FROM {0} WHERE id='{1}' '''.format(table, id))
@@ -181,6 +189,9 @@ try:
 
     if (args.all_tasks):
         list_tasks(args.all_tasks, False, cursor)
+
+    if (args.rest):
+        list_rest(cursor)
 
     if (args.add_task):
         project_id, task_name = args.add_task

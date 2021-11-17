@@ -27,6 +27,23 @@ choose_task() {
 	dunstify "Task started"
 }
 
+choose_rest() {
+	task_id=`pomodoro_cli.py --rest | rofi -dmenu -i | awk '{print $1}'`
+	check_param "$task_id"
+	remove_current_pomo
+	pomodoro_cli.py --start-pomo $task_id
+	case $task_id in
+		1)
+			dunstify "Short Break started"
+			REST_TIME=5
+		;;
+		2)
+			dunstify "Long Break started"
+			REST_TIME=15
+		;;
+	esac
+}
+
 remove_current_pomo() {
 	result=`pomodoro_cli.py --remove-current-pomo`
 	if [[ "$result" = "removed" ]]; then
@@ -40,12 +57,12 @@ case $ACTION in
 
 	"session" )
 		choose_task
-		pomodoro_polybar new 1 '祥' 'dunstify "Session finished"; pomodoro_cli.py --end-current-pomo'; pomodoro_polybar update $PID
+		pomodoro_polybar new 25 '祥' 'dunstify "Session finished"; pomodoro_cli.py --end-current-pomo'; pomodoro_polybar update $PID
 	;;
 
 	"break" )
-		# support for long breaks and cancels
-		pomodoro_polybar new 5 '' 'dunstify "Break finished; pomodoro_cli.py --end-current-pomo"' ; pomodoro_polybar update $PID
+		choose_rest
+		pomodoro_polybar new $REST_TIME '' 'dunstify "Break finished; pomodoro_cli.py --end-current-pomo"' ; pomodoro_polybar update $PID
 	;;
 
 	"cancel" )
