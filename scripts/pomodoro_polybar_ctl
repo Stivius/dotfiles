@@ -1,7 +1,5 @@
 #!/bin/bash
 
-pushd $HOME/scripts
-
 check_param() {
 	if [[ -z "$1" ]]; then
 		exit
@@ -35,12 +33,12 @@ case $ACTION in
 
 	"session" )
 		choose_task
-		pomodoro_polybar new 1 '祥' 'dunstify "Session finished"; pomodoro_cli --end-current-pomo'; pomodoro_polybar update $PID
+		pomodoro_polybar new 1 '祥' 'dunstify "Session finished"; pomodoro_cli.py --end-current-pomo'; pomodoro_polybar update $PID
 	;;
 
 	"break" )
 		# support for long breaks
-		pomodoro_polybar new 5 '' 'dunstify "Break finished; pomodoro_cli --end-current-pomo"' ; pomodoro_polybar update $PID
+		pomodoro_polybar new 5 '' 'dunstify "Break finished; pomodoro_cli.py --end-current-pomo"' ; pomodoro_polybar update $PID
 	;;
 
 	"cancel" )
