@@ -17,9 +17,9 @@ parser.add_argument('--remove-task', metavar='task_id')
 parser.add_argument('--finish-task', metavar='task_id')
 
 parser.add_argument('--start-pomo', metavar='task_id')
-parser.add_argument('--end-pomo', metavar='record_id')
+parser.add_argument('--end-pomo', metavar='pomo_id')
 parser.add_argument('--end-current-pomo', action='store_true')
-parser.add_argument('--remove-pomo', metavar='record_id')
+parser.add_argument('--remove-pomo', metavar='pomo_id')
 parser.add_argument('--remove-current-pomo', action='store_true')
 parser.add_argument('--all-pomos', action='store_true')
 parser.add_argument('--active-pomos', action='store_true')
@@ -36,7 +36,7 @@ def init(cursor):
             done INTEGER NOT NULL,
             project_id INTEGER NOT NULL,
             FOREIGN KEY (project_id) REFERENCES projects(id))''')
-    cursor.execute('''CREATE TABLE IF NOT EXISTS records(
+    cursor.execute('''CREATE TABLE IF NOT EXISTS pomos(
             id INTEGER PRIMARY KEY,
             start_dt DATETIME,
             end_dt DATETIME,
@@ -97,32 +97,40 @@ def remove_task(task_id, cursor):
 
 def start_pomo(task_id, cursor):
     now = datetime.datetime.now()
-    cursor.execute('''INSERT INTO records (id, start_dt, end_dt, task_id) VALUES (NULL, '{0}', NULL, {1})'''.format(now, task_id))
+    cursor.execute('''INSERT INTO pomos (id, start_dt, end_dt, task_id) VALUES (NULL, '{0}', NULL, {1})'''.format(now, task_id))
     sqlite_connection.commit()
-    print(get_last_id('records', cursor))
+    print(get_last_id('pomos', cursor))
 
-def end_pomo(record_id, cursor):
+def end_pomo(pomo_id, cursor):
     now = datetime.datetime.now()
-    cursor.execute('''UPDATE records SET end_dt='{0}' WHERE id={1} AND end_dt IS NULL '''.format(now, record_id))
+    cursor.execute('''UPDATE pomos SET end_dt='{0}' WHERE id={1} AND end_dt IS NULL '''.format(now, pomo_id))
     sqlite_connection.commit()
+
+def end_current_pomo(pomo_id, cursor):
+    current_pomo_id = get_last_id('pomos', cursor)
+    end_pomo(current_pomo_id, cursor)
 
 def finish_task(task_id, cursor):
     now = datetime.datetime.now()
     cursor.execute('''UPDATE tasks SET done=1 WHERE id={0} '''.format(task_id))
     sqlite_connection.commit()
 
-def remove_record(record_id, cursor):
-    cursor.execute('''DELETE FROM records WHERE id={0}'''.format(record_id))
+def remove_pomo(pomo_id, cursor):
+    cursor.execute('''DELETE FROM pomos WHERE id={0}'''.format(pomo_id))
     sqlite_connection.commit()
 
-def get_records(active_only, cursor):
+def remove_current_pomo(cursor):
+    current_pomo_id = get_last_id('pomos', cursor)
+    remove_pomo(current_pomo_id, cursor)
+
+def get_pomos(active_only, cursor):
     if not active_only:
-        cursor.execute('''SELECT * FROM records''')
+        cursor.execute('''SELECT * FROM pomos''')
     else:
-        cursor.execute('''SELECT * FROM records WHERE end_dt is NULL''')
-    records = cursor.fetchall()
+        cursor.execute('''SELECT * FROM pomos WHERE end_dt is NULL''')
+    pomos = cursor.fetchall()
     for record in records:
-        id, start_dt, end_dt, project_id, task_id = record
+        id, start_dt, end_dt, project_id, task_id = records
         project_name = get_name_by_id('projects', project_id, cursor)
         task_name = get_name_by_id('tasks', task_id, cursor)
         end_dt = end_dt if end_dt else "NotFinished"
@@ -135,12 +143,14 @@ try:
     if (args.init):
         init(cursor)
 
+    # Projects
     if (args.projects):
         list_projects(cursor)
 
     if (args.add_project):
         add_project(args.add_project, cursor)
 
+    # Tasks
     if (args.tasks):
         list_tasks(args.tasks, True, cursor)
 
@@ -157,20 +167,28 @@ try:
     if (args.finish_task):
         finish_task(args.finish_task, cursor)
 
+    # Pomos
     if (args.start_pomo):
         start_pomo(args.start_pomo, cursor)
 
     if (args.end_pomo):
         end_pomo(args.end_pomo, cursor)
 
-    if (args.all_records):
-        get_records(False, cursor)
+    if (args.end_current_pomo):
+        end_current_pomo(cursor)
 
-    if (args.remove_record):
-        remove_record(args.remove_record, cursor)
+    if (args.remove_pomo):
+        remove_pomo(args.remove_pomo, cursor)
 
-    if (args.active_records):
-        get_records(True, cursor)
+    if (args.remove_current_pomo):
+        remove_current_pomo(cursor)
+
+    if (args.all_pomos):
+        get_pomos(False, cursor)
+
+    if (args.active_pomos):
+        get_pomos(True, cursor)
+
 
     cursor.close()
 
