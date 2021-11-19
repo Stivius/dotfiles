@@ -55,6 +55,8 @@ def init(cursor):
         add_task(2, "Short Break", cursor)
         add_task(2, "Long Break", cursor)
 
+# Common
+
 def remove(table, id, cursor):
     if id > 0:
         cursor.execute('''DELETE FROM {0} WHERE id={1}'''.format(table, id))
@@ -69,6 +71,22 @@ def rename(table, id, name, cursor):
     else:
         print("rename: id is invalid")
 
+def get_name_by_id(table, id, cursor):
+    cursor.execute('''SELECT name FROM {0} WHERE id='{1}' '''.format(table, id))
+    record = cursor.fetchall()
+    if (len(record) != 0):
+        return record[0][0]
+    return -1
+
+def get_last_id(table, cursor):
+    cursor.execute('''SELECT max(id) FROM {0} '''.format(table))
+    record = cursor.fetchall()
+    if (len(record) != 0):
+        return record[0][0]
+    return -1
+
+# Projects
+
 def list_projects(cursor):
     cursor.execute('''SELECT id, name FROM projects WHERE id<>2''')
     record = cursor.fetchall()
@@ -77,9 +95,21 @@ def list_projects(cursor):
         print(id, name, sep='\t')
 
 def add_project(name, cursor):
-    cursor.execute('''INSERT INTO projects (id, name, archived) VALUES (NULL, '%s', 0)''' % name)
+    cursor.execute('''INSERT INTO projects (id, name, archived) VALUES (NULL, '{0}', 0)'''.format(name))
     sqlite_connection.commit()
     print(get_last_id('projects', cursor))
+
+def archive_project(id, cursor):
+    cursor.execute('''UPDATE projects SET archived=1 WHERE id={0} '''.format(id))
+    sqlite_connection.commit()
+
+def remove_project(id, cursor):
+    remove('projects', id, cursor)
+
+def rename_project(id, name, cursor):
+    rename('projects', id, name, cursor)
+
+# Tasks
 
 def list_tasks(project_id, in_progress, cursor):
     if (project_id):
@@ -100,20 +130,6 @@ def list_rest(cursor):
         id, name = item
         print(id, name, sep='\t')
 
-def get_name_by_id(table, id, cursor):
-    cursor.execute('''SELECT name FROM {0} WHERE id='{1}' '''.format(table, id))
-    record = cursor.fetchall()
-    if (len(record) != 0):
-        return record[0][0]
-    return -1
-
-def get_last_id(table, cursor):
-    cursor.execute('''SELECT max(id) FROM {0} '''.format(table))
-    record = cursor.fetchall()
-    if (len(record) != 0):
-        return record[0][0]
-    return -1
-
 def get_last_active_pomo(cursor):
     cursor.execute('''SELECT max(id) FROM pomos WHERE end_dt IS NULL''')
     record = cursor.fetchall()
@@ -128,11 +144,9 @@ def add_task(project_id, task_name, cursor):
     print(get_last_id('tasks', cursor))
 
 def remove_task(task_id, cursor):
-    if task_id > 0:
-        cursor.execute('''DELETE FROM tasks WHERE id={0}'''.format(task_id))
-        sqlite_connection.commit()
-    else:
-        print("remove_task: task_id is invalid")
+    remove('tasks', task_id, cursor)
+
+# Pomos
 
 def start_pomo(task_id, cursor):
     if task_id > 0:
