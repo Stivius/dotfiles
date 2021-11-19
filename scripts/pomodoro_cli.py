@@ -8,15 +8,17 @@ parser = argparse.ArgumentParser(description='Pomodoro actions')
 parser.add_argument('--init', help='initialize pomodro database', action='store_true')
 
 parser.add_argument('--projects', help='list of created projects', action='store_true')
+parser.add_argument('--all-projects', help='list of created projects', action='store_true')
 parser.add_argument('--add-project', metavar='project_name', help='add new project')
-parser.add_argument('--archive-project', metavar='project_id')
-parser.add_argument('--rename-project', metavar='project_id')
-parser.add_argument('--remove-project', metavar='project_id')
+parser.add_argument('--archive-project', metavar='project_id', type=int)
+parser.add_argument('--rename-project', metavar=('project_id', 'project_name'), nargs=2)
+parser.add_argument('--remove-project', metavar='project_id', type=int)
 
 parser.add_argument('--tasks', metavar='project_id', help='list of tasks in progress', type=int)
 parser.add_argument('--all-tasks', metavar='project_id', help='list of all tasks', type=int)
 parser.add_argument('--rest', action='store_true')
 parser.add_argument('--add-task', metavar=('project_id', 'task_name'), nargs=2, help='add new task to project')
+parser.add_argument('--rename-task', metavar=('task_id', 'task_name'), nargs=2)
 parser.add_argument('--remove-task', metavar='task_id', type=int)
 parser.add_argument('--finish-task', metavar='task_id', type=int)
 
@@ -66,7 +68,7 @@ def remove(table, id, cursor):
 
 def rename(table, id, name, cursor):
     if id > 0:
-        cursor.execute('''UPDATE {0} SET name={2} WHERE id={1} '''.format(table, id, name))
+        cursor.execute('''UPDATE {0} SET name='{2}' WHERE id={1} '''.format(table, id, name))
         sqlite_connection.commit()
     else:
         print("rename: id is invalid")
@@ -87,12 +89,19 @@ def get_last_id(table, cursor):
 
 # Projects
 
-def list_projects(cursor):
-    cursor.execute('''SELECT id, name FROM projects WHERE id<>2''')
+def list_projects(active_only, cursor):
+    if not active_only:
+        cursor.execute('''SELECT id, name, archived FROM projects WHERE id<>2''')
+    else:
+        cursor.execute('''SELECT id, name, archived FROM projects WHERE id<>2 and archived=0''')
     record = cursor.fetchall()
     for item in record:
-        id, name = item
-        print(id, name, sep='\t')
+        id, name, archived = item
+        archived = "Active" if not archived else "Archived"
+        if not active_only:
+            print(id, name, archived, sep='\t')
+        else:
+            print(id, name, sep='\t')
 
 def add_project(name, cursor):
     cursor.execute('''INSERT INTO projects (id, name, archived) VALUES (NULL, '{0}', 0)'''.format(name))
@@ -114,16 +123,19 @@ def rename_project(id, name, cursor):
 def list_tasks(project_id, in_progress, cursor):
     if (project_id):
         if not in_progress:
-            cursor.execute('''SELECT id, name, done FROM tasks WHERE project_id='%s' ''' % project_id)
+            cursor.execute('''SELECT id, name, done FROM tasks WHERE project_id={0} '''.format(project_id))
         else:
-            cursor.execute('''SELECT id, name, done FROM tasks WHERE project_id='%s' AND done=0 ''' % project_id)
+            cursor.execute('''SELECT id, name, done FROM tasks WHERE project_id={0} AND done=0 '''.format(project_id))
         record = cursor.fetchall()
         for item in record:
             id, name, done = item
             done = "In-Progress" if not done else "Done"
-            print(id, name, done, sep='\t')
+            if not in_progress:
+                print(id, name, done, sep='\t')
+            else:
+                print(id, name, sep='\t')
 
-def list_rest(cursor):
+def list_rest_tasks(cursor):
     cursor.execute('''SELECT id, name FROM tasks WHERE project_id=2''')
     record = cursor.fetchall()
     for item in record:
@@ -143,8 +155,18 @@ def add_task(project_id, task_name, cursor):
     sqlite_connection.commit()
     print(get_last_id('tasks', cursor))
 
-def remove_task(task_id, cursor):
-    remove('tasks', task_id, cursor)
+def remove_task(id, cursor):
+    remove('tasks', id, cursor)
+
+def rename_task(id, name, cursor):
+    rename('tasks', id, name, cursor)
+
+def finish_task(id, cursor):
+    if id > 0:
+        cursor.execute('''UPDATE tasks SET done=1 WHERE id={0} '''.format(id))
+        sqlite_connection.commit()
+    else:
+        print("finish_task: id is invalid")
 
 # Pomos
 
@@ -169,26 +191,14 @@ def end_current_pomo(cursor):
     current_pomo_id = get_last_active_pomo(cursor)
     end_pomo(current_pomo_id, cursor)
 
-def finish_task(task_id, cursor):
-    if pomo_id > 0:
-        cursor.execute('''UPDATE tasks SET done=1 WHERE id={0} '''.format(task_id))
-        sqlite_connection.commit()
-    else:
-        print("finish_task: task_id is invalid")
-
 def remove_pomo(pomo_id, cursor):
-    if pomo_id > 0:
-        cursor.execute('''DELETE FROM pomos WHERE id={0}'''.format(pomo_id))
-        sqlite_connection.commit()
-        print("removed")
-    else:
-        print("remove_pomo: pomo_id is invalid")
+    remove('pomos', pomo_id, cursor)
 
 def remove_current_pomo(cursor):
     current_pomo_id = get_last_active_pomo(cursor)
     remove_pomo(current_pomo_id, cursor)
 
-def get_pomos(active_only, cursor):
+def list_pomos(active_only, cursor):
     if not active_only:
         cursor.execute('''SELECT * FROM pomos''')
     else:
@@ -197,9 +207,13 @@ def get_pomos(active_only, cursor):
     for record in records:
         id, start_dt, end_dt, task_id = record
         task_name = get_name_by_id('tasks', task_id, cursor)
-        start_dt = datetime.strptime(start_dt, '%Y-%m-%d %H:%M:%S')
-        end_dt = datetime.strptime(end_dt, '%Y-%m-%d %H:%M:%S') if end_dt else "Not Finished"
-        print(id, end_dt-start_dt, task_name)
+        if end_dt:
+            start_dt = datetime.strptime(start_dt, '%Y-%m-%d %H:%M:%S')
+            end_dt = datetime.strptime(end_dt, '%Y-%m-%d %H:%M:%S')
+            duration = end_dt-start_dt
+        else:
+            duration = "In-Progress"
+        print(id, duration, task_name)
 
 try:
     sqlite_connection = sqlite3.connect('/home/stivius/scripts/pomodoro.db')
@@ -210,17 +224,20 @@ try:
 
     # Projects
     if (args.projects):
-        list_projects(cursor)
+        list_projects(True, cursor)
+
+    if (args.all_projects):
+        list_projects(False, cursor)
 
     if (args.add_project):
         add_project(args.add_project, cursor)
 
     if (args.rename_project):
         project_id, project_name = args.rename_project
-        rename_project(project_id, project_name, cursor)
+        rename_project(int(project_id), project_name, cursor)
 
     if (args.archive_project):
-        rename_project(args.archive_project, cursor)
+        archive_project(args.archive_project, cursor)
 
     if (args.remove_project):
         remove_project(args.remove_project, cursor)
@@ -233,7 +250,7 @@ try:
         list_tasks(args.all_tasks, False, cursor)
 
     if (args.rest):
-        list_rest(cursor)
+        list_rest_tasks(cursor)
 
     if (args.add_task):
         project_id, task_name = args.add_task
@@ -241,6 +258,10 @@ try:
 
     if (args.remove_task):
         remove_task(args.remove_task, cursor)
+
+    if (args.rename_task):
+        task_id, task_name = args.rename_task
+        rename_task(int(task_id), task_name, cursor)
 
     if (args.finish_task):
         finish_task(args.finish_task, cursor)
@@ -262,10 +283,10 @@ try:
         remove_current_pomo(cursor)
 
     if (args.all_pomos):
-        get_pomos(False, cursor)
+        list_pomos(False, cursor)
 
     if (args.active_pomos):
-        get_pomos(True, cursor)
+        list_pomos(True, cursor)
 
 
     cursor.close()
