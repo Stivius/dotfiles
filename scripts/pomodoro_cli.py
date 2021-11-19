@@ -3,6 +3,7 @@
 import sqlite3
 import argparse
 from datetime import datetime
+from datetime import timedelta
 
 parser = argparse.ArgumentParser(description='Pomodoro actions')
 parser.add_argument('--init', help='initialize pomodro database', action='store_true')
@@ -132,9 +133,9 @@ def list_tasks(project_id, in_progress, cursor):
             done = "In-Progress" if not done else "Done"
             total_time, total_amount = get_total_pomos(id, cursor)
             if not in_progress:
-                print(id, name, done, total_time, total_amount + " pomos", sep='\t')
+                print(id, name, done, total_time, str(total_amount) + " pomos", sep='\t')
             else:
-                print(id, name, total_time, total_amount + " pomos", sep='\t')
+                print(id, name, total_time, str(total_amount) + " pomos", sep='\t')
 
 def list_rest_tasks(cursor):
     cursor.execute('''SELECT id, name FROM tasks WHERE project_id=2''')
@@ -170,6 +171,17 @@ def finish_task(id, cursor):
         print("finish_task: id is invalid")
 
 # Pomos
+
+def get_total_pomos(task_id, cursor):
+    cursor.execute('''SELECT start_dt, end_dt FROM pomos WHERE end_dt IS NOT NULL and task_id={0}'''.format(task_id))
+    records = cursor.fetchall()
+    total_time = timedelta()
+    for record in records:
+        start_dt, end_dt = record
+        start_dt = datetime.strptime(start_dt, '%Y-%m-%d %H:%M:%S')
+        end_dt = datetime.strptime(end_dt, '%Y-%m-%d %H:%M:%S')
+        total_time += end_dt-start_dt
+    return total_time, len(records)
 
 def start_pomo(task_id, cursor):
     if task_id > 0:
