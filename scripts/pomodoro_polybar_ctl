@@ -1,27 +1,37 @@
 #!/bin/bash
 
-check_param() {
+check_param_str() {
 	if [[ -z "$1" ]]; then
 		exit
 	fi
 }
 
+check_param_int() {
+	case $1 in
+		''|*[!0-9]*)
+			exit
+			;;
+		*) # number
+			;;
+	esac
+}
+
 choose_task() {
 	project_id=`pomodoro_cli.py --projects | rofi -dmenu -i | awk '{print $1}'`
-	check_param "$project_id"
+	check_param_int "$project_id"
 	selected_row=`{ echo "New task"; pomodoro_cli.py --tasks $project_id; } | rofi -dmenu -i`
-	check_param "$selected_row"
+	check_param_str "$selected_row"
 	case "$selected_row" in
 		"New task")
 			task_name=`rofi -dmenu -theme-str 'listview { enabled: false;}'`
-			check_param "$task_name"
+			check_param_str "$task_name"
 			task_id=`pomodoro_cli.py --add-task $project_id $task_name`
 			;;
 		*)
 			task_id=`echo $selected_row | awk '{print $1}'`
 			;;
 	esac
-	check_param "$task_id"
+	check_param_int "$task_id"
 	remove_current_pomo
 	pomodoro_cli.py --start-pomo $task_id
 	dunstify "Task started"

@@ -130,10 +130,11 @@ def list_tasks(project_id, in_progress, cursor):
         for item in record:
             id, name, done = item
             done = "In-Progress" if not done else "Done"
+            total_time, total_amount = get_total_pomos(id, cursor)
             if not in_progress:
-                print(id, name, done, sep='\t')
+                print(id, name, done, total_time, total_amount + " pomos", sep='\t')
             else:
-                print(id, name, sep='\t')
+                print(id, name, total_time, total_amount + " pomos", sep='\t')
 
 def list_rest_tasks(cursor):
     cursor.execute('''SELECT id, name FROM tasks WHERE project_id=2''')
@@ -213,7 +214,10 @@ def list_pomos(active_only, cursor):
             duration = end_dt-start_dt
         else:
             duration = "In-Progress"
-        print(id, duration, task_name)
+        if not active_only:
+            print(id, duration, task_name)
+        else:
+            print(id, task_name)
 
 try:
     sqlite_connection = sqlite3.connect('/home/stivius/scripts/pomodoro.db')
