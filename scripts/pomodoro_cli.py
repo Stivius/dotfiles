@@ -9,6 +9,9 @@ parser.add_argument('--init', help='initialize pomodro database', action='store_
 
 parser.add_argument('--projects', help='list of created projects', action='store_true')
 parser.add_argument('--add-project', metavar='project_name', help='add new project')
+parser.add_argument('--archive-project', metavar='project_id')
+parser.add_argument('--rename-project', metavar='project_id')
+parser.add_argument('--remove-project', metavar='project_id')
 
 parser.add_argument('--tasks', metavar='project_id', help='list of tasks in progress', type=int)
 parser.add_argument('--all-tasks', metavar='project_id', help='list of all tasks', type=int)
@@ -30,7 +33,8 @@ args = parser.parse_args()
 def init(cursor):
     cursor.execute('''CREATE TABLE IF NOT EXISTS projects(
             id INTEGER PRIMARY KEY,
-            name TEXT NOT NULL UNIQUE)''')
+            name TEXT NOT NULL UNIQUE,
+            archived INTEGER NOT NULL)''')
     cursor.execute('''CREATE TABLE IF NOT EXISTS tasks(
             id INTEGER PRIMARY KEY,
             name TEXT NOT NULL,
@@ -51,6 +55,20 @@ def init(cursor):
         add_task(2, "Short Break", cursor)
         add_task(2, "Long Break", cursor)
 
+def remove(table, id, cursor):
+    if id > 0:
+        cursor.execute('''DELETE FROM {0} WHERE id={1}'''.format(table, id))
+        sqlite_connection.commit()
+    else:
+        print("remove: id is invalid")
+
+def rename(table, id, name, cursor):
+    if id > 0:
+        cursor.execute('''UPDATE {0} SET name={2} WHERE id={1} '''.format(table, id, name))
+        sqlite_connection.commit()
+    else:
+        print("rename: id is invalid")
+
 def list_projects(cursor):
     cursor.execute('''SELECT id, name FROM projects WHERE id<>2''')
     record = cursor.fetchall()
@@ -59,7 +77,7 @@ def list_projects(cursor):
         print(id, name, sep='\t')
 
 def add_project(name, cursor):
-    cursor.execute('''INSERT INTO projects (id, name) VALUES (NULL, '%s')''' % name)
+    cursor.execute('''INSERT INTO projects (id, name, archived) VALUES (NULL, '%s', 0)''' % name)
     sqlite_connection.commit()
     print(get_last_id('projects', cursor))
 
@@ -182,6 +200,16 @@ try:
 
     if (args.add_project):
         add_project(args.add_project, cursor)
+
+    if (args.rename_project):
+        project_id, project_name = args.rename_project
+        rename_project(project_id, project_name, cursor)
+
+    if (args.archive_project):
+        rename_project(args.archive_project, cursor)
+
+    if (args.remove_project):
+        remove_project(args.remove_project, cursor)
 
     # Tasks
     if (args.tasks):
