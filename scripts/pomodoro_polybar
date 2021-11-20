@@ -13,7 +13,6 @@ timerRunning () { [ -e /tmp/polybar-timer/ ] ; }
 timerExpiry () { cat /tmp/polybar-timer/expiry ; }
 timerLabel () { cat /tmp/polybar-timer/label ; }
 timerAction () { cat /tmp/polybar-timer/action ; }
-recordId () { cat /tmp/polybar-timer/record-id ; }
 
 secondsLeft () { echo $(( $(timerExpiry) - $(now) )) ; }
 minutesLeft () { echo $(( ( $(secondsLeft)  + 59 ) / 60 )) ; }
@@ -23,6 +22,7 @@ printExpiryTime () { dunstify -u low -r -12345 "Timer expires at $( date -d "$(s
 deleteExpiryTime () { dunstify -C -12345 ; }
 
 updateTail () {
+  echo "$(minutesLeft)" >> /home/stivius/test.txt
   if timerRunning && [ $(minutesLeft) -le 0 ]
   then
 	echo "here" >> /home/stivius/test.txt
