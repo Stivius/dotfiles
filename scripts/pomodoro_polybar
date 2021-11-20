@@ -25,8 +25,12 @@ deleteExpiryTime () { dunstify -C -12345 ; }
 updateTail () {
   if timerRunning && [ $(minutesLeft) -le 0 ]
   then
+	echo "here" >> /home/stivius/test.txt
+	cat /tmp/polybar-timer/action >> /home/stivius/test.txt
     eval $(timerAction)
+	echo "here2" >> /home/stivius/test.txt
     killTimer
+	echo "here3" >> /home/stivius/test.txt
   fi
 
   if timerRunning
