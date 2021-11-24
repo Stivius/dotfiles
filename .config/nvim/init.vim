@@ -40,8 +40,6 @@ autocmd Filetype markdown source ~/.config/nvim/zettelkasten.vim
 let g:airline_powerline_fonts = 1 " use powerline fonts
 let g:Powerline_symbols='unicode' " support unicode
 
-source ~/.config/nvim/coc.vim
-
 colorscheme base16-classic-dark
 set termguicolors
 
@@ -64,6 +62,8 @@ set splitright " for vnew to work to the right
 " change <Leader> key
 nnoremap <SPACE> <Nop>
 let mapleader=" "
+
+source ~/.config/nvim/coc.vim
 
 " search
 noremap <F9> :nohl<CR>
