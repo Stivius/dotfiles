@@ -21,8 +21,10 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
   Plug 'chriskempson/base16-vim'
   Plug 'troydm/zoomwintab.vim'
   Plug 'tpope/vim-unimpaired'
+  " LSP
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  " telescope
+  Plug 'jackguo380/vim-lsp-cxx-highlight'
+  " Telescope
   Plug 'nvim-lua/popup.nvim'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
