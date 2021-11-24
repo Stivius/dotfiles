@@ -4,6 +4,7 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
   Plug 'preservim/nerdtree'
   Plug 'vim-airline/vim-airline'
@@ -11,12 +12,22 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
   Plug 'junegunn/fzf.vim'
   Plug 'tpope/vim-surround'
   Plug '907th/vim-auto-save'
-  Plug 'altercation/vim-colors-solarized'
   Plug 'tpope/vim-surround'
   Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
   Plug 'easymotion/vim-easymotion'
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'ryanoasis/vim-devicons'
+  Plug 'fladson/vim-kitty'
+  Plug 'chriskempson/base16-vim'
+  Plug 'troydm/zoomwintab.vim'
+  Plug 'tpope/vim-unimpaired'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  " telescope
+  Plug 'nvim-lua/popup.nvim'
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim'
+  Plug 'nvim-telescope/telescope-fzy-native.nvim'
+  Plug 'fannheyward/telescope-coc.nvim'
 call plug#end()
 
 filetype plugin on
@@ -24,12 +35,13 @@ filetype plugin on
 " autocommands
 autocmd Filetype markdown source ~/.config/nvim/zettelkasten.vim
 
-" let g:auto_save = 1  " enable AutoSave on Vim startup 
 let g:airline_powerline_fonts = 1 " use powerline fonts
 let g:Powerline_symbols='unicode' " support unicode
 
-set t_Co=256
-set background=light
+source ~/.config/nvim/coc.vim
+
+colorscheme base16-classic-dark
+set termguicolors
 
 " enable russian layout
 set keymap=russian-jcukenwin  
@@ -37,7 +49,6 @@ set iminsert=0 " default - enlgish
 set imsearch=0 " default - english
 inoremap <C-Space> <C-^>
 nnoremap <C-Space> a<C-^><ESC>
-highlight lCursor guifg=NONE guibg=Cyan
 
 set wrap linebreak " wrap words
 set tabstop=4
@@ -66,35 +77,53 @@ nmap T <Plug>(easymotion-Tl)
 nmap <Leader><Leader>t <Plug>(easymotion-t2)
 nmap <Leader><Leader>T <Plug>(easymotion-T2)
 
+" coc
+imap <C-l> <Plug>(coc-snippets-expand)
+vmap <C-j> <Plug>(coc-snippets-select)
+
 " navigation
 noremap <C-k> <C-w>k
 noremap <C-j> <C-w>j
 noremap <C-h> <C-w>h
 noremap <C-l> <C-w>l
 
-nnoremap <Leader>nv :vnew<CR>
-nnoremap <Leader>nh :new<CR>
+" splits
+nnoremap <Leader>snv :vnew<CR>
+nnoremap <Leader>snh :new<CR>
+nnoremap <Leader>sv <C-w>v
+nnoremap <Leader>sh <C-w>s
+nnoremap <Leader>se <C-w>=
+nnoremap <Leader>sf :ZoomWinTabToggle<CR>
+nnoremap <silent> <C-Left> :vertical resize +3<CR>
+nnoremap <silent> <C-Right> :vertical resize -3<CR>
+nnoremap <silent> <C-Up> :resize +3<CR>
+nnoremap <silent> <C-Down> :resize -3<CR>
 
 " file tree
 noremap <F5> <ESC>:NERDTreeToggle<CR>
-noremap <F4> <ESC>:NERDTree<CR>
-noremap <Leader>rc :NERDTreeFocus<cr>R<c-w><c-p>
-noremap <Leader>rr :NERDTreeFocus<cr>Ro
+"noremap <F4> <ESC>:NERDTree<CR>
+nnoremap <Leader>rc :NERDTreeFocus<cr>R<c-w><c-p>
+nnoremap <Leader>rr :NERDTreeFocus<cr>Ro
 
-nnoremap <Leader>h :History<CR>
-nnoremap <Leader>o :Files<CR>
+nnoremap <Leader>qc  <cmd>cclose<cr>
+nnoremap <Leader>qo  <cmd>copen<cr>
 
-" ripgrep search
-nnoremap <Leader>ff :Rg 
-nnoremap <Leader>fw :Rg <C-r><C-w><CR>
+nnoremap <Leader>h  <cmd>Telescope oldfiles<cr>
+nnoremap <Leader>o  <cmd>Telescope find_files<cr>
+nnoremap <Leader>ff <cmd>Telescope <cr>
+nnoremap <Leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <Leader>fb <cmd>Telescope buffers<cr>
+nnoremap <Leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <Leader>fw <cmd>Telescope grep_string<cr>
 
 " copy/paste to system clipboard
-nnoremap <Leader>p "+p
-nnoremap <Leader>y "+y
+noremap <Leader>p "+p
+noremap <Leader>y "+y
 
 " vimrc
 nnoremap <Leader>rv :source $MYVIMRC<CR>
 nnoremap <Leader>ev :vsplit $MYVIMRC<CR>
+nnoremap <Leader>ee :e $MYVIMRC<CR>
 
 " file manipulations
 nnoremap <Leader>D :call delete(expand('%'))<CR>

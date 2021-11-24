@@ -58,7 +58,8 @@ bindsym $mod+q kill
 # useful stuff
 bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+b exec --no-startup-id "$SCRIPTS/external/rofi_bluetooth"
-bindsym $mod+Shift+f exec --no-startup-id rofi_finder
+bindsym $mod+Shift+s exec --no-startup-id i3_swap_workspaces
+bindsym $mod+Shift+f exec --no-startup-id open_fs
 bindsym $mod+Shift+n exec --no-startup-id dunstctl close-all
 bindsym $mod+Shift+p exec --no-startup-id rofi-pass
 bindsym $mod+Shift+z exec --no-startup-id "$SCRIPTS/external/layout_manager"
@@ -90,7 +91,6 @@ mode "$mode_launcher" {
 # Power off
 set $mode_logout (s)uspend, (l)ock screen, l(o)gout, (r)eboot, (p)oweroff
 bindsym $mod+p mode "$mode_logout"
-
 mode "$mode_logout" {
     bindsym s exec i3_logout suspend; mode "default"
     bindsym l exec i3_logout lock; mode "default"
@@ -179,10 +179,17 @@ bindsym $mod+v split v
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+Shift+s layout stacking
-bindsym $mod+Shift+t layout tabbed
-bindsym $mod+Shift+e layout toggle split
+# Container Layout
+set $mode_layout (s)tacking, (t)abbed, t(i)ling
+bindsym $mod+t mode "$mode_layout"
+mode "$mode_layout" {
+    bindsym s layout stacking
+    bindsym t layout tabbed
+    bindsym i layout toggle split
+
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -214,15 +221,15 @@ for_window [window_role="dialog"] floating enable
 
 focus_on_window_activation urgent
 
-for_window [title="urxvt"] move --no-auto-back-and-forth to workspace $ws1, focus
+for_window [title="bash"] move --no-auto-back-and-forth to workspace $ws1, focus
 for_window [class="Telegram"] move --no-auto-back-and-forth to workspace $ws2, focus
 for_window [class="Firefox"] move --no-auto-back-and-forth to workspace $ws3, focus
 for_window [class="Code"] move --no-auto-back-and-forth to workspace $ws5, focus
 for_window [class="obsidian"] move --no-auto-back-and-forth to workspace $ws6, focus
 for_window [class="Zathura"] move --no-auto-back-and-forth to workspace $ws7, focus
 for_window [title="^Zettelkasten$"] move --no-auto-back-and-forth to workspace $ws7, focus
-for_window [title="^Math$"] floating enable, move --no-auto-back-and-forth scratchpad
-for_window [title="^HandyTerm$"] floating enable, move --no-auto-back-and-forth scratchpad
+for_window [title="^Math$"] floating enable, move --no-auto-back-and-forth scratchpad, resize set 920 600
+for_window [title="^HandyTerm$"] floating enable, move --no-auto-back-and-forth scratchpad, resize set 920 600
 for_window [title="Quick Connect"] move --no-auto-back-and-forth to workspace $ws8, focus
 for_window [class="Teams"] move --no-auto-back-and-forth to workspace $ws9, focus
 
@@ -240,10 +247,10 @@ bindsym $mod+c mode "$mode_scratchpad"
 mode "$mode_scratchpad" {
     bindsym c [class="AnyConnect"] scratchpad show; mode "default"
     bindsym r [title="Remmina Remote"] scratchpad show; mode "default"
-    bindsym m [title="Math"] scratchpad show; mode "default"
-    bindsym t [title="^HandyTerm$"] scratchpad show; mode "default"
+    bindsym m [title="Math"] scratchpad show, move position center; mode "default"
+    bindsym t [title="^HandyTerm$"] scratchpad show, move position center; mode "default"
     bindsym b [class="Blueman-manager"] scratchpad show; mode "default"
-    bindsym p [class="Spotify"] scratchpad show; mode "default"
+    bindsym p [class="Spotify"] scratchpad show, move position center; mode "default"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
