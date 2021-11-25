@@ -8,12 +8,9 @@ endif
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
   Plug 'preservim/nerdtree'
   Plug 'vim-airline/vim-airline'
-  Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-  Plug 'junegunn/fzf.vim'
   Plug 'tpope/vim-surround'
   Plug '907th/vim-auto-save'
   Plug 'tpope/vim-surround'
-  Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
   Plug 'easymotion/vim-easymotion'
   Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
   Plug 'ryanoasis/vim-devicons'
@@ -21,9 +18,6 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
   Plug 'chriskempson/base16-vim'
   Plug 'troydm/zoomwintab.vim'
   Plug 'tpope/vim-unimpaired'
-  " LSP
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  Plug 'jackguo380/vim-lsp-cxx-highlight'
   " Telescope
   Plug 'nvim-lua/popup.nvim'
   Plug 'nvim-lua/plenary.nvim'
@@ -33,9 +27,6 @@ call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
 call plug#end()
 
 filetype plugin on
-
-" autocommands
-autocmd Filetype markdown source ~/.config/nvim/zettelkasten.vim
 
 let g:airline_powerline_fonts = 1 " use powerline fonts
 let g:Powerline_symbols='unicode' " support unicode
@@ -62,8 +53,6 @@ set splitright " for vnew to work to the right
 " change <Leader> key
 nnoremap <SPACE> <Nop>
 let mapleader=" "
-
-source ~/.config/nvim/coc.vim
 
 " search
 noremap <F9> :nohl<CR>
