@@ -226,8 +226,8 @@ for_window [class="Telegram"] move --no-auto-back-and-forth to workspace $ws2, f
 for_window [class="Firefox"] move --no-auto-back-and-forth to workspace $ws3, focus
 for_window [class="Code"] move --no-auto-back-and-forth to workspace $ws5, focus
 for_window [class="obsidian"] move --no-auto-back-and-forth to workspace $ws6, focus
+for_window [title="^Zettelkasten$"] move --no-auto-back-and-forth to workspace $ws6, focus
 for_window [class="Zathura"] move --no-auto-back-and-forth to workspace $ws7, focus
-for_window [title="^Zettelkasten$"] move --no-auto-back-and-forth to workspace $ws7, focus
 for_window [title="^Math$"] floating enable, move --no-auto-back-and-forth scratchpad, resize set 920 600
 for_window [title="^HandyTerm$"] floating enable, move --no-auto-back-and-forth scratchpad, resize set 920 600
 for_window [title="Quick Connect"] move --no-auto-back-and-forth to workspace $ws8, focus
@@ -265,8 +265,8 @@ workspace $ws2 output $laptop
 workspace $ws3 output $monitor
 workspace $ws4 output $laptop
 workspace $ws5 output $monitor
-workspace $ws6 output $laptop
-workspace $ws7 output $monitor
+workspace $ws6 output $monitor
+workspace $ws7 output $laptop
 workspace $ws8 output $monitor
 workspace $ws9 output $laptop
 workspace $ws10 output $laptop
