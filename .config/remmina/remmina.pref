@@ -99,8 +99,8 @@ periodic_usage_stats_last_sent=0
 periodic_usage_stats_uuid_prefix=
 
 [remmina_news]
-periodic_rmnews_last_get=1631785174
-periodic_rmnews_get_count=3
+periodic_rmnews_last_get=1638183993
+periodic_rmnews_get_count=4
 periodic_rmnews_uuid_prefix=701OUL24AE39WC
 
 [remmina]
