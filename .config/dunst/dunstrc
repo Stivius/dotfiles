@@ -2,7 +2,7 @@
     # Which monitor should the notifications be displayed on.
     monitor = 0
 
-    follow = none
+    follow = keyboard
 
     width = 400
 	height = 200
