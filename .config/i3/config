@@ -65,7 +65,7 @@ bindsym $mod+Shift+p exec --no-startup-id rofi-pass
 bindsym $mod+Shift+z exec --no-startup-id "$SCRIPTS/external/layout_manager"
 
 # Launch apps
-set $mode_launcher (f)irefox, (t)g, (o)bsidian, (b)ooks, (c)ode, (s)horcuts, (z)ettel, s(p)otify, (r)dp, (m)icrosft teams, m(a)th, t(e)rminal, (v)pn
+set $mode_launcher (f)irefox, (t)g, (o)bsidian, (b)ooks, (c)ode, (s)horcuts, (z)ettel, s(p)otify, m(a)th, t(e)rminal
 bindsym $mod+o mode "$mode_launcher"
 
 mode "$mode_launcher" {
@@ -79,10 +79,6 @@ mode "$mode_launcher" {
 	bindsym z exec code /home/stivius/Zettelkasten; mode "default"
 	bindsym a exec open_calc; mode "default"
 	bindsym e exec open_term; mode "default"
-
-	bindsym r exec remmina; mode "default"
-	bindsym m exec teams; mode "default"
-	bindsym v exec /opt/cisco/anyconnect/bin/vpnui; mode "default"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
@@ -241,12 +237,10 @@ for_window [title="Remmina Remote"] floating enable, move --no-auto-back-and-for
 bindsym $mod+minus scratchpad show
 bindsym $mod+Shift+minus move --no-auto-back-and-forth scratchpad
 
-set $mode_scratchpad (c)isco, (r)dp connections, (m)ath, (t)erminal, (b)luetooth, s(p)otify
+set $mode_scratchpad (m)ath, (t)erminal, (b)luetooth, s(p)otify
 bindsym $mod+c mode "$mode_scratchpad"
 
 mode "$mode_scratchpad" {
-    bindsym c [class="AnyConnect"] scratchpad show; mode "default"
-    bindsym r [title="Remmina Remote"] scratchpad show; mode "default"
     bindsym m [title="Math"] scratchpad show, move position center; mode "default"
     bindsym t [title="^HandyTerm$"] scratchpad show, move position center; mode "default"
     bindsym b [class="Blueman-manager"] scratchpad show; mode "default"
