@@ -32,4 +32,5 @@ export TERMINAL="kitty"
 export SHORTCUTS=$HOME/shortcuts
 export SCRIPTS=$HOME/Projects/dotfiles/scripts
 export PATH=$PATH:$SCRIPTS
+export ANKI_NOHIGHDPI=1
 ### END Custom configuration
