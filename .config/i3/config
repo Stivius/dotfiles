@@ -44,9 +44,6 @@ exec telegram-desktop
 exec open_calc
 exec open_term
 
-# Layout Switcher
-exec_always --no-startup-id setup_keyboard
-
 # enable laptop monitor in emergency case
 bindsym $mod+Mod1+m exec --no-startup-id enable_laptop_monitor
 
