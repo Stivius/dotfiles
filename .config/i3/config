@@ -32,6 +32,9 @@ exec --no-startup-id update_monitors
 # Launch polybar (sleep 1s waiting for monitors update)
 exec_always --no-startup-id "sleep 1; polybar_launch"
 
+# Fix FN keys on Keychron keyboard
+exec_always --no-startup-id "echo 0 | sudo tee /sys/module/hid_apple/parameters/fnmode"
+
 # Run compositor (sleep 1s waiting for monitors update)
 exec_always --no-startup-id "killall -q picom; sleep 1; picom"
 
