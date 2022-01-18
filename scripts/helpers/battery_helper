@@ -1,13 +1,13 @@
 #!/bin/bash
 
-battery_charging_icon="battery_charging"
-battery_icon="battery"
-battery_low_icon="battery_low"
+BATTERY_CHARGING_ICON="battery_charging"
+BATTERY_ICON="battery"
+BATTERY_LOW_ICON="battery_low"
 
-low_text="Low"
-low_level=30
-critical_text="Critical"
-critical_level=10
-charging_text="Charging"
-disharging_text="Discharging"
+LOW_TEXT="Low"
+LOW_LEVEL=30
+CRITICAL_TEXT="Critical"
+CRITICAL_LEVEL=10
+CHARGING_TEXT="Charging"
+DISHARGING_TEXT="Discharging"
 
