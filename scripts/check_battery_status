@@ -1,7 +1,5 @@
 #!/bin/bash
 
-exec > /home/stivius/udev.out 2>&1
-
 source /home/stivius/scripts/helpers/battery_helper
 
 USER=/run/user/1000
@@ -16,17 +14,14 @@ if [ -f "$status_file" ]; then
   read -r notify_status < "$status_file"
 fi
 
-echo "Saved status $notify_status"
-
 function ShowStatusNotification {
 	if [ "$notify_status" != "$2" ]; then
-		echo $2 > $status_file
-		notify-send --icon=$1 Battery $2
+		echo "$2" | sudo -u stivius tee "$status_file"
+		sudo -u stivius dunstify --icon=$1 Battery $2
 	fi
 }
 
 status=`cat /sys/class/power_supply/AC0/online`
-echo "Current status $status"
 if [ $status = 0 ]; then
 	level=`cat /sys/class/power_supply/BAT0/capacity`
 
