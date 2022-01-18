@@ -8,6 +8,7 @@ USER=/run/user/1000
 export XAUTHORITY=$USER/gdm/Xauthority
 export DISPLAY=:1
 export PATH=$PATH:/usr/local/bin
+export DBUS_SESSION_BUS_ADDRESS=unix:path=$USER/bus 
 
 status_file='/tmp/battery_status_notify'
 
@@ -19,8 +20,8 @@ echo "Saved status $notify_status"
 
 function ShowStatusNotification {
 	if [ "$notify_status" != "$2" ]; then
-		sudo -u stivius echo $2 > $status_file
-		DBUS_SESSION_BUS_ADDRESS=unix:path=$USER/bus dunstify --icon=$1 Battery $2
+		echo $2 > $status_file
+		notify-send --icon=$1 Battery $2
 	fi
 }
 
