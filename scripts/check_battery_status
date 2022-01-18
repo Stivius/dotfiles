@@ -4,8 +4,6 @@ source $HOME/.profile
 
 export XAUTHORITY=/run/user/1000/gdm/Xauthority
 export DISPLAY=:1
-export PATH=$PATH:/usr/local/bin
-export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 
 status_file='/tmp/battery_status_notify'
 level_file='/tmp/battery_level_notify'
