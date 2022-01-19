@@ -31,6 +31,6 @@ fi
 export TERMINAL="kitty"
 export SHORTCUTS=$HOME/shortcuts
 export SCRIPTS=$HOME/Projects/dotfiles/scripts
-export PATH=$PATH:$SCRIPTS
+export PATH=$PATH:$SCRIPTS:$SCRIPTS/i3:$SCRIPTS/polybar:$SCRIPTS/rofi:$SCRIPTS/system
 export ANKI_NOHIGHDPI=1
 ### END Custom configuration

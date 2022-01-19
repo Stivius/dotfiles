@@ -57,12 +57,12 @@ bindsym $mod+q kill
 
 # useful stuff
 bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Shift+b exec --no-startup-id "$SCRIPTS/external/rofi_bluetooth"
+bindsym $mod+Shift+b exec --no-startup-id rofi_bluetooth
 bindsym $mod+Shift+s exec --no-startup-id i3_swap_workspaces
 bindsym $mod+Shift+f exec --no-startup-id open_fs
 bindsym $mod+Shift+n exec --no-startup-id dunstctl close-all
 bindsym $mod+Shift+p exec --no-startup-id rofi-pass
-bindsym $mod+Shift+z exec --no-startup-id "$SCRIPTS/external/layout_manager"
+#bindsym $mod+Shift+z exec --no-startup-id "$SCRIPTS/external/layout_manager"
 
 # Launch apps
 set $mode_launcher (f)irefox, (t)g, (o)bsidian, (b)ooks, (c)ode, (s)horcuts, (z)ettel, s(p)otify, m(a)th, t(e)rminal

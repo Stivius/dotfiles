@@ -2,5 +2,5 @@
 
 USER="/run/user/$(id -u)"
 export XAUTHORITY=$USER/gdm/Xauthority
-export DISPLAY=:1
+export DISPLAY=:0
 export DBUS_SESSION_BUS_ADDRESS=unix:path=$USER/bus 
