@@ -1,7 +1,6 @@
 #!/bin/bash 
 
-export XAUTHORITY=/run/user/1000/gdm/Xauthority
-export DISPLAY=:1
+source /home/stivius/scripts/helpers/authority
 
 echo "Switching to eDP-1-1"
 xrandr --output eDP-1-1 --primary --auto --output HDMI-1-2 --off

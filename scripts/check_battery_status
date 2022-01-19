@@ -1,12 +1,9 @@
 #!/bin/bash
 
 source /home/stivius/scripts/helpers/battery_helper
+source /home/stivius/scripts/helpers/authority
 
-USER=/run/user/1000
-export XAUTHORITY=$USER/gdm/Xauthority
-export DISPLAY=:1
 export PATH=$PATH:/usr/local/bin
-export DBUS_SESSION_BUS_ADDRESS=unix:path=$USER/bus 
 
 status_file='/tmp/battery_status_notify'
 

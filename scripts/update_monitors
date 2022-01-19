@@ -1,7 +1,6 @@
 #!/bin/bash 
 
-export XAUTHORITY=/run/user/1000/gdm/Xauthority
-export DISPLAY=:1
+source /home/stivius/scripts/helpers/authority
 
 MONITOR=`xrandr | grep -P -o "^HDMI(-1)?-2"`
 LAPTOP=`xrandr | grep -P -o "^eDP(-1)?-1"`
