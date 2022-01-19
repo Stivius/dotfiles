@@ -1,0 +1,1 @@
+ACTION=="add|bind", SUBSYSTEM=="usb|input", ATTR{idVendor}=="05ac", ATTR{idProduct}=="024f", RUN+="/home/stivius/scripts/system/setup_keyboard"

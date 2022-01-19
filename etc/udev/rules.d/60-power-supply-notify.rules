@@ -1,0 +1,2 @@
+ACTION=="change", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_NAME}=="AC0", RUN+="/home/stivius/scripts/system/check_battery_status"
+
