@@ -23,7 +23,7 @@ status=`cat /sys/class/power_supply/AC0/online`
 if [ $status = 0 ]; then
 	level=`cat /sys/class/power_supply/BAT0/capacity`
 
-	if [ $level -gt $CRITICAL_LEVEL ] && [ $LEVEL -le $LOW_LEVEL ] ; then
+	if [ $level -gt $CRITICAL_LEVEL ] && [ $level -le $LOW_LEVEL ] ; then
 		ShowLevelNotification $BATTERY_LOW_ICON normal $LOW_TEXT
 	elif [ $level -ge 0 ] && [ $level -le $CRITICAL_LEVEL ] ; then
 		ShowLevelNotification $BATTERY_LOW_ICON critical $CRITICAL_TEXT 
