@@ -1,5 +1,7 @@
 #!/bin/bash
 
+exec > /home/stivius/udev.out 2>&1 
+
 source /home/stivius/scripts/helpers/authority
 
 setxkbmap -layout us,ru -variant ,, -option grp:alt_shift_toggle -option caps:none
