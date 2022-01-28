@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USER="/run/user/$(id -u)"
+USER="/run/user/$(id -u stivius)"
 export XAUTHORITY=$USER/gdm/Xauthority
 export DISPLAY=:0
 export DBUS_SESSION_BUS_ADDRESS=unix:path=$USER/bus 

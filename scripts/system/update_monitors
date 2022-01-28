@@ -18,6 +18,9 @@ function HDMIConnected {
 	! xrandr | grep $MONITOR | grep disconnected
 }
 
+echo $DISPLAY
+echo $XAUTHORITY
+
 if HDMIConnected
 then
 	ActivateHDMI

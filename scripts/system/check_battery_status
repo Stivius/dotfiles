@@ -1,9 +1,9 @@
 #!/bin/bash
 
+exec > /home/stivius/battery.out 2>&1
+
 source /home/stivius/scripts/helpers/battery_helper
 source /home/stivius/scripts/helpers/authority
-
-export PATH=$PATH:/usr/local/bin
 
 status_file='/tmp/battery_status_notify'
 
@@ -14,7 +14,10 @@ fi
 function ShowStatusNotification {
 	if [ "$notify_status" != "$2" ]; then
 		echo "$2" | sudo -u stivius tee "$status_file"
-		sudo -u stivius dunstify --icon=$1 Battery $2
+		echo $DISPLAY
+		echo $XAUTHORITY
+		echo $DBUS_SESSION_BUS_ADDRESS
+		notify-send --icon=$1 Battery $2
 	fi
 }
 
