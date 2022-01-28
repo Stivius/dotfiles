@@ -2,5 +2,4 @@
 
 source /home/stivius/scripts/helpers/authority
 
-sudo -u stivius setxkbmap -layout us,ru -variant ,, -option grp:alt_shift_toggle -option caps:none
-echo 0 | tee /sys/module/hid_apple/parameters/fnmode
+setxkbmap -layout us,ru -variant ,, -option grp:alt_shift_toggle -option caps:none
