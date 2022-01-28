@@ -5,17 +5,17 @@ screenshot_icon="screenshot"
 case "$1" in
 
  "f" )
-	import -window root png:- | xclip -selection clipboard -t image/png
+	maim | xclip -selection clipboard -t image/png
 	dunstify --icon=$screenshot_icon Screenshot "Fullscreen captured"
  ;;
 
  "w" )
-	import -window "$(xdotool getwindowfocus -f)" png:- | xclip -selection clipboard -t image/png
+	maim --window $(xdotool getwindowfocus -f) --capturebackground | xclip -selection clipboard -t image/png
 	dunstify --icon=$screenshot_icon Screenshot "Window captured"
  ;;
 
  "s" )
-	import png:- | xclip -selection clipboard -t image/png 
+	maim --select | xclip -selection clipboard -t image/png 
 	dunstify --icon=$screenshot_icon Screenshot "Selection captured"
  ;;
 
