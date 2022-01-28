@@ -27,7 +27,7 @@ exec --no-startup-id feh --bg-scale $HOME/Pictures/Wallpapers/space.png
 # exec_always --no-startup-id xrdb $HOME/.Xresources
 
 # Update monitors
-exec --no-startup-id update_monitors
+# exec --no-startup-id update_monitors
 
 # Setup keyboard 
 exec_always --no-startup-id setup_keyboard
@@ -251,8 +251,8 @@ mode "$mode_scratchpad" {
 }
 
 # Workspace Layout
-set $laptop eDP-1-1
-set $monitor HDMI-1-2
+set $laptop eDP-1
+set $monitor HDMI-2
 
 workspace $ws1 output $laptop
 workspace $ws2 output $laptop
