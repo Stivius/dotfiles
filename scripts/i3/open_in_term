@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if [[ ! -z "$1" && ! -z "$2" ]]; then
+	kitty --title="$1" bash -i -c "$2"
+fi

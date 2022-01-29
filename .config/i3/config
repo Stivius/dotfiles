@@ -52,20 +52,17 @@ bindsym $mod+Mod1+m exec --no-startup-id enable_laptop_monitor
 
 # process management
 bindsym $mod+d exec --no-startup-id rofi -show drun
-bindsym $mod+Shift+q exec --no-startup-id kill_process
 bindsym $mod+q kill
 
 # useful stuff
 bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Shift+b exec --no-startup-id rofi_bluetooth
 bindsym $mod+Shift+s exec --no-startup-id i3_swap_workspaces
-bindsym $mod+Shift+f exec --no-startup-id open_fs
+bindsym $mod+Shift+f exec --no-startup-id open_in_term "Ranger" "ranger"
 bindsym $mod+Shift+n exec --no-startup-id dunstctl close-all
-bindsym $mod+Shift+p exec --no-startup-id rofi-pass
 #bindsym $mod+Shift+z exec --no-startup-id "$SCRIPTS/external/layout_manager"
 
 # Launch apps
-set $mode_launcher (f)irefox, (t)g, (o)bsidian, (b)ooks, (c)ode, (s)horcuts, (z)ettel, s(p)otify, m(a)th, t(e)rminal
+set $mode_launcher (f)irefox, (t)g, (o)bsidian, (c)ode, (z)ettel, s(p)otify, m(a)th, t(e)rminal
 bindsym $mod+o mode "$mode_launcher"
 
 mode "$mode_launcher" {
@@ -73,12 +70,26 @@ mode "$mode_launcher" {
     bindsym t exec telegram-desktop; mode "default"
     bindsym o exec obsidian; mode "default"
     bindsym c exec code; mode "default"
-	bindsym b exec open_book; mode "default"
-	bindsym s exec open_shortcuts; mode "default"
 	bindsym p exec spotify; mode "default"
 	bindsym z exec code /home/stivius/Zettelkasten; mode "default"
 	bindsym a exec open_calc; mode "default"
 	bindsym e exec open_term; mode "default"
+
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+
+# Open rofi
+set $mode_rofi blue(t)ooth, (p)ass, (b)ooks, (c)onfigs, (s)hortcuts, (k)ill process
+bindsym $mod+Shift+o mode "$mode_rofi"
+
+mode "$mode_rofi" {
+    bindsym t exec rofi_bluetooth; mode "default"
+    bindsym p exec rofi-pass; mode "default"
+    bindsym b exec rofi_books; mode "default"
+    bindsym c exec rofi_configs; mode "default"
+	bindsym s exec rofi_shortcuts; mode "default"
+	bindsym k exec rofi_kill_processes; mode "default"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
