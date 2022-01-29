@@ -1,0 +1,25 @@
+#!/bin/bash
+
+CONFIG_DIR=$HOME/.config
+
+declare -A configs
+configs[i3]="$CONFIG_DIR/i3/config"
+configs[dunst]="$CONFIG_DIR/dunst/dunstrc"
+configs[nvim]="$CONFIG_DIR/nvim/init.vim"
+configs[polybar]="$CONFIG_DIR/dunst/config.ini"
+configs[remmina]="$CONFIG_DIR/remmina/remmina.pref"
+configs[rofi]="$CONFIG_DIR/rofi/config.rasi"
+configs[zathura]="$CONFIG_DIR/zathura/zathurarc"
+
+#for i in "${!configs[@]}"
+#do
+#	echo "key: $i"
+#	echo "value: ${configs[$i]}"
+#done
+selected_config=`echo "${!configs[@]}" | tr " " "\n" | rofi -i -dmenu`
+
+echo $selected_config
+
+if [[ ! -z "$selected_config" ]]; then
+	vim "${configs[$selected_config]}"
+fi
