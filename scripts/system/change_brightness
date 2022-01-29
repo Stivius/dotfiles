@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /home/stivius/scripts/helpers/get_brightness
+
 type=$1
 
 if [ "$type" = "l" ]; then
@@ -14,4 +16,5 @@ else
 fi
 
 level=`get_brightness $type`
+polybar-msg hook backlight 1
 dunstify -h string:x-dunst-stack-tag:brightness --icon=brightness Brightness "[$name] Level is $level"

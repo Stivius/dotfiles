@@ -1,5 +1,7 @@
 #!/bin/bash 
 
+source /home/stivius/scripts/helpers/get_brightness
+
 function display_level {
 	val="$1"
 	if ((0<=$val && $val<=19))
