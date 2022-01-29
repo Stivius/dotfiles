@@ -17,6 +17,8 @@ Mute()
 	pulsemixer --id $app_direction --toggle-mute
 	mute_status=`pulsemixer --id $app_direction --get-mute`
 
+	polybar-msg hook micro 1
+
 	if [ $mute_status = 0 ]; then
 		dunstify -h string:x-dunst-stack-tag:volume --icon=$volume_icon Volume "$app_name $mute_type unmuted"
 	else
