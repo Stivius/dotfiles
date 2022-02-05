@@ -1,0 +1,3 @@
+*/1 * * * * /home/stivius/scripts/system/check_battery_level
+*/30 * * * * cd /home/stivius/Projects/dotfiles && /home/stivius/scripts/commit_git
+*/30 * * * * cd /home/stivius/Zettelkasten && /home/stivius/scripts/commit_git
