@@ -6,4 +6,4 @@ current=`echo $weather_json | jq -r '.main.temp'`
 current_feels=`echo $weather_json | jq -r '.main.feels_like'`
 sky=`echo $weather_json | jq -r '.weather[0].description'`
 
-echo " $current/$current_feels $sky"
+dunstify --icon="weather" "$current/$current_feels $sky"
