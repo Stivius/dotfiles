@@ -1,0 +1,10 @@
+[user]
+	email = maxim11853@gmail.com
+	name = stivius
+[core]
+	editor = vim
+	quotepath = off
+[merge]
+	tool = meld
+[mergetool]
+	keepBackup = false
