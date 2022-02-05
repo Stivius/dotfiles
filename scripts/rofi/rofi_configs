@@ -13,11 +13,6 @@ configs[remmina]="$CONFIG_DIR/remmina/remmina.pref"
 configs[rofi]="$CONFIG_DIR/rofi/config.rasi"
 configs[zathura]="$CONFIG_DIR/zathura/zathurarc"
 
-#for i in "${!configs[@]}"
-#do
-#	echo "key: $i"
-#	echo "value: ${configs[$i]}"
-#done
 selected_config=`echo "${!configs[@]}" | tr " " "\n" | rofi -i -dmenu`
 
 if [[ ! -z "$selected_config" ]]; then
