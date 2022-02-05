@@ -3,6 +3,10 @@
 search_type="$1"
 search_term=`rofi -dmenu -theme-str 'listview { enabled: false;}'`
 
+if [[ -z "$search_term" ]]; then
+	exit 1
+fi
+
 case "$search_type" in
 	"web")
 		xdg-open "https://www.google.com/search?q=$search_term"
@@ -12,7 +16,11 @@ case "$search_type" in
 		;;
 	
 	"tr")
-		xdg-open "https://translate.google.com/?sl=auto&tl=ru&text=$search_term&op=translate"
+		target_lang=`echo -e "en\nru\nes" | rofi -i -dmenu`
+		if [[ -z "$target_lang" ]]; then
+			exit 1
+		fi
+		xdg-open "https://translate.google.com/?sl=auto&tl=$target_lang&text=$search_term&op=translate"
 		;;
 	*)
 		;;

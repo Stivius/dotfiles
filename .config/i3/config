@@ -79,6 +79,19 @@ mode "$mode_launcher" {
     bindsym Return mode "default"
 }
 
+# Open search
+set $mode_search (w)eb, (y)outube, (t)ranslate
+bindsym $mod+g mode "$mode_search"
+
+mode "$mode_search" {
+    bindsym g exec rofi_search web; mode "default"
+    bindsym y exec rofi_search yt; mode "default"
+    bindsym t exec rofi_search tr; mode "default"
+
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+
 # Open rofi
 set $mode_rofi blue(t)ooth, (p)ass, (b)ooks, (c)onfigs, (s)hortcuts, scr(i)pts, (k)ill process
 bindsym $mod+Shift+o mode "$mode_rofi"
