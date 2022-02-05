@@ -19,7 +19,6 @@ alias z='cd ~/Zettelkasten && nvim'
 alias vim=nvim
 alias vi=nvim
 alias ssh="TERM=xterm-256color ssh"
-alias lux_ssh='ssh mivanov@172.24.7.67'
 
 # Powerline configuration
 if [ -f /usr/share/powerline/bindings/bash/powerline.sh ]; then

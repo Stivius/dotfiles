@@ -1,0 +1,20 @@
+#!/bin/bash
+
+CONFIG_DIR=$HOME/.config
+
+declare -A configs
+configs[i3]="$CONFIG_DIR/i3/config"
+configs[dunst]="$CONFIG_DIR/dunst/dunstrc"
+configs[nvim]="$CONFIG_DIR/nvim/init.vim"
+configs[polybar]="$CONFIG_DIR/polybar/config.ini"
+configs[polybar_modules]="$CONFIG_DIR/polybar/modules.ini"
+configs[polybar_colors]="$CONFIG_DIR/polybar/colors.ini"
+configs[remmina]="$CONFIG_DIR/remmina/remmina.pref"
+configs[rofi]="$CONFIG_DIR/rofi/config.rasi"
+configs[zathura]="$CONFIG_DIR/zathura/zathurarc"
+
+selected_config=`echo "${!configs[@]}" | tr " " "\n" | rofi -i -dmenu`
+
+if [[ ! -z "$selected_config" ]]; then
+	open_in_term "Config" "vim ${configs[$selected_config]}"
+fi
