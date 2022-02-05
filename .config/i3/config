@@ -80,13 +80,14 @@ mode "$mode_launcher" {
 }
 
 # Open search
-set $mode_search (w)eb, (y)outube, (t)ranslate
+set $mode_search (w)eb, (y)outube, (t)ranslate, (w)eather
 bindsym $mod+g mode "$mode_search"
 
 mode "$mode_search" {
     bindsym g exec rofi_search web; mode "default"
     bindsym y exec rofi_search yt; mode "default"
     bindsym t exec rofi_search tr; mode "default"
+    bindsym w exec get_weather; mode "default"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
