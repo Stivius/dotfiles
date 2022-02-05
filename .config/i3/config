@@ -80,7 +80,7 @@ mode "$mode_launcher" {
 }
 
 # Open rofi
-set $mode_rofi blue(t)ooth, (p)ass, (b)ooks, (c)onfigs, (s)hortcuts, (k)ill process
+set $mode_rofi blue(t)ooth, (p)ass, (b)ooks, (c)onfigs, (s)hortcuts, scr(i)pts, (k)ill process
 bindsym $mod+Shift+o mode "$mode_rofi"
 
 mode "$mode_rofi" {
@@ -89,6 +89,7 @@ mode "$mode_rofi" {
     bindsym b exec rofi_books; mode "default"
     bindsym c exec rofi_configs; mode "default"
 	bindsym s exec rofi_shortcuts; mode "default"
+	bindsym i exec rofi_scripts; mode "default"
 	bindsym k exec rofi_kill_processes; mode "default"
 
     bindsym Escape mode "default"

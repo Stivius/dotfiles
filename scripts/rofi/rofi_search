@@ -1,0 +1,19 @@
+#!/bin/bash
+
+search_type="$1"
+search_term=`rofi -dmenu -theme-str 'listview { enabled: false;}'`
+
+case "$search_type" in
+	"web")
+		xdg-open "https://www.google.com/search?q=$search_term"
+		;;
+	"yt")
+		xdg-open "https://www.youtube.com/results?search_query=$search_term"
+		;;
+	
+	"tr")
+		xdg-open "https://translate.google.com/?sl=auto&tl=ru&text=$search_term&op=translate"
+		;;
+	*)
+		;;
+esac
