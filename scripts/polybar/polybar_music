@@ -2,9 +2,40 @@
 
 # https://github.com/altdesktop/playerctl/#printing-properties-and-metadata
 FORMAT="{{ title }} - {{ artist }}"
+STOPPED_FILE=/tmp/polybar_music_stopped
+PAUSED_FILE=/tmp/polybar_music_paused
+PAUSED_HOOK=2
+PLAYING_HOOK=1
 
-update_hooks() {
+create_file() {
+	echo > $1
+}
+
+delete_file() {
+	rm $1 2>/dev/null
+}
+
+send_hook() {
 	polybar-msg hook music-play-pause $1 1>/dev/null 2>&1
+}
+
+update_playback_status() {
+	case $1 in
+		$PAUSED_HOOK)
+			if [[ ! -f "$PAUSED_FILE" ]]; then
+				create_file $PAUSED_FILE
+				dunstify "Paused"
+				send_hook $PAUSED_HOOK
+			fi
+			;;
+		$PLAYING_HOOK)
+			if [[ -f "$PAUSED_FILE" ]]; then
+				delete_file $PAUSED_FILE
+				dunstify "Playing"
+				send_hook $PLAYING_HOOK
+			fi
+			;;
+	esac
 }
 
 show_playback_status() {
@@ -12,17 +43,25 @@ show_playback_status() {
 }
 
 hide_all() {
-	polybar-msg action "module_hide" music-prev
-	polybar-msg action "module_hide" music
-	polybar-msg action "module_hide" music-play-pause
-	polybar-msg action "module_hide" music-next
+	if [[ ! -f "$STOPPED_FILE" ]]; then
+		create_file $STOPPED_FILE
+		dunstify "Hidden"
+		polybar-msg action "#music-prev.module_hide"  1>/dev/null 2>&1
+		polybar-msg action "#music.module_hide"  1>/dev/null 2>&1
+		polybar-msg action "#music-play-pause.module_hide"  1>/dev/null 2>&1
+		polybar-msg action "#music-next.module_hide"  1>/dev/null 2>&1
+	fi
 }
 
 show_all() {
-	polybar-msg module_show music-prev
-	polybar-msg module_show music
-	polybar-msg module_show music-play-pause
-	polybar-msg module_show music-next
+	if [[ -f "$STOPPED_FILE" ]]; then
+		delete_file $STOPPED_FILE
+		dunstify "Shown"
+		polybar-msg action "#music-prev.module_show"  1>/dev/null 2>&1
+		polybar-msg action "#music.module_show"  1>/dev/null 2>&1
+		polybar-msg action "#music-play-pause.module_show"  1>/dev/null 2>&1
+		polybar-msg action "#music-next.module_show"  1>/dev/null 2>&1
+	fi
 }
 
 PLAYERCTL_STATUS=$(playerctl status 2>/dev/null)
@@ -34,15 +73,14 @@ else
     STATUS="Stopped"
 fi
 
-hide_all
 if [ "$STATUS" = "Stopped" ]; then
-	echo "No music is playing"
+	hide_all
 else
+	show_all
 	if [ "$STATUS" = "Paused"  ]; then
-		update_hooks 2
-		show_playback_status
+		update_playback_status $PAUSED_HOOK
 	else
-		update_hooks 1
-		show_playback_status
+		update_playback_status $PLAYING_HOOK
 	fi
+	show_playback_status
 fi
