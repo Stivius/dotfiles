@@ -16,5 +16,5 @@ configs[zathura]="$CONFIG_DIR/zathura/zathurarc"
 selected_config=`echo "${!configs[@]}" | tr " " "\n" | rofi -i -dmenu`
 
 if [[ ! -z "$selected_config" ]]; then
-	open_in_term "Config" "vim ${configs[$selected_config]}"
+	open_in_term "bash" "vim ${configs[$selected_config]}"
 fi

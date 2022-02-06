@@ -19,19 +19,21 @@ send_hook() {
 	polybar-msg hook music-play-pause $1 1>/dev/null 2>&1
 }
 
+send_action() {
+	polybar-msg action "$1" 1>/dev/null 2>&1
+}
+
 update_playback_status() {
 	case $1 in
 		$PAUSED_HOOK)
 			if [[ ! -f "$PAUSED_FILE" ]]; then
 				create_file $PAUSED_FILE
-				dunstify "Paused"
 				send_hook $PAUSED_HOOK
 			fi
 			;;
 		$PLAYING_HOOK)
 			if [[ -f "$PAUSED_FILE" ]]; then
 				delete_file $PAUSED_FILE
-				dunstify "Playing"
 				send_hook $PLAYING_HOOK
 			fi
 			;;
@@ -45,22 +47,20 @@ show_playback_status() {
 hide_all() {
 	if [[ ! -f "$STOPPED_FILE" ]]; then
 		create_file $STOPPED_FILE
-		dunstify "Hidden"
-		polybar-msg action "#music-prev.module_hide"  1>/dev/null 2>&1
-		polybar-msg action "#music.module_hide"  1>/dev/null 2>&1
-		polybar-msg action "#music-play-pause.module_hide"  1>/dev/null 2>&1
-		polybar-msg action "#music-next.module_hide"  1>/dev/null 2>&1
+		send_action "#music-prev.module_hide"
+		send_action "#music.module_hide"
+		send_action "#music-play-pause.module_hide"
+		send_action "#music-next.module_hide"
 	fi
 }
 
 show_all() {
 	if [[ -f "$STOPPED_FILE" ]]; then
 		delete_file $STOPPED_FILE
-		dunstify "Shown"
-		polybar-msg action "#music-prev.module_show"  1>/dev/null 2>&1
-		polybar-msg action "#music.module_show"  1>/dev/null 2>&1
-		polybar-msg action "#music-play-pause.module_show"  1>/dev/null 2>&1
-		polybar-msg action "#music-next.module_show"  1>/dev/null 2>&1
+		send_action "#music-prev.module_show"
+		send_action "#music.module_show"
+		send_action "#music-play-pause.module_show"
+		send_action "#music-next.module_show"
 	fi
 }
 

@@ -3,5 +3,5 @@
 selected_script=`find $SCRIPTS -type f -printf '%P\n' | rofi -i -dmenu`
 
 if [[ ! -z "$selected_script" ]]; then
-	open_in_term "Script" "vim $SCRIPTS/${selected_script}"
+	open_in_term "bash" "vim $SCRIPTS/${selected_script}"
 fi
