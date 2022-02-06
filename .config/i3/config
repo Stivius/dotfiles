@@ -257,6 +257,7 @@ for_window [title="^Zettelkasten$"] move --no-auto-back-and-forth to workspace $
 for_window [class="Zathura"] move --no-auto-back-and-forth to workspace $ws7, focus
 for_window [class="Steam"] move --no-auto-back-and-forth to workspace $ws8, focus
 for_window [class="discord"] move --no-auto-back-and-forth to workspace $ws9, focus
+for_window [class="superProductivity"] move --no-auto-back-and-forth to workspace $ws10, focus
 for_window [title="^Math$"] floating enable, move --no-auto-back-and-forth scratchpad, resize set 920 600
 for_window [title="^HandyTerm$"] floating enable, move --no-auto-back-and-forth scratchpad, resize set 920 600
 

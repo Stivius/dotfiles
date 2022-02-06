@@ -16,6 +16,7 @@ delete_file() {
 }
 
 send_hook() {
+	dunstify "hook sent $1"
 	polybar-msg hook music-play-pause $1 1>/dev/null 2>&1
 }
 
@@ -77,7 +78,7 @@ if [ "$STATUS" = "Stopped" ]; then
 	hide_all
 else
 	show_all
-	if [ "$STATUS" = "Paused"  ]; then
+	if [ "$STATUS" = "Paused" ]; then
 		update_playback_status $PAUSED_HOOK
 	else
 		update_playback_status $PLAYING_HOOK
