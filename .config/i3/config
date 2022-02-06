@@ -62,7 +62,7 @@ bindsym $mod+Shift+n exec --no-startup-id dunstctl close-all
 #bindsym $mod+Shift+z exec --no-startup-id "$SCRIPTS/external/layout_manager"
 
 # Launch apps
-set $mode_launcher (f)irefox, (t)g, (o)bsidian, (c)ode, (z)ettel, s(p)otify, m(a)th, t(e)rminal, (s)team, f(l)ashcards, p(r)ojects, (d)iscord
+set $mode_launcher (f)irefox, (t)g, (o)bsidian, (c)ode, (z)ettel, (s)team, f(l)ashcards, p(r)ojects, (d)iscord, s(p)otify, m(a)th, t(e)rminal
 bindsym $mod+o mode "$mode_launcher"
 
 mode "$mode_launcher" {
@@ -70,14 +70,14 @@ mode "$mode_launcher" {
     bindsym t exec telegram-desktop; mode "default"
     bindsym o exec obsidian; mode "default"
     bindsym c exec code; mode "default"
-	bindsym p exec spotify; mode "default"
 	bindsym z exec code /home/stivius/Zettelkasten; mode "default"
-	bindsym a exec open_calc; mode "default"
-	bindsym e exec open_term; mode "default"
 	bindsym s exec steam; mode "default"
 	bindsym l exec anki; mode "default"
 	bindsym r exec superproductivity; mode "default"
 	bindsym d exec discord; mode "default"
+	bindsym p exec spotify; mode "default"
+	bindsym a exec open_calc; mode "default"
+	bindsym e exec open_term; mode "default"
 
     bindsym Escape mode "default"
     bindsym Return mode "default"
