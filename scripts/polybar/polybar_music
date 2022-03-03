@@ -16,7 +16,6 @@ delete_file() {
 }
 
 send_hook() {
-	dunstify "hook sent $1"
 	polybar-msg hook music-play-pause $1 1>/dev/null 2>&1
 }
 
