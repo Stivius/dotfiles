@@ -16,7 +16,7 @@ delete_file() {
 }
 
 send_hook() {
-	polybar-msg hook music-play-pause $1 1>/dev/null 2>&1
+	polybar-msg hook music-play-pause 1 1>/dev/null 2>&1
 }
 
 send_action() {
@@ -28,13 +28,13 @@ update_playback_status() {
 		$PAUSED_HOOK)
 			if [[ ! -f "$PAUSED_FILE" ]]; then
 				create_file $PAUSED_FILE
-				send_hook $PAUSED_HOOK
+				send_hook 
 			fi
 			;;
 		$PLAYING_HOOK)
 			if [[ -f "$PAUSED_FILE" ]]; then
 				delete_file $PAUSED_FILE
-				send_hook $PLAYING_HOOK
+				send_hook 
 			fi
 			;;
 	esac

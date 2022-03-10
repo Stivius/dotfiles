@@ -45,7 +45,6 @@ exec_always --no-startup-id "killall -q picom; sleep 1; picom"
 exec --no-startup-id nm-applet
 exec --no-startup-id blueman-manager
 exec firefox
-exec spotify
 exec telegram-desktop
 exec open_calc
 exec open_term

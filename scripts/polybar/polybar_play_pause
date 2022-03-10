@@ -1,0 +1,10 @@
+#!/bin/bash
+
+PAUSED_FILE=/tmp/polybar_music_paused
+
+if [[ ! -f "$PAUSED_FILE" ]]; then
+	echo " 栗"
+else
+	echo " 契"
+fi
+
