@@ -7,8 +7,11 @@ killall -q polybar
 # polybar-msg cmd quit
 
 # launch on multiple monitors
+counter=0
 for m in $(polybar --list-monitors | cut -d":" -f1); do
-    MONITOR=$m polybar --config="$dir/config.ini" --reload top &
+    MONITOR=$m MONITOR_NUM=$counter polybar --config="$dir/config.ini" --reload top &
+	echo $! > "/tmp/polybar_$counter"
+	((counter+=1))
 done
 
 echo "Bars launched..."

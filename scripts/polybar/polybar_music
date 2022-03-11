@@ -2,8 +2,9 @@
 
 # https://github.com/altdesktop/playerctl/#printing-properties-and-metadata
 FORMAT="{{ title }} - {{ artist }}"
-STOPPED_FILE=/tmp/polybar_music_stopped
-PAUSED_FILE=/tmp/polybar_music_paused
+COUNTER=$1
+STOPPED_FILE="/tmp/polybar_music_stopped_$MONITOR"
+PAUSED_FILE="/tmp/polybar_music_paused_$MONTIOR"
 PAUSED_HOOK=2
 PLAYING_HOOK=1
 
@@ -45,7 +46,12 @@ show_playback_status() {
 }
 
 hide_all() {
-	if [[ ! -f "$STOPPED_FILE" ]]; then
+	if [[ ! -f "$STOPPED_FILE" ]] || [[ $COUNTER -eq 1 ]]; then
+		if [[ $COUNTER -eq 1 ]]; then
+			# wait until all modules are initilized
+			sleep 1
+		fi
+		dunstify "hide $COUNTER $MONITOR"
 		create_file $STOPPED_FILE
 		send_action "#music-prev.module_hide"
 		send_action "#music.module_hide"
@@ -55,7 +61,7 @@ hide_all() {
 }
 
 show_all() {
-	if [[ -f "$STOPPED_FILE" ]]; then
+	if [[ -f "$STOPPED_FILE" ]] || [[ $COUNTER -eq 1 ]]; then
 		delete_file $STOPPED_FILE
 		send_action "#music-prev.module_show"
 		send_action "#music.module_show"
