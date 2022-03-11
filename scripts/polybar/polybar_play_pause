@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PAUSED_FILE=/tmp/polybar_music_paused
+PAUSED_FILE="/tmp/polybar_music_paused_$MONITOR"
 
 if [[ ! -f "$PAUSED_FILE" ]]; then
 	echo " 栗"

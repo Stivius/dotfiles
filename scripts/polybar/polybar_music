@@ -4,7 +4,7 @@
 FORMAT="{{ title }} - {{ artist }}"
 COUNTER=$1
 STOPPED_FILE="/tmp/polybar_music_stopped_$MONITOR"
-PAUSED_FILE="/tmp/polybar_music_paused_$MONTIOR"
+PAUSED_FILE="/tmp/polybar_music_paused_$MONITOR"
 PAUSED_HOOK=2
 PLAYING_HOOK=1
 
@@ -49,9 +49,8 @@ hide_all() {
 	if [[ ! -f "$STOPPED_FILE" ]] || [[ $COUNTER -eq 1 ]]; then
 		if [[ $COUNTER -eq 1 ]]; then
 			# wait until all modules are initilized
-			sleep 1
+			sleep 3
 		fi
-		dunstify "hide $COUNTER $MONITOR"
 		create_file $STOPPED_FILE
 		send_action "#music-prev.module_hide"
 		send_action "#music.module_hide"
@@ -61,7 +60,7 @@ hide_all() {
 }
 
 show_all() {
-	if [[ -f "$STOPPED_FILE" ]] || [[ $COUNTER -eq 1 ]]; then
+	if [[ -f "$STOPPED_FILE" ]]; then
 		delete_file $STOPPED_FILE
 		send_action "#music-prev.module_show"
 		send_action "#music.module_show"
