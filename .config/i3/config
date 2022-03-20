@@ -250,7 +250,7 @@ focus_on_window_activation urgent
 
 for_window [title="bash"] move --no-auto-back-and-forth to workspace $ws1, focus
 for_window [class="Telegram"] move --no-auto-back-and-forth to workspace $ws2, focus
-for_window [class="Firefox"] move --no-auto-back-and-forth to workspace $ws3, focus
+for_window [class="firefox"] move --no-auto-back-and-forth to workspace $ws3, focus
 for_window [class="Code"] move --no-auto-back-and-forth to workspace $ws5, focus
 for_window [class="obsidian"] move --no-auto-back-and-forth to workspace $ws6, focus
 for_window [class="Anki"] move --no-auto-back-and-forth to workspace $ws6, focus
