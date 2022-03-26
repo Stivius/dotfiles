@@ -1,21 +1,31 @@
 #!/bin/bash
 
 search_type="$1"
-search_term=`rofi -dmenu -theme-str 'listview { enabled: false;}'`
 
-if [[ -z "$search_term" ]]; then
-	exit 1
-fi
+function get_search_term() {
+	search_term=`rofi -dmenu -theme-str 'listview { enabled: false;}'`
+
+	if [[ -z "$search_term" ]]; then
+		exit 1
+	fi
+}
 
 case "$search_type" in
-	"web")
+	"search")
+		get_search_term
 		xdg-open "https://www.google.com/search?q=$search_term"
 		;;
 	"yt")
+		get_search_term
 		xdg-open "https://www.youtube.com/results?search_query=$search_term"
 		;;
 	
+	"lofi")
+		xdg-open "https://www.youtube.com/watch?v=5qap5aO4i9A"
+		;;
+	
 	"tr")
+		get_search_term
 		target_lang=`echo -e "en\nru\nes" | rofi -i -dmenu`
 		if [[ -z "$target_lang" ]]; then
 			exit 1

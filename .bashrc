@@ -19,6 +19,7 @@ alias z='cd ~/Zettelkasten && nvim'
 alias vim=nvim
 alias vi=nvim
 alias ssh="TERM=xterm-256color ssh"
+alias xclip="xclip -sel clip"
 
 # Powerline configuration
 if [ -f /usr/share/powerline/bindings/bash/powerline.sh ]; then
