@@ -2,7 +2,11 @@
 # Manage logout with rofi
 case $1 in
     suspend)
-        sudo /usr/bin/systemctl suspend
+        i3lock_screen
+        /usr/bin/systemctl suspend
+        ;;
+    hibernate)
+        /usr/bin/systemctl hibernate
         ;;
     lock)
         i3lock_screen
@@ -16,7 +20,4 @@ case $1 in
     poweroff)
         /usr/bin/systemctl poweroff
         ;;
-    #killuser)
-    #    loginctl kill-user $USER
-    #    ;;
 esac

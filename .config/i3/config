@@ -32,7 +32,7 @@ exec --no-startup-id update_monitors
 # Night display
 exec --no-startup-id redshift
 
-# Power manager
+# Power Manager 
 exec_always --no-startup-id xfce4-power-manager
 
 # Setup keyboard 
@@ -124,6 +124,7 @@ set $mode_logout (s)uspend, (l)ock screen, l(o)gout, (r)eboot, (p)oweroff
 bindsym $mod+p mode "$mode_logout"
 mode "$mode_logout" {
     bindsym s exec i3_logout suspend; mode "default"
+    bindsym h exec i3_logout hibernate; mode "default"
     bindsym l exec i3_logout lock; mode "default"
     bindsym o exec i3_logout logout; mode "default"
 	bindsym r exec i3_logout reboot; mode "default"
