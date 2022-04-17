@@ -120,7 +120,7 @@ mode "$mode_rofi" {
 }
 
 # Power off
-set $mode_logout (s)uspend, (l)ock screen, l(o)gout, (r)eboot, (p)oweroff
+set $mode_logout (s)uspend, (h)iberante, (l)ock screen, l(o)gout, (r)eboot, (p)oweroff
 bindsym $mod+p mode "$mode_logout"
 mode "$mode_logout" {
     bindsym s exec i3_logout suspend; mode "default"
