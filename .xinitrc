@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# invoke global X session script
+#. /etc/X11/Xsession
+
 xset +fp /home/stivius/.local/share/fonts
 xset fp rehash
 userresources=$HOME/.Xresources
