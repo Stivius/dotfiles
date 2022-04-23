@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. /etc/X11/Xsession.d/95dbus_update-activation-env
+. /etc/X11/Xsession.d/20dbus_xdg-runtime
 
 xset +fp /home/stivius/.local/share/fonts
 xset fp rehash
