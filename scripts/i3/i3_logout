@@ -2,11 +2,10 @@
 # Manage logout with rofi
 case $1 in
     suspend)
-        i3lock_screen
         /usr/bin/systemctl suspend
         ;;
     hibernate)
-        /usr/bin/systemctl hibernate
+        sudo /usr/bin/systemctl hibernate
         ;;
     lock)
         i3lock_screen
