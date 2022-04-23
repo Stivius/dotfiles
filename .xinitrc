@@ -1,5 +1,7 @@
 #!/bin/bash
 
+. /etc/X11/Xsession.d/95dbus_update-activation-env
+
 xset +fp /home/stivius/.local/share/fonts
 xset fp rehash
 userresources=$HOME/.Xresources
