@@ -34,3 +34,7 @@ export SCRIPTS=$HOME/Projects/dotfiles/scripts
 export PATH=$PATH:$SCRIPTS:$SCRIPTS/i3:$SCRIPTS/polybar:$SCRIPTS/rofi:$SCRIPTS/system
 export ANKI_NOHIGHDPI=1
 ### END Custom configuration
+
+if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
+  exec startx   # remove the exec to remain logged in when your wm ends
+fi
