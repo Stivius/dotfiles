@@ -15,6 +15,8 @@ floating_modifier $mod
 # Font for window titles. Will also be used by the bar unless a different font
 font pango:monospace 12
 
+exec --no-startup-id lxpolkit
+
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # Autolock in 15 minutes of inactivity
