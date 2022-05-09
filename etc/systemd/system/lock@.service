@@ -1,0 +1,12 @@
+[Unit]
+Description=i3lock on suspend
+After=sleep.target
+
+[Service]
+User=%i
+Type=forking
+Environment=DISPLAY=:0
+ExecStart=/home/stivius/Projects/dotfiles/scripts/i3/i3lock_screen
+
+[Install]
+WantedBy=sleep.target

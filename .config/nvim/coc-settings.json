@@ -1,0 +1,30 @@
+{
+	"markdownlint.config": {
+		"default": true,
+		"line_length": false
+	},
+	"semanticTokens.filetypes": ["*"],
+	"languageserver": {
+		"clangd": {
+			"command": "clangd-12",
+			"rootPatterns": ["compile_flags.txt", "compile_commands.json"],
+			"filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
+		},
+		"cmake": {
+			"command": "cmake-language-server",
+			"filetypes": ["cmake"],
+			"rootPatterns": [
+				"build/"
+			],
+			"initializationOptions": {
+				"buildDirectory": "build"
+			}
+		},
+		"dockerfile": {
+			"command": "docker-langserver",
+			"filetypes": ["dockerfile"],
+			"args": ["--stdio"]
+		}
+  },
+  "Lua.telemetry.enable": false
+}
