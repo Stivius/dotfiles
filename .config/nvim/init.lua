@@ -261,5 +261,14 @@ vim.api.nvim_create_user_command(
 	{ nargs = 0, range = true }
 )
 
+vim.api.nvim_create_user_command(
+	'TodoDate',
+	function(opts)
+		vim.cmd('r!date --date ' .. opts['args'] .. ' +\\%Y/\\%m/\\%d')
+		vim.cmd('normal! k"_dd')
+	end,
+	{ nargs = 1 }
+)
+
 -- generate date
 -- revive
