@@ -213,6 +213,7 @@ function ExecuteTodoCommand(opts, command)
 	local manyPrefix = #ids > 1 and 'many' or '';
 	local confirmCmd = opts['confirm'] and 'yes |' or '';
 	local cmdFormat = string.format('!%s todo.sh %s %s %s %s', confirmCmd, manyPrefix, command, idsStr, args);
+	print(cmdFormat)
 	vim.cmd(string.format('silent exec "%s"', cmdFormat));
 end
 
@@ -247,7 +248,7 @@ vim.api.nvim_create_user_command(
 	'TodoDone',
 	function(opts)
 		opts['confirm'] = true;
-		ExecuteTodoCommand(opts, 'done')
+		ExecuteTodoCommand(opts, 'done');
 	end,
 	{ nargs = 0, range = true }
 )
@@ -256,7 +257,7 @@ vim.api.nvim_create_user_command(
 	'TodoDel',
 	function(opts)
 		opts['confirm'] = true;
-		ExecuteTodoCommand(opts, 'del')
+		ExecuteTodoCommand(opts, 'del');
 	end,
 	{ nargs = 0, range = true }
 )
@@ -264,10 +265,11 @@ vim.api.nvim_create_user_command(
 vim.api.nvim_create_user_command(
 	'TodoDate',
 	function(opts)
-		vim.cmd('r!date --date ' .. opts['args'] .. ' +\\%Y/\\%m/\\%d')
-		vim.cmd('normal! k"_dd')
+		local result = 't:' .. string.gsub(vim.fn.system('date --date ' .. opts['args'] .. ' +%Y-%m-%d'), '\n', '');
+		opts['args'] = result;
+		ExecuteTodoCommand(opts, 'append');
 	end,
-	{ nargs = 1 }
+	{ nargs = 1, range = true }
 )
 
 -- generate date
