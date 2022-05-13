@@ -210,25 +210,56 @@ function ExecuteTodoCommand(opts, command)
 		table.insert(ids, i);
 	end
 	local idsStr = table.concat(ids, ',');
-	local manyPrefix
-	if #ids > 1 then
-		manyPrefix = 'many';
-	else
-		manyPrefix = '';
-	end
-	vim.cmd(string.format('!todo.sh %s %s %s %s', manyPrefix, command, idsStr, args));
+	local manyPrefix = #ids > 1 and 'many' or '';
+	local confirmCmd = opts['confirm'] and 'yes |' or '';
+	local cmdFormat = string.format('!%s todo.sh %s %s %s %s', confirmCmd, manyPrefix, command, idsStr, args);
+	vim.cmd(string.format('silent exec "%s"', cmdFormat));
 end
 
-vim.api.nvim_create_user_command('TodoPri',
-	function(opts)
-		ExecuteTodoCommand(opts, 'pri')
-    end,
+vim.api.nvim_create_user_command(
+	'TodoPri',
+	function(opts) ExecuteTodoCommand(opts, 'pri') end,
 	{ nargs = 1, range = true }
 )
 
-vim.api.nvim_create_user_command('TodoDepri',
-	function(opts)
-		ExecuteTodoCommand(opts, 'depri')
-    end,
+vim.api.nvim_create_user_command(
+	'TodoDepri',
+	function(opts) ExecuteTodoCommand(opts, 'depri') end,
 	{ nargs = 0, range = true }
 )
+
+vim.api.nvim_create_user_command(
+	'TodoSchedule',
+	function(opts) ExecuteTodoCommand(opts, 'schedule') end,
+	{ nargs = 1, range = true }
+)
+
+vim.api.nvim_create_user_command(
+	'TodoUnschedule',
+	function(opts)
+		opts['args'] = 'rm';
+		ExecuteTodoCommand(opts, 'schedule');
+	end,
+	{ nargs = 0, range = true }
+)
+
+vim.api.nvim_create_user_command(
+	'TodoDone',
+	function(opts)
+		opts['confirm'] = true;
+		ExecuteTodoCommand(opts, 'done')
+	end,
+	{ nargs = 0, range = true }
+)
+
+vim.api.nvim_create_user_command(
+	'TodoDel',
+	function(opts)
+		opts['confirm'] = true;
+		ExecuteTodoCommand(opts, 'del')
+	end,
+	{ nargs = 0, range = true }
+)
+
+-- generate date
+-- revive
