@@ -203,14 +203,32 @@ nnoremap('J', 'gj')
 nnoremap('K', 'gk')
 nnoremap('gj', 'J')
 
+function ExecuteTodoCommand(opts, command)
+	local first, last, args = opts['line1'], opts['line2'], opts['args'];
+	local ids = {};
+	for i = first, last do
+		table.insert(ids, i);
+	end
+	local idsStr = table.concat(ids, ',');
+	local manyPrefix
+	if #ids > 1 then
+		manyPrefix = 'many';
+	else
+		manyPrefix = '';
+	end
+	vim.cmd(string.format('!todo.sh %s %s %s %s', manyPrefix, command, idsStr, args));
+end
+
 vim.api.nvim_create_user_command('TodoPri',
 	function(opts)
-		local first, last = opts['line1'], opts['line2'];
-		for i = first, last do
-			print(i)
-		end
-		-- vim.cmd('!todo.sh ls +Work')
-		-- for k,v in pairs(opts) do print(k, v) end
+		ExecuteTodoCommand(opts, 'pri')
     end,
-	{ nargs = 0, range = true}
+	{ nargs = 1, range = true }
+)
+
+vim.api.nvim_create_user_command('TodoDepri',
+	function(opts)
+		ExecuteTodoCommand(opts, 'depri')
+    end,
+	{ nargs = 0, range = true }
 )
