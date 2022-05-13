@@ -203,4 +203,14 @@ nnoremap('J', 'gj')
 nnoremap('K', 'gk')
 nnoremap('gj', 'J')
 
-
+vim.api.nvim_create_user_command('TodoPri',
+	function(opts)
+		local first, last = opts['line1'], opts['line2'];
+		for i = first, last do
+			print(i)
+		end
+		-- vim.cmd('!todo.sh ls +Work')
+		-- for k,v in pairs(opts) do print(k, v) end
+    end,
+	{ nargs = 0, range = true}
+)
