@@ -40,7 +40,7 @@ nmap('<Leader>f', '<Plug>(coc-format-selected)')
 xmap('<Leader>f', '<Plug>(coc-format-selected)')
 
 -- Applying codeAction to the selected region.
--- Example: `<leader>aap` for current paragraph
+-- Example: `<leader>cap` for current paragraph
 nmap('<Leader>ca', '<Plug>(coc-codeaction-selected)')
 xmap('<Leader>ca', '<Plug>(coc-codeaction-selected)')
 
