@@ -3,10 +3,31 @@ function merge(first_table, second_table)
 	return first_table
 end
 
+function print_table(tbl)
+	print('Printing table...')
+	for k,v in pairs(tbl) do print(k, v) end
+end
+
 function set_keymap(mode, lhs, rhs, opts, additional_opts)
 	opts = opts or {}
 	additional_opts = additional_opts or {}
-	vim.api.nvim_set_keymap(mode, lhs, rhs, merge(opts, additional_opts))
+	local all_opts = merge(opts, additional_opts)
+	print_table(all_opts)
+	if all_opts['buffer'] then
+		all_opts['buffer'] = nil
+		vim.api.nvim_buf_set_keymap(0, mode, lhs, rhs, all_opts)
+	else
+		vim.api.nvim_set_keymap(mode, lhs, rhs, all_opts)
+	end
+end
+
+function create_user_command(command_name, callback, opts)
+	if opts['buffer'] then
+		opts['buffer'] = nil
+		vim.api.nvim_buf_create_user_command(0, command_name, callback, opts)
+	else
+		vim.api.nvim_create_user_command(command_name, callback, opts)
+	end
 end
 
 function map(lhs, rhs, opts) set_keymap('', lhs, rhs, opts) end
