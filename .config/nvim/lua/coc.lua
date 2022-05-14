@@ -2,6 +2,9 @@ function set_option(option, value)
 	vim.api.nvim_set_option(option, value)
 end
 
+vim.g.coc_snippet_next = '<Tab>';
+vim.g.coc_snippet_prev = '<S-Tab>';
+
 function set_win_option(option, value)
 	vim.api.nvim_win_set_option(0, option, value)
 end
@@ -50,6 +53,9 @@ nmap('<Leader>caa', '<Plug>(coc-codeaction)')
 nmap('<Leader>fc', '<Plug>(coc-fix-current)')
 -- Run the Code Lens action on the current line.
 nmap('<Leader>cal', '<Plug>(coc-codelens-action)')
+
+-- Convert selection to snippet
+xmap('<leader>snp', '<Plug>(coc-convert-snippet)')
 
 --[[
 
