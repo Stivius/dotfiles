@@ -77,7 +77,7 @@ vim.api.nvim_set_option('tabstop', 4)
 vim.api.nvim_set_option('shiftwidth', 4)
 vim.api.nvim_set_option('encoding', 'UTF-8')
 vim.api.nvim_set_option('autoindent', true)
-vim.api.nvim_set_option('splitright', true) -- for vnew to work to the right 
+vim.api.nvim_set_option('splitright', true) -- for vnew to work to the right
 vim.api.nvim_win_set_option(0, 'relativenumber', true)
 vim.api.nvim_win_set_option(0, 'number', true)
 

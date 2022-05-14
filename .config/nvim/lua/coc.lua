@@ -5,7 +5,6 @@ end
 function set_win_option(option, value)
 	vim.api.nvim_win_set_option(0, option, value)
 end
-
 -- unicode characters in the file autoload/float.vim
 set_option('encoding', 'utf-8')
 -- TextEdit might fail if hidden is not set.
@@ -36,23 +35,23 @@ nmap('gr', '<Plug>(coc-references)')
 -- Symbol renaming.
 nmap('<Leader>rn', '<Plug>(coc-rename)')
 
---[[
 -- Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+nmap('<Leader>f', '<Plug>(coc-format-selected)')
+xmap('<Leader>f', '<Plug>(coc-format-selected)')
 
 -- Applying codeAction to the selected region.
 -- Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap('<Leader>ca', '<Plug>(coc-codeaction-selected)')
+xmap('<Leader>ca', '<Plug>(coc-codeaction-selected)')
 
 -- Remap keys for applying codeAction to the current buffer.
-nmap <leader>ac  <Plug>(coc-codeaction)
+nmap('<Leader>caa', '<Plug>(coc-codeaction)')
 -- Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
-
+nmap('<Leader>fc', '<Plug>(coc-fix-current)')
 -- Run the Code Lens action on the current line.
-nmap <leader>cl  <Plug>(coc-codelens-action)
+nmap('<Leader>cal', '<Plug>(coc-codelens-action)')
+
+--[[
 
 -- Map function and class text objects
 -- NOTE: Requires 'textDocument.documentSymbol' support from the language server.

@@ -39,4 +39,5 @@ function vnoremap(lhs, rhs, opts) set_keymap('v', lhs, rhs, { noremap = true }, 
 function vnoremap_local(lhs, rhs, opts) set_keymap('v', lhs, rhs, { noremap = true, buffer = true }, opts) end
 function imap(lhs, rhs, opts) set_keymap('i', lhs, rhs, opts) end
 function inoremap(lhs, rhs, opts) set_keymap('i', lhs, rhs, { noremap = true }, opts) end
+function xmap(lhs, rhs, opts) set_keymap('x', lhs, rhs, opts) end
 
