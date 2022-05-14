@@ -12,7 +12,6 @@ function set_keymap(mode, lhs, rhs, opts, additional_opts)
 	opts = opts or {}
 	additional_opts = additional_opts or {}
 	local all_opts = merge(opts, additional_opts)
-	print_table(all_opts)
 	if all_opts['buffer'] then
 		all_opts['buffer'] = nil
 		vim.api.nvim_buf_set_keymap(0, mode, lhs, rhs, all_opts)
