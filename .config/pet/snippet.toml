@@ -1,0 +1,19 @@
+[[snippets]]
+  description = "TODO today + past"
+  command = "watch -n 5 -c todo.sh view past"
+  output = ""
+
+[[snippets]]
+  description = "TODO today + future"
+  command = "watch -n 5 -c todo.sh view future"
+  output = ""
+
+[[snippets]]
+  description = "TODO Weekly Goals"
+  command = "todo.sh ls goals:Weekly | less -R"
+  output = ""
+
+[[snippets]]
+  description = "TODO Monthly Goals"
+  command = "todo.sh ls goals:Monthly | less -R"
+  output = ""
