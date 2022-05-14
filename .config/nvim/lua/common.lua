@@ -33,7 +33,9 @@ function map(lhs, rhs, opts) set_keymap('', lhs, rhs, opts) end
 function noremap(lhs, rhs, opts) set_keymap('', lhs, rhs, { noremap = true }, opts) end
 function nmap(lhs, rhs, opts) set_keymap('n', lhs, rhs, opts) end
 function nnoremap(lhs, rhs, opts) set_keymap('n', lhs, rhs, { noremap = true }, opts) end
-function nnoremap_local(rhs, lhs) nnoremap(lhs, rhs, { buffer = true }) end
+function test_map(rhs, lhs)
+	nnoremap(lhs, rhs, { buffer = true })
+end
 function vmap(lhs, rhs, opts) set_keymap('v', lhs, rhs, opts) end
 function vnoremap(lhs, rhs, opts) set_keymap('v', lhs, rhs, { noremap = true }, opts) end
 function vnoremap_local(rhs, lhs) vnoremap(lhs, rhs, { buffer = true }) end

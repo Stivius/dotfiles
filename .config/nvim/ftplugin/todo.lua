@@ -66,9 +66,11 @@ create_user_command(
 	{ nargs = 0, range = true, buffer = true }
 )
 
+nnoremap('<Leader><Leader>pa', ':TodoPri A<CR>', { buffer = true })
+test_map('<Leader><Leader>pb', ':TodoPri B<CR>')
 -- priority
-nnoremap('<Leader><Leader>pa', ':TodoPri A<CR>')
 --[[
+nnoremap_local('<Leader><Leader>pa', ':TodoPri A<CR>')
 vnoremap_local('<Leader><Leader>pa', ':TodoPri A<CR>')
 nnoremap_local('<Leader><Leader>pb', ':TodoPri B<CR>')
 vnoremap_local('<Leader><Leader>pb', ':TodoPri B<CR>')
