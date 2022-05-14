@@ -23,7 +23,6 @@ require('packer').startup(function(use)
 	use { 'neoclide/coc.nvim', branch = 'release' }
 
 	use 'chrisbra/NrrwRgn'
-	use 'freitass/todo.txt-vim'
 	use 'ledger/vim-ledger'
 	use 'tpope/vim-commentary'
 	use 'iamcco/markdown-preview.nvim'
@@ -36,7 +35,9 @@ require('packer').startup(function(use)
 	use 'fannheyward/telescope-coc.nvim'
 end)
 
--- require('coc')
+require('common')
+require('coc')
+require('todo')
 
 vim.cmd("autocmd CursorHold * silent call CocActionAsync('highlight')")
 
@@ -50,26 +51,6 @@ vim.cmd([[
 		autocmd BufEnter *.txt if &buftype == 'help' | wincmd L | endif
 	augroup END
 ]])
-
-function merge(first_table, second_table)
-	for k,v in pairs(second_table) do first_table[k] = v end
-	return first_table
-end
-
-function set_keymap(mode, lhs, rhs, opts, additional_opts)
-	opts = opts or {}
-	additional_opts = additional_opts or {}
-	vim.api.nvim_set_keymap(mode, lhs, rhs, merge(opts, additional_opts))
-end
-
-function map(lhs, rhs, opts) set_keymap('', lhs, rhs, opts) end
-function noremap(lhs, rhs, opts) set_keymap('', lhs, rhs, { noremap = true }, opts) end
-function nmap(lhs, rhs, opts) set_keymap('n', lhs, rhs, opts) end
-function nnoremap(lhs, rhs, opts) set_keymap('n', lhs, rhs, { noremap = true }, opts) end
-function vmap(lhs, rhs, opts) set_keymap('v', lhs, rhs, opts) end
-function vnoremap(lhs, rhs, opts) set_keymap('v', lhs, rhs, { noremap = true }, opts) end
-function imap(lhs, rhs, opts) set_keymap('i', lhs, rhs, opts) end
-function inoremap(lhs, rhs, opts) set_keymap('i', lhs, rhs, { noremap = true }, opts) end
 
 -- powerline
 vim.g.airline_powerline_fonts = 1 -- use powerline fonts
@@ -202,75 +183,3 @@ inoremap('<right>', '<nop>')
 nnoremap('J', 'gj')
 nnoremap('K', 'gk')
 nnoremap('gj', 'J')
-
-function ExecuteTodoCommand(opts, command)
-	local first, last, args = opts['line1'], opts['line2'], opts['args'];
-	local ids = {};
-	for i = first, last do
-		table.insert(ids, i);
-	end
-	local idsStr = table.concat(ids, ',');
-	local manyPrefix = #ids > 1 and 'many' or '';
-	local confirmCmd = opts['confirm'] and 'yes |' or '';
-	local cmdFormat = string.format('!%s todo.sh %s %s %s %s', confirmCmd, manyPrefix, command, idsStr, args);
-	print(cmdFormat)
-	vim.cmd(string.format('silent exec "%s"', cmdFormat));
-end
-
-vim.api.nvim_create_user_command(
-	'TodoPri',
-	function(opts) ExecuteTodoCommand(opts, 'pri') end,
-	{ nargs = 1, range = true }
-)
-
-vim.api.nvim_create_user_command(
-	'TodoDepri',
-	function(opts) ExecuteTodoCommand(opts, 'depri') end,
-	{ nargs = 0, range = true }
-)
-
-vim.api.nvim_create_user_command(
-	'TodoSchedule',
-	function(opts) ExecuteTodoCommand(opts, 'schedule') end,
-	{ nargs = 1, range = true }
-)
-
-vim.api.nvim_create_user_command(
-	'TodoUnschedule',
-	function(opts)
-		opts['args'] = 'rm';
-		ExecuteTodoCommand(opts, 'schedule');
-	end,
-	{ nargs = 0, range = true }
-)
-
-vim.api.nvim_create_user_command(
-	'TodoDone',
-	function(opts)
-		opts['confirm'] = true;
-		ExecuteTodoCommand(opts, 'done');
-	end,
-	{ nargs = 0, range = true }
-)
-
-vim.api.nvim_create_user_command(
-	'TodoDel',
-	function(opts)
-		opts['confirm'] = true;
-		ExecuteTodoCommand(opts, 'del');
-	end,
-	{ nargs = 0, range = true }
-)
-
-vim.api.nvim_create_user_command(
-	'TodoDate',
-	function(opts)
-		local result = 't:' .. string.gsub(vim.fn.system('date --date ' .. opts['args'] .. ' +%Y-%m-%d'), '\n', '');
-		opts['args'] = result;
-		ExecuteTodoCommand(opts, 'append');
-	end,
-	{ nargs = 1, range = true }
-)
-
--- generate date
--- revive

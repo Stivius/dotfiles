@@ -124,11 +124,6 @@ _G.packer_plugins = {
     path = "/home/stivius/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
-  ["todo.txt-vim"] = {
-    loaded = true,
-    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/todo.txt-vim",
-    url = "https://github.com/freitass/todo.txt-vim"
-  },
   ["vim-airline"] = {
     loaded = true,
     path = "/home/stivius/.local/share/nvim/site/pack/packer/start/vim-airline",
