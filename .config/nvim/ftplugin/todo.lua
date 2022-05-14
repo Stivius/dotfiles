@@ -14,66 +14,58 @@ function ExecuteTodoCommand(opts, command)
 	vim.cmd(string.format('silent exec "%s"', cmdFormat));
 end
 
-vim.api.nvim_create_user_command(
+vim.api.nvim_buf_create_user_command(
 	'TodoPri',
 	function(opts) ExecuteTodoCommand(opts, 'pri') end,
-	{ nargs = 1, range = true, buffer = true }
+	{ nargs = 1, range = true }
 )
 
-vim.api.nvim_create_user_command(
+vim.api.nvim_buf_create_user_command(
 	'TodoDepri',
 	function(opts) ExecuteTodoCommand(opts, 'depri') end,
-	{ nargs = 0, range = true, buffer = true }
+	{ nargs = 0, range = true }
 )
 
-vim.api.nvim_create_user_command(
+vim.api.nvim_buf_create_user_command(
 	'TodoSchedule',
 	function(opts) ExecuteTodoCommand(opts, 'schedule') end,
-	{ nargs = 1, range = true, buffer = true }
+	{ nargs = 1, range = true }
 )
 
-vim.api.nvim_create_user_command(
+vim.api.nvim_buf_create_user_command(
 	'TodoUnschedule',
 	function(opts)
 		opts['args'] = 'rm';
 		ExecuteTodoCommand(opts, 'schedule');
 	end,
-	{ nargs = 0, range = true, buffer = true }
+	{ nargs = 0, range = true }
 )
 
-vim.api.nvim_create_user_command(
+vim.api.nvim_buf_create_user_command(
 	'TodoDone',
 	function(opts)
 		opts['confirm'] = true;
 		ExecuteTodoCommand(opts, 'done');
 	end,
-	{ nargs = 0, range = true, buffer = true }
+	{ nargs = 0, range = true }
 )
 
-vim.api.nvim_create_user_command(
+vim.api.nvim_buf_create_user_command(
 	'TodoRevive',
 	function(opts)
 		ExecuteTodoCommand(opts, 'revive');
 	end,
-	{ nargs = 0, range = true, buffer = true }
+	{ nargs = 0, range = true }
 )
 
-vim.api.nvim_create_user_command(
+vim.api.nvim_buf_create_user_command(
 	'TodoDel',
 	function(opts)
 		opts['confirm'] = true;
 		ExecuteTodoCommand(opts, 'del');
 	end,
-	{ nargs = 0, range = true, buffer = true }
+	{ nargs = 0, range = true }
 )
-
-function nnoremap_local(rhs, lhs)
-	nnoremap(lhs, rhs, { buffer = true })
-end
-
-function vnoremap_local(rhs, lhs)
-	vnoremap(lhs, rhs, { buffer = true })
-end
 
 -- priority
 nnoremap_local('<Leader><Leader>pa', ':TodoPri A<CR>')
