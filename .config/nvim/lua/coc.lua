@@ -2,12 +2,18 @@ function set_option(option, value)
 	vim.api.nvim_set_option(option, value)
 end
 
-vim.g.coc_snippet_next = '<Tab>';
-vim.g.coc_snippet_prev = '<S-Tab>';
-
 function set_win_option(option, value)
 	vim.api.nvim_win_set_option(0, option, value)
 end
+
+vim.cmd([[
+autocmd BufNew,BufEnter *.json,*.lua,*.js,*.ts,*.cpp,*.h,*.hpp,*.md execute "silent! CocEnable"
+autocmd BufLeave *.json,*.vim,*.lua execute "silent! CocDisable"
+]])
+
+vim.g.coc_snippet_next = '<Tab>';
+vim.g.coc_snippet_prev = '<S-Tab>';
+
 -- unicode characters in the file autoload/float.vim
 set_option('encoding', 'utf-8')
 -- TextEdit might fail if hidden is not set.

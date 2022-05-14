@@ -17,3 +17,8 @@
   description = "TODO Monthly Goals"
   command = "todo.sh ls goals:Monthly | less -R"
   output = ""
+
+[[snippets]]
+  description = "past + todat tasks"
+  command = "todo.sh view past | less -R"
+  output = ""
