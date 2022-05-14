@@ -6,13 +6,27 @@ function set_win_option(option, value)
 	vim.api.nvim_win_set_option(0, option, value)
 end
 
-vim.cmd([[
-augroup CocGroup
-  autocmd!
-  autocmd BufNew,BufEnter * execute "CocDisable"
-augroup end
-]])
---   autocmd BufNew,BufEnter *.json,*.lua,*.js,*.ts,*.cpp,*.h,*.hpp,*.md,*.py,*.sh execute "silent! CocEnable"
+local function contains(table, val)
+   for i=1,#table do
+      if table[i] == val then
+         return true
+      end
+   end
+   return false
+end
+
+local allowed_exts = {'json', 'lua', 'javascript', 'typescript', 'cpp', 'markdown', 'sh'}
+
+vim.api.nvim_create_autocmd({"BufEnter"}, {
+	pattern = "*",
+	callback = function()
+		local ft = vim.api.nvim_buf_get_option(0, 'filetype')
+		if not contains(allowed_exts, ft) then
+			vim.cmd(":CocDisable")
+		end
+	end,
+})
+--   autocmd BufNew,BufEnter execute "silent! CocEnable"
 --   autocmd BufLeave *.json,*.lua,*.js,*.ts,*.cpp,*.h,*.hpp,*.md,*.py,*.sh execute "silent! CocDisable"
 
 vim.g.coc_snippet_next = '<Tab>';
