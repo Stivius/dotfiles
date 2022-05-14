@@ -31,6 +31,11 @@ if [ -f /usr/share/powerline/bindings/bash/powerline.sh ]; then
 fi
 
 . $HOME/.local/share/bash-completions/todo
+
+function prev() {
+  PREV=$(echo `history | tail -n2 | head -n1` | sed 's/[0-9]* //')
+  sh -c "pet new `printf %q "$PREV"`"
+}
 ### END Custom configuration
 
 # don't put duplicate lines or lines starting with space in the history.
