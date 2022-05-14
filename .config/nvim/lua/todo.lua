@@ -59,21 +59,19 @@ vim.api.nvim_create_user_command(
 	{ nargs = 0, range = true }
 )
 
-vim.api.nvim_create_user_command(
-	'TodoDate',
-	function(opts)
-		local result = 't:' .. string.gsub(vim.fn.system('date --date ' .. opts['args'] .. ' +%Y-%m-%d'), '\n', '');
-		opts['args'] = result;
-		ExecuteTodoCommand(opts, 'append');
-	end,
-	{ nargs = 1, range = true }
-)
-
-nnoremap('<Leader>pa', ':TodoPri A<CR>')
-nnoremap('<Leader>pb', ':TodoPri B<CR>')
-nnoremap('<Leader>pc', ':TodoPri C<CR>')
-nnoremap('<Leader>pd', ':TodoPri D<CR>')
-nnoremap('<Leader>pp', ':TodoDepri<CR>')
-
--- generate date
 -- revive
+
+nnoremap('<Leader><Leader>pa', ':TodoPri A<CR>')
+nnoremap('<Leader><Leader>pb', ':TodoPri B<CR>')
+nnoremap('<Leader><Leader>pc', ':TodoPri C<CR>')
+nnoremap('<Leader><Leader>pd', ':TodoPri D<CR>')
+nnoremap('<Leader><Leader>pp', ':TodoDepri<CR>')
+
+nnoremap('<Leader><Leader>srm', ':TodoUnschedule<CR>')
+nnoremap('<Leader><Leader>ss', ':TodoSchedule ')
+nnoremap('<Leader><Leader>stt', ':TodoSchedule today<CR>')
+nnoremap('<Leader><Leader>stm', ':TodoSchedule tomorrow<CR>')
+
+nnoremap('<Leader><Leader>d', ':TodoDone<CR>')
+nnoremap('<Leader><Leader>rm', ':TodoDel<CR>')
+

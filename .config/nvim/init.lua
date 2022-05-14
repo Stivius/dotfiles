@@ -36,8 +36,6 @@ require('packer').startup(function(use)
 end)
 
 require('common')
-require('coc')
-require('todo')
 
 vim.cmd("autocmd CursorHold * silent call CocActionAsync('highlight')")
 
@@ -71,6 +69,9 @@ vim.api.nvim_set_option('imsearch', 0) -- english by default
 nnoremap('<Space>', '<Nop>')
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
+
+require('coc')
+require('todo')
 
 vim.api.nvim_set_option('wrap', true) -- wrap words
 vim.api.nvim_set_option('linebreak', true) -- wrap words
