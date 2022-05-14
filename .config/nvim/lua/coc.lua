@@ -7,9 +7,13 @@ function set_win_option(option, value)
 end
 
 vim.cmd([[
-autocmd BufNew,BufEnter *.json,*.lua,*.js,*.ts,*.cpp,*.h,*.hpp,*.md execute "silent! CocEnable"
-autocmd BufLeave *.json,*.vim,*.lua execute "silent! CocDisable"
+augroup CocGroup
+  autocmd!
+  autocmd BufNew,BufEnter * execute "CocDisable"
+augroup end
 ]])
+--   autocmd BufNew,BufEnter *.json,*.lua,*.js,*.ts,*.cpp,*.h,*.hpp,*.md,*.py,*.sh execute "silent! CocEnable"
+--   autocmd BufLeave *.json,*.lua,*.js,*.ts,*.cpp,*.h,*.hpp,*.md,*.py,*.sh execute "silent! CocDisable"
 
 vim.g.coc_snippet_next = '<Tab>';
 vim.g.coc_snippet_prev = '<S-Tab>';
