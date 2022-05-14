@@ -71,7 +71,6 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 require('coc')
-require('todo')
 
 vim.api.nvim_set_option('wrap', true) -- wrap words
 vim.api.nvim_set_option('linebreak', true) -- wrap words

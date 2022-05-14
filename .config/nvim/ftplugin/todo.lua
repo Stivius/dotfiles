@@ -51,6 +51,14 @@ vim.api.nvim_create_user_command(
 )
 
 vim.api.nvim_create_user_command(
+	'TodoRevive',
+	function(opts)
+		ExecuteTodoCommand(opts, 'revive');
+	end,
+	{ nargs = 0, range = true }
+)
+
+vim.api.nvim_create_user_command(
 	'TodoDel',
 	function(opts)
 		opts['confirm'] = true;
@@ -59,19 +67,31 @@ vim.api.nvim_create_user_command(
 	{ nargs = 0, range = true }
 )
 
--- revive
-
 nnoremap('<Leader><Leader>pa', ':TodoPri A<CR>')
+vnoremap('<Leader><Leader>pa', ':TodoPri A<CR>')
 nnoremap('<Leader><Leader>pb', ':TodoPri B<CR>')
+vnoremap('<Leader><Leader>pb', ':TodoPri B<CR>')
 nnoremap('<Leader><Leader>pc', ':TodoPri C<CR>')
+vnoremap('<Leader><Leader>pc', ':TodoPri C<CR>')
 nnoremap('<Leader><Leader>pd', ':TodoPri D<CR>')
+vnoremap('<Leader><Leader>pd', ':TodoPri D<CR>')
 nnoremap('<Leader><Leader>pp', ':TodoDepri<CR>')
+vnoremap('<Leader><Leader>pp', ':TodoDepri<CR>')
 
 nnoremap('<Leader><Leader>srm', ':TodoUnschedule<CR>')
+vnoremap('<Leader><Leader>srm', ':TodoUnschedule<CR>')
 nnoremap('<Leader><Leader>ss', ':TodoSchedule ')
+vnoremap('<Leader><Leader>ss', ':TodoSchedule ')
 nnoremap('<Leader><Leader>stt', ':TodoSchedule today<CR>')
+vnoremap('<Leader><Leader>stt', ':TodoSchedule today<CR>')
 nnoremap('<Leader><Leader>stm', ':TodoSchedule tomorrow<CR>')
+vnoremap('<Leader><Leader>stm', ':TodoSchedule tomorrow<CR>')
 
+nnoremap('<Leader><Leader>od', ':vsp ~/.todo/done.txt<CR>')
 nnoremap('<Leader><Leader>d', ':TodoDone<CR>')
+vnoremap('<Leader><Leader>d', ':TodoDone<CR>')
+nnoremap('<Leader><Leader>rv', ':TodoRevive<CR>')
+vnoremap('<Leader><Leader>rv', ':TodoRevive<CR>')
 nnoremap('<Leader><Leader>rm', ':TodoDel<CR>')
+vnoremap('<Leader><Leader>rm', ':TodoDel<CR>')
 
