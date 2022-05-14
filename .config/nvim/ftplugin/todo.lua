@@ -17,19 +17,19 @@ end
 vim.api.nvim_create_user_command(
 	'TodoPri',
 	function(opts) ExecuteTodoCommand(opts, 'pri') end,
-	{ nargs = 1, range = true }
+	{ nargs = 1, range = true, buffer = true }
 )
 
 vim.api.nvim_create_user_command(
 	'TodoDepri',
 	function(opts) ExecuteTodoCommand(opts, 'depri') end,
-	{ nargs = 0, range = true }
+	{ nargs = 0, range = true, buffer = true }
 )
 
 vim.api.nvim_create_user_command(
 	'TodoSchedule',
 	function(opts) ExecuteTodoCommand(opts, 'schedule') end,
-	{ nargs = 1, range = true }
+	{ nargs = 1, range = true, buffer = true }
 )
 
 vim.api.nvim_create_user_command(
@@ -38,7 +38,7 @@ vim.api.nvim_create_user_command(
 		opts['args'] = 'rm';
 		ExecuteTodoCommand(opts, 'schedule');
 	end,
-	{ nargs = 0, range = true }
+	{ nargs = 0, range = true, buffer = true }
 )
 
 vim.api.nvim_create_user_command(
@@ -47,7 +47,7 @@ vim.api.nvim_create_user_command(
 		opts['confirm'] = true;
 		ExecuteTodoCommand(opts, 'done');
 	end,
-	{ nargs = 0, range = true }
+	{ nargs = 0, range = true, buffer = true }
 )
 
 vim.api.nvim_create_user_command(
@@ -55,7 +55,7 @@ vim.api.nvim_create_user_command(
 	function(opts)
 		ExecuteTodoCommand(opts, 'revive');
 	end,
-	{ nargs = 0, range = true }
+	{ nargs = 0, range = true, buffer = true }
 )
 
 vim.api.nvim_create_user_command(
@@ -64,34 +64,45 @@ vim.api.nvim_create_user_command(
 		opts['confirm'] = true;
 		ExecuteTodoCommand(opts, 'del');
 	end,
-	{ nargs = 0, range = true }
+	{ nargs = 0, range = true, buffer = true }
 )
 
-nnoremap('<Leader><Leader>pa', ':TodoPri A<CR>')
-vnoremap('<Leader><Leader>pa', ':TodoPri A<CR>')
-nnoremap('<Leader><Leader>pb', ':TodoPri B<CR>')
-vnoremap('<Leader><Leader>pb', ':TodoPri B<CR>')
-nnoremap('<Leader><Leader>pc', ':TodoPri C<CR>')
-vnoremap('<Leader><Leader>pc', ':TodoPri C<CR>')
-nnoremap('<Leader><Leader>pd', ':TodoPri D<CR>')
-vnoremap('<Leader><Leader>pd', ':TodoPri D<CR>')
-nnoremap('<Leader><Leader>pp', ':TodoDepri<CR>')
-vnoremap('<Leader><Leader>pp', ':TodoDepri<CR>')
+function nnoremap_local(rhs, lhs)
+	nnoremap(lhs, rhs, { buffer = true })
+end
 
-nnoremap('<Leader><Leader>srm', ':TodoUnschedule<CR>')
-vnoremap('<Leader><Leader>srm', ':TodoUnschedule<CR>')
-nnoremap('<Leader><Leader>ss', ':TodoSchedule ')
-vnoremap('<Leader><Leader>ss', ':TodoSchedule ')
-nnoremap('<Leader><Leader>stt', ':TodoSchedule today<CR>')
-vnoremap('<Leader><Leader>stt', ':TodoSchedule today<CR>')
-nnoremap('<Leader><Leader>stm', ':TodoSchedule tomorrow<CR>')
-vnoremap('<Leader><Leader>stm', ':TodoSchedule tomorrow<CR>')
+function vnoremap_local(rhs, lhs)
+	vnoremap(lhs, rhs, { buffer = true })
+end
 
-nnoremap('<Leader><Leader>od', ':vsp ~/.todo/done.txt<CR>')
-nnoremap('<Leader><Leader>d', ':TodoDone<CR>')
-vnoremap('<Leader><Leader>d', ':TodoDone<CR>')
-nnoremap('<Leader><Leader>rv', ':TodoRevive<CR>')
-vnoremap('<Leader><Leader>rv', ':TodoRevive<CR>')
-nnoremap('<Leader><Leader>rm', ':TodoDel<CR>')
-vnoremap('<Leader><Leader>rm', ':TodoDel<CR>')
+-- priority
+nnoremap_local('<Leader><Leader>pa', ':TodoPri A<CR>')
+vnoremap_local('<Leader><Leader>pa', ':TodoPri A<CR>')
+nnoremap_local('<Leader><Leader>pb', ':TodoPri B<CR>')
+vnoremap_local('<Leader><Leader>pb', ':TodoPri B<CR>')
+nnoremap_local('<Leader><Leader>pc', ':TodoPri C<CR>')
+vnoremap_local('<Leader><Leader>pc', ':TodoPri C<CR>')
+nnoremap_local('<Leader><Leader>pd', ':TodoPri D<CR>')
+vnoremap_local('<Leader><Leader>pd', ':TodoPri D<CR>')
+nnoremap_local('<Leader><Leader>pp', ':TodoDepri<CR>')
+vnoremap_local('<Leader><Leader>pp', ':TodoDepri<CR>')
+
+-- schedule
+nnoremap_local('<Leader><Leader>srm', ':TodoUnschedule<CR>')
+vnoremap_local('<Leader><Leader>srm', ':TodoUnschedule<CR>')
+nnoremap_local('<Leader><Leader>ss', ':TodoSchedule ')
+vnoremap_local('<Leader><Leader>ss', ':TodoSchedule ')
+nnoremap_local('<Leader><Leader>stt', ':TodoSchedule today<CR>')
+vnoremap_local('<Leader><Leader>stt', ':TodoSchedule today<CR>')
+nnoremap_local('<Leader><Leader>stm', ':TodoSchedule tomorrow<CR>')
+vnoremap_local('<Leader><Leader>stm', ':TodoSchedule tomorrow<CR>')
+
+-- deletion/finish
+nnoremap_local('<Leader><Leader>od', ':vsp ~/.todo/done.txt<CR>')
+nnoremap_local('<Leader><Leader>d', ':TodoDone<CR>')
+vnoremap_local('<Leader><Leader>d', ':TodoDone<CR>')
+nnoremap_local('<Leader><Leader>rv', ':TodoRevive<CR>')
+vnoremap_local('<Leader><Leader>rv', ':TodoRevive<CR>')
+nnoremap_local('<Leader><Leader>rm', ':TodoDel<CR>')
+vnoremap_local('<Leader><Leader>rm', ':TodoDel<CR>')
 
