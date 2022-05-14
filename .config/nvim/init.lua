@@ -36,9 +36,28 @@ require('packer').startup(function(use)
 	use 'fannheyward/telescope-coc.nvim'
 end)
 
-vim.cmd("autocmd CursorHold * silent call CocActionAsync('highlight')")
-
 vim.cmd('filetype plugin on')
+
+-- change <Leader> key
+nnoremap('<Space>', '<Nop>')
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
+local allowed_exts = {'json', 'lua', 'javascript', 'typescript', 'cpp', 'markdown', 'sh'}
+vim.api.nvim_create_autocmd({"BufEnter","BufWinEnter"}, {
+	pattern = "*",
+	callback = function()
+		print('buffer enter', vim.api.nvim_get_current_buf())
+		local ft = vim.api.nvim_buf_get_option(0, 'filetype')
+		if not table_contains(allowed_exts, ft) then
+			vim.cmd(":CocDisable")
+		else
+			print('enable coc')
+			vim.cmd(":CocEnable")
+			require('coc')
+		end
+	end,
+})
 
 -- autocommand (not yet supported in lua API)
 vim.cmd([[
@@ -49,50 +68,44 @@ vim.cmd([[
 	augroup END
 ]])
 
+-- unicode characters in the file autoload/float.vim
+set_option('encoding', 'utf-8')
+-- TextEdit might fail if hidden is not set.
+set_option('hidden', true)
+-- Some servers have issues with backup files, see #649.
+set_option('backup', false)
+set_option('writebackup', false)
+-- Give more space for displaying messages.
+set_option('cmdheight', 2)
+-- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable delays and poor user experience.
+set_option('updatetime', 300)
+-- Column for diagnostic messages
+set_win_option('signcolumn', 'auto')
+
 -- powerline
 vim.g.airline_powerline_fonts = 1 -- use powerline fonts
 vim.g.Powerline_symbols = 'unicode' -- support unicode
 
 -- colorscheme
 vim.cmd('colorscheme base16-classic-dark')
-vim.api.nvim_set_option('termguicolors', true)
+set_option('termguicolors', true)
 
 -- enable russian layout
 inoremap('<C-f>', '<C-^>')
 nnoremap('<C-f>', 'a<C-^><ESC>')
-vim.api.nvim_set_option('keymap', 'russian-jcukenwin')
-vim.api.nvim_set_option('iminsert', 0) -- english by default
-vim.api.nvim_set_option('imsearch', 0) -- english by default
+set_option('keymap', 'russian-jcukenwin')
+set_option('iminsert', 0) -- english by default
+set_option('imsearch', 0) -- english by default
 
--- change <Leader> key
-nnoremap('<Space>', '<Nop>')
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
-require('coc')
-
-vim.api.nvim_set_option('wrap', true) -- wrap words
-vim.api.nvim_set_option('linebreak', true) -- wrap words
-vim.api.nvim_set_option('tabstop', 4)
-vim.api.nvim_set_option('shiftwidth', 4)
-vim.api.nvim_set_option('encoding', 'UTF-8')
-vim.api.nvim_set_option('autoindent', true)
-vim.api.nvim_set_option('splitright', true) -- for vnew to work to the right
-vim.api.nvim_win_set_option(0, 'relativenumber', true)
-vim.api.nvim_win_set_option(0, 'number', true)
-
--- goto code
-nmap('gd', '<Plug>(coc-definition)', { silent = true})
-nmap('gy', '<Plug>(coc-type-definition)', { silent = true})
-nmap('gi', '<Plug>(coc-implementation)', { silent = true})
-nmap('gr', '<Plug>(coc-references)', { silent = true})
-
--- Symbol renaming.
-nmap('<Leader>rn', '<Plug>(coc-rename)')
-
--- Formatting selected code.
--- xmap('<Leader>f', '<Plug>(coc-format-selected)')
-nmap('<Leader>f', '<Plug>(coc-format-selected)')
+set_option('wrap', true) -- wrap words
+set_option('linebreak', true) -- wrap words
+set_option('tabstop', 4)
+set_option('shiftwidth', 4)
+set_option('encoding', 'UTF-8')
+set_option('autoindent', true)
+set_option('splitright', true) -- for vnew to work to the right
+set_win_option('relativenumber', true)
+set_win_option('number', true)
 
 -- completion
 inoremap('<CR>', 'pumvisible() ? coc#_select_confirm() : "\\<C-g>u\\<CR>"', { expr = true })

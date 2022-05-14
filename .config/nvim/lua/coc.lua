@@ -1,85 +1,39 @@
-function set_option(option, value)
-	vim.api.nvim_set_option(option, value)
-end
-
-function set_win_option(option, value)
-	vim.api.nvim_win_set_option(0, option, value)
-end
-
-local function contains(table, val)
-   for i=1,#table do
-      if table[i] == val then
-         return true
-      end
-   end
-   return false
-end
-
-local allowed_exts = {'json', 'lua', 'javascript', 'typescript', 'cpp', 'markdown', 'sh'}
-
-vim.api.nvim_create_autocmd({"BufEnter"}, {
-	pattern = "*",
-	callback = function()
-		local ft = vim.api.nvim_buf_get_option(0, 'filetype')
-		if not contains(allowed_exts, ft) then
-			vim.cmd(":CocDisable")
-		end
-	end,
-})
---   autocmd BufNew,BufEnter execute "silent! CocEnable"
---   autocmd BufLeave *.json,*.lua,*.js,*.ts,*.cpp,*.h,*.hpp,*.md,*.py,*.sh execute "silent! CocDisable"
+vim.cmd("autocmd CursorHold * silent call CocActionAsync('highlight')")
 
 vim.g.coc_snippet_next = '<Tab>';
 vim.g.coc_snippet_prev = '<S-Tab>';
 
--- unicode characters in the file autoload/float.vim
-set_option('encoding', 'utf-8')
--- TextEdit might fail if hidden is not set.
-set_option('hidden', true)
--- Some servers have issues with backup files, see #649.
-set_option('backup', false)
-set_option('writebackup', false)
-
--- Give more space for displaying messages.
-set_option('cmdheight', 2)
-
--- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable delays and poor user experience.
-set_option('updatetime', 300)
-
--- Column for diagnostic messages
-set_win_option('signcolumn', 'auto')
-
 -- Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap('[g', '<Plug>(coc-diagnostic-prev)')
-nmap(']g', '<Plug>(coc-diagnostic-prev)')
+nmap_local('[g', '<Plug>(coc-diagnostic-prev)')
+nmap_local(']g', '<Plug>(coc-diagnostic-prev)')
 
 -- GoTo code navigation.
-nmap('gd', '<Plug>(coc-definition)')
-nmap('gy', '<Plug>(coc-type-definition)')
-nmap('gi', '<Plug>(coc-implementation)')
-nmap('gr', '<Plug>(coc-references)')
+nmap_local('gd', '<Plug>(coc-definition)')
+nmap_local('gy', '<Plug>(coc-type-definition)')
+nmap_local('gi', '<Plug>(coc-implementation)')
+nmap_local('gr', '<Plug>(coc-references)')
 
 -- Symbol renaming.
-nmap('<Leader>rn', '<Plug>(coc-rename)')
+nmap_local('<Leader>rn', '<Plug>(coc-rename)')
 
 -- Formatting selected code.
-nmap('<Leader>f', '<Plug>(coc-format-selected)')
-xmap('<Leader>f', '<Plug>(coc-format-selected)')
+nmap_local('<Leader>f', '<Plug>(coc-format-selected)')
+xmap_local('<Leader>f', '<Plug>(coc-format-selected)')
 
 -- Applying codeAction to the selected region.
 -- Example: `<leader>cap` for current paragraph
-nmap('<Leader>ca', '<Plug>(coc-codeaction-selected)')
-xmap('<Leader>ca', '<Plug>(coc-codeaction-selected)')
+nmap_local('<Leader>ca', '<Plug>(coc-codeaction-selected)')
+xmap_local('<Leader>ca', '<Plug>(coc-codeaction-selected)')
 
 -- Remap keys for applying codeAction to the current buffer.
-nmap('<Leader>caa', '<Plug>(coc-codeaction)')
+nmap_local('<Leader>caa', '<Plug>(coc-codeaction)')
 -- Apply AutoFix to problem on the current line.
-nmap('<Leader>fc', '<Plug>(coc-fix-current)')
+nmap_local('<Leader>fc', '<Plug>(coc-fix-current)')
 -- Run the Code Lens action on the current line.
-nmap('<Leader>cal', '<Plug>(coc-codelens-action)')
+nmap_local('<Leader>cal', '<Plug>(coc-codelens-action)')
 
 -- Convert selection to snippet
-xmap('<leader>snp', '<Plug>(coc-convert-snippet)')
+xmap_local('<leader>snp', '<Plug>(coc-convert-snippet)')
 
 --[[
 

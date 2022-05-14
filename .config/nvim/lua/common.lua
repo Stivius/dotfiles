@@ -3,6 +3,23 @@ function merge(first_table, second_table)
 	return first_table
 end
 
+function set_option(option, value)
+	vim.api.nvim_set_option(option, value)
+end
+
+function set_win_option(option, value)
+	vim.api.nvim_win_set_option(0, option, value)
+end
+
+function table_contains(table, val)
+   for i=1,#table do
+      if table[i] == val then
+         return true
+      end
+   end
+   return false
+end
+
 function print_table(tbl)
 	print('Printing table...')
 	for k,v in pairs(tbl) do print(k, v) end
@@ -30,14 +47,21 @@ function create_user_command(command_name, callback, opts)
 end
 
 function map(lhs, rhs, opts) set_keymap('', lhs, rhs, opts) end
+function map_local(lhs, rhs, opts) set_keymap('', lhs, rhs, { buffer = true }, opts) end
 function noremap(lhs, rhs, opts) set_keymap('', lhs, rhs, { noremap = true }, opts) end
+function noremap_local(lhs, rhs, opts) set_keymap('', lhs, rhs, { noremap = true, buffer = true }, opts) end
 function nmap(lhs, rhs, opts) set_keymap('n', lhs, rhs, opts) end
+function nmap_local(lhs, rhs, opts) set_keymap('n', lhs, rhs, { buffer = true }, opts) end
 function nnoremap(lhs, rhs, opts) set_keymap('n', lhs, rhs, { noremap = true }, opts) end
 function nnoremap_local(lhs, rhs, opts) set_keymap('n', lhs, rhs, { noremap = true, buffer = true }, opts) end
 function vmap(lhs, rhs, opts) set_keymap('v', lhs, rhs, opts) end
+function vmap_local(lhs, rhs, opts) set_keymap('v', lhs, rhs, { buffer = true }, opts) end
 function vnoremap(lhs, rhs, opts) set_keymap('v', lhs, rhs, { noremap = true }, opts) end
 function vnoremap_local(lhs, rhs, opts) set_keymap('v', lhs, rhs, { noremap = true, buffer = true }, opts) end
 function imap(lhs, rhs, opts) set_keymap('i', lhs, rhs, opts) end
+function imap_local(lhs, rhs, opts) set_keymap('i', lhs, rhs, { buffer = true}, opts) end
 function inoremap(lhs, rhs, opts) set_keymap('i', lhs, rhs, { noremap = true }, opts) end
+function inoremap_local(lhs, rhs, opts) set_keymap('i', lhs, rhs, { noremap = true, buffer = true }, opts) end
 function xmap(lhs, rhs, opts) set_keymap('x', lhs, rhs, opts) end
+function xmap_local(lhs, rhs, opts) set_keymap('x', lhs, rhs, { buffer = true }, opts) end
 
