@@ -1,22 +1,25 @@
+function set_option(option, value)
+	vim.api.nvim_set_option(option, value)
+end
+
+function set_option_local(option, value)
+	vim.api.nvim_buf_set_option(0, option, value)
+end
+
+-- unicode characters in the file autoload/float.vim
+-- set_option_local('encoding', 'utf-8')
+-- TextEdit might fail if hidden is not set.
+-- set_option_local('hidden', true)
+-- Some servers have issues with backup files, see #649.
+set_option_local('nobackup', true)
+set_option_local('nobackup', true)
+
+-- Give more space for displaying messages.
+set_option_local('cmdheight', 2)
+
+-- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable delays and poor user experience.
+set_option_local('updatetime', 300)
 --[[
-" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
-" unicode characters in the file autoload/float.vim
-set encoding=utf-8
-
-" TextEdit might fail if hidden is not set.
-set hidden
-
-" Some servers have issues with backup files, see #649.
-set nobackup
-set nowritebackup
-
-" Give more space for displaying messages.
-set cmdheight=2
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
-
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
@@ -42,18 +45,6 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-" Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
-
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
