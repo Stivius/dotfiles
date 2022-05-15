@@ -43,21 +43,7 @@ nnoremap('<Space>', '<Nop>')
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-local allowed_exts = {'json', 'lua', 'javascript', 'typescript', 'cpp', 'markdown', 'sh'}
-vim.api.nvim_create_autocmd({"BufEnter","BufWinEnter"}, {
-	pattern = "*",
-	callback = function()
-		print('buffer enter', vim.api.nvim_get_current_buf())
-		local ft = vim.api.nvim_buf_get_option(0, 'filetype')
-		if not table_contains(allowed_exts, ft) then
-			vim.cmd(":CocDisable")
-		else
-			print('enable coc')
-			vim.cmd(":CocEnable")
-			require('coc')
-		end
-	end,
-})
+require('coc')
 
 -- autocommand (not yet supported in lua API)
 vim.cmd([[
