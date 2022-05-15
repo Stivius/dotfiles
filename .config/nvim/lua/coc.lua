@@ -3,10 +3,7 @@ vim.api.nvim_create_autocmd({"BufEnter"}, {
 	pattern = "*",
 	callback = function()
 		local ft = vim.api.nvim_buf_get_option(0, 'filetype')
-		if not table_contains(allowed_exts, ft) then
-			vim.cmd('execute "silent! CocDisable"')
-		else
-			vim.cmd('execute "silent! CocEnable"')
+		if table_contains(allowed_exts, ft) then
 			vim.cmd(":luafile ~/.config/nvim/lua/coc_mappings.lua")
 		end
 	end,
