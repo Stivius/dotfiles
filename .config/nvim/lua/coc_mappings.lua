@@ -1,5 +1,5 @@
 -- Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap_local('[g', '<Plug>(coc-diagnostic-prev)')
+nmap_local('[g', '<Plug>(coc-diagnostic-next)')
 nmap_local(']g', '<Plug>(coc-diagnostic-prev)')
 
 -- GoTo code navigation.
@@ -30,8 +30,36 @@ nmap_local('<Leader>cal', '<Plug>(coc-codelens-action)')
 -- Convert selection to snippet
 xmap_local('<leader>snp', '<Plug>(coc-convert-snippet)')
 
---[[
+-- Mappings for CoCList
+-- Show all diagnostics.
+nnoremap_local('<Leader>ld', ':<C-u>CocList diagnostics<cr>', { silent = true, nowait = true })
+-- Manage extensions.
+nnoremap_local('<Leader>le', ':<C-u>CocList extensions<cr>', { silent = true, nowait = true })
+-- Show commands.
+nnoremap_local('<Leader>lc', ':<C-u>CocList commands<cr>', { silent = true, nowait = true })
+-- Find symbol of current document.
+nnoremap_local('<Leader>lo', ':<C-u>CocList outline<cr>', { silent = true, nowait = true })
+-- Search workspace symbols.
+nnoremap_local('<Leader>ls', ':<C-u>CocList -I symbols<cr>', { silent = true, nowait = true })
+-- Do default action for next/prev item.
+-- nnoremap_local('<Leader>j', ':<C-u>CocNext<CR>', { silent = true, nowait = true})
+-- nnoremap_local('<Leader>k', ':<C-u>CocPrev<CR>', { silent = true, nowait = true})
 
+-- Use K to show documentation in preview window.
+nnoremap_local('K', ':call show_documentation()<CR>', { silent = true })
+
+
+vim.cmd([[
+function! s:show_documentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+]])
+
+--[[
 -- Map function and class text objects
 -- NOTE: Requires 'textDocument.documentSymbol' support from the language server.
 xmap if <Plug>(coc-funcobj-i)
@@ -43,54 +71,9 @@ omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
--- Mappings for CoCList
--- Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
--- Manage extensions.
-nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
--- Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
--- Find symbol of current document.
-nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
--- Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
--- Do default action for next item.
-nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
--- Do default action for previous item.
-nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
--- Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
-
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
-endfunction
-
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
 
 augroup mygroup
   autocmd!
