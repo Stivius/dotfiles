@@ -87,15 +87,6 @@ create_user_command(
 	end,
 	{ nargs = 0, buffer = true }
 )
--- Add `:Fold` command to fold current buffer.
--- command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-create_user_command(
-	'Fold',
-	function (opts)
-		print('folding')
-	end,
-	{ nargs = '?', buffer = true }
-)
 -- Add `:OR` command for organize imports of the current buffer.
 create_user_command(
 	'OR',
@@ -105,17 +96,36 @@ create_user_command(
 	{ nargs = 0, buffer = true }
 )
 
+local groupId = vim.api.nvim_create_augroup('coc_commands', { clear = true })
+-- Setup formatexpr specified filetype(s).
+vim.api.nvim_create_autocmd({ "FileType" }, {
+	pattern = { 'typescript', 'json' },
+	callback = function ()
+		vim.opt_local.formatexpr = vim.fn.CocAction('formatSelected')
+	end,
+	group = groupId
+})
+-- Update signature help on jump placeholder.
+-- vim.api.nvim_create_autocmd(
+-- 	{ "User", "CocJumpPlaceholder" },
+-- 	function ()
+-- 	end,
+-- 	{ buffer = true, group = groupId }
+-- )
+
+
+vim.cmd([[
+augroup mygroup
+  autocmd!
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+]])
+
 --[[
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder.
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
 --]]
 
 --[[
