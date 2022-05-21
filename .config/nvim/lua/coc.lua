@@ -9,6 +9,13 @@ vim.api.nvim_create_autocmd({"BufEnter"}, {
 	end,
 })
 
+vim.api.nvim_create_autocmd({"CursorHold"}, {
+	pattern = "*",
+	callback = function()
+		vim.cmd("call CocActionAsync('highlight')")
+	end
+})
+
 vim.cmd("autocmd CursorHold * silent call CocActionAsync('highlight')")
 
 vim.g.coc_snippet_next = '<Tab>';
