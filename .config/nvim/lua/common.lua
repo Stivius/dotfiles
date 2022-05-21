@@ -64,4 +64,7 @@ function inoremap(lhs, rhs, opts) set_keymap('i', lhs, rhs, { noremap = true }, 
 function inoremap_local(lhs, rhs, opts) set_keymap('i', lhs, rhs, { noremap = true, buffer = true }, opts) end
 function xmap(lhs, rhs, opts) set_keymap('x', lhs, rhs, opts) end
 function xmap_local(lhs, rhs, opts) set_keymap('x', lhs, rhs, { buffer = true }, opts) end
+function omap(lhs, rhs, opts) set_keymap('o', lhs, rhs, opts) end
+function omap_local(lhs, rhs, opts) set_keymap('o', lhs, rhs, { buffer = true }, opts) end
+
 

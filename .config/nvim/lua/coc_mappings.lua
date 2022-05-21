@@ -56,18 +56,18 @@ end
 -- Use K to show documentation in preview window.
 nnoremap_local('K', ':lua show_documentation()<CR>', { silent = true })
 
+-- Map function and class text objects
+-- NOTE: Requires 'textDocument.documentSymbol' support from the language server
+xmap_local('if', '<Plug>(coc-funcobj-i)')
+omap_local('if', '<Plug>(coc-funcobj-i)')
+xmap_local('af', '<Plug>(coc-funcobj-a)')
+omap_local('af', '<Plug>(coc-funcobj-a)')
+xmap_local('ic', '<Plug>(coc-classobj-i)')
+omap_local('ic', '<Plug>(coc-classobj-i)')
+xmap_local('ac', '<Plug>(coc-classobj-a)')
+omap_local('ac', '<Plug>(coc-classobj-a)')
 
 --[[
--- Map function and class text objects
--- NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
 
 
 " Don't pass messages to |ins-completion-menu|.
