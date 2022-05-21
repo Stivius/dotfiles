@@ -48,13 +48,11 @@ nnoremap_local('<Leader>ls', ':<C-u>CocList -I symbols<cr>', { silent = true, no
 function show_documentation()
    if vim.fn.CocAction('hasProvider', 'hover') then
 	   vim.fn.CocActionAsync('doHover')
-   else
-	   vim.fn.feedkeys('K', 'in')
    end
 end
 
 -- Use K to show documentation in preview window.
-nnoremap_local('K', ':lua show_documentation()<CR>', { silent = true })
+nnoremap_local('gh', ':lua show_documentation()<CR>', { silent = true })
 
 -- Map function and class text objects
 -- NOTE: Requires 'textDocument.documentSymbol' support from the language server
@@ -96,22 +94,5 @@ create_user_command(
 	{ nargs = 0, buffer = true }
 )
 
--- local groupId = vim.api.nvim_create_augroup('coc_commands', { clear = true })
--- Update signature help on jump placeholder.
--- vim.api.nvim_create_autocmd({ "User" }, {
--- 	pattern = { 'CocJumpPlaceholder' },
--- 	callback = function ()
--- 		vim.fn.CocActionAsync('showSignatureHelp')
--- 	end,
--- 	group = groupId
--- })
-
 -- Don't pass messages to |ins-completion-menu|.
 vim.opt.shortmess:append({ c = true })
-
---[[
-Add (Neo)Vim's native statusline support.
-NOTE: Please see `:h coc-status` for integrations with external plugins that
-provide custom statusline: lightline.vim, vim-airline.
---]]
-vim.cmd("set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}")
