@@ -1,6 +1,6 @@
 {
 	"markdownlint.config": {
-		"default": true,
+"default": true,
 		"line_length": false
 	},
 	"semanticTokens.filetypes": ["*"],

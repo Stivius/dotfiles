@@ -96,41 +96,22 @@ create_user_command(
 	{ nargs = 0, buffer = true }
 )
 
-local groupId = vim.api.nvim_create_augroup('coc_commands', { clear = true })
--- Setup formatexpr specified filetype(s).
-vim.api.nvim_create_autocmd({ "FileType" }, {
-	pattern = { 'typescript', 'json' },
-	callback = function ()
-		vim.opt_local.formatexpr = vim.fn.CocAction('formatSelected')
-	end,
-	group = groupId
-})
+-- local groupId = vim.api.nvim_create_augroup('coc_commands', { clear = true })
 -- Update signature help on jump placeholder.
--- vim.api.nvim_create_autocmd(
--- 	{ "User", "CocJumpPlaceholder" },
--- 	function ()
+-- vim.api.nvim_create_autocmd({ "User" }, {
+-- 	pattern = { 'CocJumpPlaceholder' },
+-- 	callback = function ()
+-- 		vim.fn.CocActionAsync('showSignatureHelp')
 -- 	end,
--- 	{ buffer = true, group = groupId }
--- )
+-- 	group = groupId
+-- })
 
-
-vim.cmd([[
-augroup mygroup
-  autocmd!
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-]])
+-- Don't pass messages to |ins-completion-menu|.
+vim.opt.shortmess:append({ c = true })
 
 --[[
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
-
+Add (Neo)Vim's native statusline support.
+NOTE: Please see `:h coc-status` for integrations with external plugins that
+provide custom statusline: lightline.vim, vim-airline.
 --]]
-
---[[
-" Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
---]]
--- set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+vim.cmd("set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}")
