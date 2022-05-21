@@ -67,9 +67,45 @@ omap_local('ic', '<Plug>(coc-classobj-i)')
 xmap_local('ac', '<Plug>(coc-classobj-a)')
 omap_local('ac', '<Plug>(coc-classobj-a)')
 
+-- Remap <C-f> and <C-b> for scroll float windows/popups.
+  nnoremap_local('<C-f>', 'coc#float#has_scroll() ? coc#float#scroll(1) : "\\<C-f>"', { nowait = true, expr = true, silent = true })
+  nnoremap_local('<C-b>', 'coc#float#has_scroll() ? coc#float#scroll(0) : "\\<C-b>"', { nowait = true, expr = true, silent = true })
+  inoremap_local('<C-f>', 'coc#float#has_scroll() ? "\\<c-r>=coc#float#scroll(1)\\<cr>" : "\\<Right>"', { nowait = true, expr = true, silent = true })
+  inoremap_local('<C-b>', 'coc#float#has_scroll() ? "\\<c-r>=coc#float#scroll(0)\\<cr>" : "\\<Left>"', { nowait = true, expr = true, silent = true })
+  vnoremap_local('<C-f>', 'coc#float#has_scroll() ? coc#float#scroll(1) : "\\<C-f>"', { nowait = true, expr = true, silent = true })
+  vnoremap_local('<C-b>', 'coc#float#has_scroll() ? coc#float#scroll(0) : "\\<C-b>"', { nowait = true, expr = true, silent = true })
+
+-- Requires 'textDocument/selectionRange' support of language server.
+nmap_local('<C-s>', '<Plug>(coc-range-select)')
+xmap_local('<C-s>', '<Plug>(coc-range-select)')
+
+-- Add `:Format` command to format current buffer.
+create_user_command(
+	'Format',
+	function ()
+		vim.fn.CocActionAsync('format')
+	end,
+	{ nargs = 0, buffer = true }
+)
+-- Add `:Fold` command to fold current buffer.
+-- command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+create_user_command(
+	'Fold',
+	function (opts)
+		print('folding')
+	end,
+	{ nargs = '?', buffer = true }
+)
+-- Add `:OR` command for organize imports of the current buffer.
+create_user_command(
+	'OR',
+	function ()
+		vim.fn.CocActionAsync('runCommand', 'editor.action.organizeImport')
+	end,
+	{ nargs = 0, buffer = true }
+)
+
 --[[
-
-
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
@@ -80,34 +116,11 @@ augroup mygroup
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
+--]]
 
-
-" Remap <C-f> and <C-b> for scroll float windows/popups.
-if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-endif
-
-" Use CTRL-S for selections ranges.
-" Requires 'textDocument/selectionRange' support of language server.
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
-
-" Add `:Format` command to format current buffer.
-command! -nargs=0 Format :call CocActionAsync('format')
-
-" Add `:Fold` command to fold current buffer.
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-" Add `:OR` command for organize imports of the current buffer.
-command! -nargs=0 OR   :call     CocActionAsync('runCommand', 'editor.action.organizeImport')
-
+--[[
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 --]]
+-- set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
