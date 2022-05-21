@@ -45,19 +45,17 @@ nnoremap_local('<Leader>ls', ':<C-u>CocList -I symbols<cr>', { silent = true, no
 -- nnoremap_local('<Leader>j', ':<C-u>CocNext<CR>', { silent = true, nowait = true})
 -- nnoremap_local('<Leader>k', ':<C-u>CocPrev<CR>', { silent = true, nowait = true})
 
+function show_documentation()
+   if vim.fn.CocAction('hasProvider', 'hover') then
+	   vim.fn.CocActionAsync('doHover')
+   else
+	   vim.fn.feedkeys('K', 'in')
+   end
+end
+
 -- Use K to show documentation in preview window.
-nnoremap_local('K', ':call show_documentation()<CR>', { silent = true })
+nnoremap_local('K', ':lua show_documentation()<CR>', { silent = true })
 
-
-vim.cmd([[
-function! s:show_documentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
-endfunction
-]])
 
 --[[
 -- Map function and class text objects
