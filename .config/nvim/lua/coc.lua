@@ -16,5 +16,5 @@ vim.api.nvim_create_autocmd({"CursorHold"}, {
 	end
 })
 
-vim.g.coc_snippet_next = '<Tab>';
-vim.g.coc_snippet_prev = '<S-Tab>';
+vim.g.coc_snippet_next = '<C-n>';
+vim.g.coc_snippet_prev = '<C-p>';
