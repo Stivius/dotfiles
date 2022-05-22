@@ -18,9 +18,11 @@ export EDITOR="$VISUAL"
 alias z='cd ~/Zettelkasten && nvim'
 alias vim=nvim
 alias vi=nvim
-alias ssh="TERM=xterm-256color ssh"
-alias xclip="xclip -sel clip"
+alias ssh='TERM=xterm-256color ssh'
+alias xclip='xclip -sel clip'
 alias cat=bat
+alias pe='pet exec'
+alias ll='ls -alF'
 
 # Powerline configuration
 if [ -f /usr/share/powerline/bindings/bash/powerline.sh ]; then
@@ -32,10 +34,12 @@ fi
 
 . $HOME/.local/share/bash-completions/todo
 
+# Add previously executed command to pet
 function prev() {
   PREV=$(echo `history | tail -n2 | head -n1` | sed 's/[0-9]* //')
   sh -c "pet new `printf %q "$PREV"`"
 }
+
 ### END Custom configuration
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -69,11 +73,6 @@ fi
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
