@@ -47,6 +47,7 @@ exec_always --no-startup-id "killall -q picom; sleep 1; picom"
 # Autostart apps
 exec --no-startup-id nm-applet
 exec --no-startup-id blueman-manager
+exec kitty --title "Primary Workspace" --session ~/.config/kitty/sessions/main_session.conf
 exec firefox
 exec telegram-desktop
 exec open_calc
@@ -73,7 +74,7 @@ bindsym $mod+o mode "$mode_launcher"
 mode "$mode_launcher" {
     bindsym w exec firefox; mode "default"
     bindsym t exec telegram-desktop; mode "default"
-    bindsym z exec obsidian; mode "default"
+    bindsym o exec obsidian; mode "default"
     bindsym c exec code; mode "default"
 	bindsym g exec steam; mode "default"
 	bindsym f exec anki; mode "default"
