@@ -255,7 +255,7 @@ for_window [window_role="dialog"] floating enable
 
 focus_on_window_activation urgent
 
-for_window [title="bash"] move --no-auto-back-and-forth to workspace $ws1, focus
+for_window [title="^bash$"] move --no-auto-back-and-forth to workspace $ws1, focus
 for_window [title="Primary Workspace"] move --no-auto-back-and-forth to workspace $ws1, focus
 for_window [class="Telegram"] move --no-auto-back-and-forth to workspace $ws2, focus
 for_window [class="firefox"] move --no-auto-back-and-forth to workspace $ws3, focus
