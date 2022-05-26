@@ -47,7 +47,7 @@ exec_always --no-startup-id "killall -q picom; sleep 1; picom"
 # Autostart apps
 exec --no-startup-id nm-applet
 exec --no-startup-id blueman-manager
-exec kitty --title "Primary Workspace" --session $HOME/.config/kitty/sessions/main_session.conf
+exec "sleep 2: kitty --title \"Primary Workspace\" --session $HOME/.config/kitty/sessions/main_session.conf"
 exec "sleep 1; firefox"
 exec telegram-desktop
 exec open_calc
