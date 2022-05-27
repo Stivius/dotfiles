@@ -83,6 +83,7 @@ create_user_command(
 	end,
 	{ nargs = 0, range = true, buffer = true }
 )
+
 -- priority
 nnoremap_local('<Leader><Leader>pa', ':TodoPri A<CR>')
 vnoremap_local('<Leader><Leader>pa', ':TodoPri A<CR>')
@@ -94,6 +95,12 @@ nnoremap_local('<Leader><Leader>pd', ':TodoPri D<CR>')
 vnoremap_local('<Leader><Leader>pd', ':TodoPri D<CR>')
 nnoremap_local('<Leader><Leader>pp', ':TodoDepri<CR>')
 vnoremap_local('<Leader><Leader>pp', ':TodoDepri<CR>')
+
+-- goals
+nnoremap_local('<Leader><Leader>gw', ':TodoWeekly<CR>')
+vnoremap_local('<Leader><Leader>gw', ':TodoWeekly<CR>')
+nnoremap_local('<Leader><Leader>gm', ':TodoMonthly<CR>')
+vnoremap_local('<Leader><Leader>gm', ':TodoMonthly<CR>')
 
 -- schedule
 nnoremap_local('<Leader><Leader>srm', ':TodoUnschedule<CR>')
