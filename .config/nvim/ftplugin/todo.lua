@@ -111,6 +111,8 @@ nnoremap_local('<Leader><Leader>stt', ':TodoSchedule today<CR>')
 vnoremap_local('<Leader><Leader>stt', ':TodoSchedule today<CR>')
 nnoremap_local('<Leader><Leader>stm', ':TodoSchedule tomorrow<CR>')
 vnoremap_local('<Leader><Leader>stm', ':TodoSchedule tomorrow<CR>')
+nnoremap_local('<Leader><Leader>stw', ':TodoSchedule +1 week<CR>')
+vnoremap_local('<Leader><Leader>stw', ':TodoSchedule +1 week<CR>')
 
 -- deletion/finish
 nnoremap_local('<Leader><Leader>od', ':vsp ~/.todo/done.txt<CR>')
