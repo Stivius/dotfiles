@@ -66,6 +66,23 @@ create_user_command(
 	{ nargs = 0, range = true, buffer = true }
 )
 
+create_user_command(
+	'TodoWeekly',
+	function(opts)
+		opts['args'] = 'goals:Weekly';
+		ExecuteTodoCommand(opts, 'append');
+	end,
+	{ nargs = 0, range = true, buffer = true }
+)
+
+create_user_command(
+	'TodoMonthly',
+	function(opts)
+		opts['args'] = 'goals:Monthly';
+		ExecuteTodoCommand(opts, 'append');
+	end,
+	{ nargs = 0, range = true, buffer = true }
+)
 -- priority
 nnoremap_local('<Leader><Leader>pa', ':TodoPri A<CR>')
 vnoremap_local('<Leader><Leader>pa', ':TodoPri A<CR>')
