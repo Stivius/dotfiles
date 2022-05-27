@@ -1,24 +1,50 @@
 [[snippets]]
-  description = "TODO today + past"
+  description = "Todo.txt - Continuous Today/Overvdue"
   command = "watch -n 5 -c todo.sh view past"
   output = ""
 
 [[snippets]]
-  description = "TODO today + future"
+  description = "Todo.txt - Continuous Today/Future"
   command = "watch -n 5 -c todo.sh view future"
   output = ""
 
 [[snippets]]
-  description = "TODO Weekly Goals"
+  description = "Todo.txt - Weekly Goals"
   command = "todo.sh ls goals:Weekly | less -R"
   output = ""
 
 [[snippets]]
-  description = "TODO Monthly Goals"
+  description = "Todo.txt - Continuous Weekly Goals"
+  command = "watch -n 5 -c todo.sh ls goals:Weekly"
+  output = ""
+
+[[snippets]]
+  description = "Todo.txt - Monthly Goals"
   command = "todo.sh ls goals:Monthly | less -R"
   output = ""
 
 [[snippets]]
-  description = "past + todat tasks"
+  description = "Todo.txt - Today/Overvdue"
   command = "todo.sh view past | less -R"
   output = ""
+
+[[snippets]]
+  description = "Productivity - Monthly Relative"
+  command = "unbuffer node index.js report --range-type 3 | less -R"
+  output = ""
+
+[[snippets]]
+  description = "Productivity - Monthly Absolute"
+  command = "unbuffer node index.js report --absolute --range-type 3 | less -R"
+  output = ""
+
+[[snippets]]
+  description = "Productivity - Weekly Relative"
+  command = "unbuffer node index.js report --range-type 2 | less -R"
+  output = ""
+
+[[snippets]]
+  description = "Productivity - Weekly Absolute"
+  command = "unbuffer node index.js report --absolute --range-type 2 | less -R"
+  output = ""
+
