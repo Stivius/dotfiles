@@ -26,7 +26,10 @@ require('packer').startup(function(use)
 	use 'chrisbra/NrrwRgn'
 	use 'ledger/vim-ledger'
 	use 'tpope/vim-commentary'
-	use 'iamcco/markdown-preview.nvim'
+	use({
+		"iamcco/markdown-preview.nvim",
+		run = function() vim.fn["mkdp#util#install"]() end,
+	})
 
 	-- Telescope
 	use 'nvim-lua/popup.nvim'
