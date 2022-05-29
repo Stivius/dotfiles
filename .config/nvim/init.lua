@@ -81,8 +81,8 @@ vim.g.airline_powerline_fonts = 1 -- use powerline fonts
 vim.g.Powerline_symbols = 'unicode' -- support unicode
 
 -- colorschemev
--- vim.cmd('set background=light')
-vim.cmd('colorscheme base16-classic-dark')
+
+vim.cmd('colorscheme base16-tomorrow-night')
 vim.cmd('set re=0')
 set_option('termguicolors', true)
 
