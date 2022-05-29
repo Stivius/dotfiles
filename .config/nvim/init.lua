@@ -54,13 +54,11 @@ require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
   ensure_installed = { "typescript", "javascript", "lua", "cpp", "vim", "bash", "dockerfile", "todotxt", "yaml", "cmake" },
 
-
-
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = true,
 
   highlight = {
-    enable = true,
+    enable = false,
 
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
@@ -104,11 +102,17 @@ set_win_option('signcolumn', 'auto')
 vim.g.airline_powerline_fonts = 1 -- use powerline fonts
 vim.g.Powerline_symbols = 'unicode' -- support unicode
 
--- colorschemev
-
+-- colorscheme
 vim.cmd('colorscheme base16-tomorrow-night')
-vim.cmd('set re=0')
 set_option('termguicolors', true)
+
+vim.cmd([[
+	hi! link typescriptTSKeywordOperator Keyword
+	hi! link typescriptTSRepeat Keyword
+	hi! link typescriptTSException Keyword
+	hi! link CocSemClass Type
+]])
+
 
 -- enable russian layout
 inoremap('<C-f>', '<C-^>')
