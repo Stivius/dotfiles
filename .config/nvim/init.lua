@@ -26,6 +26,10 @@ require('packer').startup(function(use)
 	use 'chrisbra/NrrwRgn'
 	use 'ledger/vim-ledger'
 	use 'tpope/vim-commentary'
+	use 'pangloss/vim-javascript'
+	use 'leafgarland/typescript-vim'
+
+	--Zettelkasten
 	use({
 		"iamcco/markdown-preview.nvim",
 		run = function() vim.fn["mkdp#util#install"]() end,
@@ -75,8 +79,9 @@ set_win_option('signcolumn', 'auto')
 vim.g.airline_powerline_fonts = 1 -- use powerline fonts
 vim.g.Powerline_symbols = 'unicode' -- support unicode
 
--- colorscheme
-vim.cmd('colorscheme base16-classic-dark')
+-- colorschemev
+-- vim.cmd('set background=light')
+-- vim.cmd('colorscheme base16-classic-dark')
 set_option('termguicolors', true)
 
 -- enable russian layout
