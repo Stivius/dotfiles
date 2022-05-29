@@ -27,7 +27,7 @@ require('packer').startup(function(use)
 	use 'ledger/vim-ledger'
 	use 'tpope/vim-commentary'
 	use 'pangloss/vim-javascript'
-	use 'leafgarland/typescript-vim'
+	-- use 'leafgarland/typescript-vim'
 	-- use 'HerringtonDarkholme/yats.vim'
 
 	--Zettelkasten
