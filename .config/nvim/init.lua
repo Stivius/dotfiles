@@ -18,7 +18,8 @@ require('packer').startup(function(use)
 	use 'fladson/vim-kitty'
 	use 'chriskempson/base16-vim'
 	use 'troydm/zoomwintab.vim'
-	use 'tpope/vim-unimpaired'
+	-- use 'tpope/vim-unimpaired'
+	use 'HerringtonDarkholme/yats.vim'
 
 	-- Programming
 	use { 'neoclide/coc.nvim', branch = 'release' }
@@ -81,7 +82,8 @@ vim.g.Powerline_symbols = 'unicode' -- support unicode
 
 -- colorschemev
 -- vim.cmd('set background=light')
--- vim.cmd('colorscheme base16-classic-dark')
+vim.cmd('colorscheme base16-classic-dark')
+vim.cmd('set re=0')
 set_option('termguicolors', true)
 
 -- enable russian layout
