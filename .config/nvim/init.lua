@@ -18,8 +18,7 @@ require('packer').startup(function(use)
 	use 'fladson/vim-kitty'
 	use 'chriskempson/base16-vim'
 	use 'troydm/zoomwintab.vim'
-	-- use 'tpope/vim-unimpaired'
-	use 'HerringtonDarkholme/yats.vim'
+ 	use 'tpope/vim-unimpaired'
 
 	-- Programming
 	use { 'neoclide/coc.nvim', branch = 'release' }
@@ -29,6 +28,7 @@ require('packer').startup(function(use)
 	use 'tpope/vim-commentary'
 	use 'pangloss/vim-javascript'
 	use 'leafgarland/typescript-vim'
+	-- use 'HerringtonDarkholme/yats.vim'
 
 	--Zettelkasten
 	use({
