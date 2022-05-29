@@ -52,13 +52,13 @@ vim.cmd('filetype plugin on')
 
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
-  ensure_installed = { "typescript", "javascript", "lua", "cpp", "vim", "bash", "dockerfile", "todotxt", "yaml", "cmake" },
+  ensure_installed = "all",
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = true,
 
   highlight = {
-    enable = false,
+    enable = true,
 
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
@@ -106,13 +106,13 @@ vim.g.Powerline_symbols = 'unicode' -- support unicode
 vim.cmd('colorscheme base16-tomorrow-night')
 set_option('termguicolors', true)
 
+-- fixes for highlight
 vim.cmd([[
 	hi! link typescriptTSKeywordOperator Keyword
 	hi! link typescriptTSRepeat Keyword
 	hi! link typescriptTSException Keyword
 	hi! link CocSemClass Type
 ]])
-
 
 -- enable russian layout
 inoremap('<C-f>', '<C-^>')
