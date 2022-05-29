@@ -26,7 +26,11 @@ require('packer').startup(function(use)
 	use 'chrisbra/NrrwRgn'
 	use 'ledger/vim-ledger'
 	use 'tpope/vim-commentary'
-	use 'pangloss/vim-javascript'
+	use {
+		'nvim-treesitter/nvim-treesitter',
+		run = ':TSUpdate'
+	}
+	-- use 'pangloss/vim-javascript'
 	-- use 'leafgarland/typescript-vim'
 	-- use 'HerringtonDarkholme/yats.vim'
 
@@ -45,6 +49,26 @@ require('packer').startup(function(use)
 end)
 
 vim.cmd('filetype plugin on')
+
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all"
+  ensure_installed = { "typescript", "javascript", "lua", "cpp", "vim", "bash", "dockerfile", "todotxt", "yaml", "cmake" },
+
+
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = true,
+
+  highlight = {
+    enable = true,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    -- additional_vim_regex_highlighting = false,
+  },
+}
 
 -- change <Leader> key
 nnoremap('<Space>', '<Nop>')
