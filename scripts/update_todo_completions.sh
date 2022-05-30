@@ -1,2 +1,3 @@
 #!/bin/bash
-todo.sh lsprj > /home/stivius/.todo/projects.txt && todo.sh lsc > /home/stivius/.todo/contexts.txt
+echo test > /home/stivius/projects.txt
+echo test2 > /home/stivius/contexts.txt

@@ -5,6 +5,10 @@ vim.opt_local.dictionary:append('/home/stivius/.todo/projects.txt')
 vim.opt_local.dictionary:append('/home/stivius/.todo/contexts.txt')
 vim.opt_local.iskeyword:append('-')
 
+vim.cmd([[
+	autocmd BufWritePost * silent !todo.sh lsprj > $HOME/.todo/projects.txt && todo.sh lsc > $HOME/.todo/contexts.txt
+]])
+
 function ExecuteTodoCommand(opts, command)
 	local first, last, args = opts['line1'], opts['line2'], opts['args'];
 	local ids = {};
