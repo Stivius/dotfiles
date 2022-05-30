@@ -1,0 +1,12 @@
+DIR=$1
+COMMAND=$2
+
+$COMMAND
+
+inotifywait -q -e close_write -m $DIR |
+while read -r directory events filename; do
+	# clear scrollback buffer and console
+	printf '\033[2J\033[3J\033[1;1H'
+	$COMMAND
+done
+
