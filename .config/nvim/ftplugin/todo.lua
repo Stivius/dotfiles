@@ -1,5 +1,10 @@
 require('common')
 
+vim.opt_local.complete:append('k')
+-- vim.opt_local.dictionary:append('k')
+-- vim.opt_local.dictionary:append('k')
+vim.opt_local.iskeyword:append('-')
+
 function ExecuteTodoCommand(opts, command)
 	local first, last, args = opts['line1'], opts['line2'], opts['args'];
 	local ids = {};
