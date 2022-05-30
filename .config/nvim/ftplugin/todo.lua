@@ -1,8 +1,8 @@
 require('common')
 
 vim.opt_local.complete:append('k')
--- vim.opt_local.dictionary:append('k')
--- vim.opt_local.dictionary:append('k')
+vim.opt_local.dictionary:append('/home/stivius/.todo/projects.txt')
+vim.opt_local.dictionary:append('/home/stivius/.todo/contexts.txt')
 vim.opt_local.iskeyword:append('-')
 
 function ExecuteTodoCommand(opts, command)
