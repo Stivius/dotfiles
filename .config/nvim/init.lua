@@ -111,7 +111,6 @@ vim.cmd([[
 	hi! link typescriptTSKeywordOperator Keyword
 	hi! link typescriptTSRepeat Keyword
 	hi! link typescriptTSException Keyword
-	hi! link CocSemClass Type
 ]])
 
 -- enable russian layout
