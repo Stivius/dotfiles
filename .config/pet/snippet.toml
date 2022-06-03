@@ -49,11 +49,7 @@
   output = ""
 
 [[snippets]]
-  description = "xibo cmake generate"
-  command = "CMAKE_PREFIX_PATH=$HOME/Projects/xibo/xibo-linux/third-party/usr/local/ cmake -Bbuild ."
+  description = "xibo cmake build"
+  command = "CMAKE_PREFIX_PATH=$HOME/Projects/xibo/xibo-linux/third-party/usr/local/ cmake -Bbuild . && cmake --build build/ --target install -- -j8"
   output = ""
 
-[[snippets]]
-  description = "xibo cmake build"
-  command = "cmake --build build/ --target install -- -j8"
-  output = ""
