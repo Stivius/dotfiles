@@ -20,13 +20,13 @@ syntax  match  TodoProject    '\(^\|\W\)+[^[:blank:]]\+'  contains=NONE
 syntax  match  TodoContext    '\(^\|\W\)@[^[:blank:]]\+'  contains=NONE
 
 " Other priority colours might be defined by the user
-highlight  default  link  TodoDone       Comment
-highlight  default  link  TodoPriorityA  Constant
-highlight  default  link  TodoPriorityB  Statement
-highlight  default  link  TodoPriorityC  Identifier
-highlight  default  link  TodoDate       PreProc
-highlight  default  link  TodoProject    Special
-highlight  default  link  TodoContext    Special
+highlight  TodoDone       ctermfg=LightGray guifg=LightGray
+highlight  TodoPriorityA  ctermfg=Yellow guifg=Yellow
+highlight  TodoPriorityB  ctermfg=Green guifg=Green
+highlight  TodoPriorityC  ctermfg=LightBlue guifg=LightBlue
+highlight  TodoDate       ctermfg=Blue guifg=Blue
+highlight  TodoProject    ctermfg=Red guifg=Red
+highlight  TodoContext    ctermfg=Red guifg=Red
 
 let b:current_syntax = "todo"
 
