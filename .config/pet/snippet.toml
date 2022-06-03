@@ -48,3 +48,12 @@
   command = "unbuffer node index.js report --absolute --range-type 2 | less -R"
   output = ""
 
+[[snippets]]
+  description = "xibo cmake generate"
+  command = "CMAKE_PREFIX_PATH=$HOME/Projects/xibo/xibo-linux/third-party/usr/local/ cmake -Bbuild ."
+  output = ""
+
+[[snippets]]
+  description = "xibo cmake build"
+  command = "cmake --build build/ --target install -- -j8"
+  output = ""
