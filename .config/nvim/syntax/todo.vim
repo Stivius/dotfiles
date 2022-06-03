@@ -15,18 +15,20 @@ syntax  match  TodoPriorityB  '^([bB])\s.\+$'             contains=TodoDate,Todo
 syntax  match  TodoPriorityC  '^([cC])\s.\+$'             contains=TodoDate,TodoProject,TodoContext,OverDueDate
 syntax  match  TodoPriorityD  '^([dD])\s.\+$'             contains=TodoDate,TodoProject,TodoContext,OverDueDate
 
+syntax  match  TodoMeta       '\(^\|\W\)\w[^[:blank:]]\+' 					  contains=NONE
 syntax  match  TodoDate       '\d\{2,4\}-\d\{2\}-\d\{2\}' contains=NONE
 syntax  match  TodoProject    '\(^\|\W\)+[^[:blank:]]\+'  contains=NONE
 syntax  match  TodoContext    '\(^\|\W\)@[^[:blank:]]\+'  contains=NONE
 
 " Other priority colours might be defined by the user
-highlight  TodoDone       ctermfg=LightGray guifg=LightGray
-highlight  TodoPriorityA  ctermfg=Yellow guifg=Yellow
-highlight  TodoPriorityB  ctermfg=Green guifg=Green
-highlight  TodoPriorityC  ctermfg=LightBlue guifg=LightBlue
-highlight  TodoDate       ctermfg=Blue guifg=Blue
-highlight  TodoProject    ctermfg=Red guifg=Red
-highlight  TodoContext    ctermfg=Red guifg=Red
+highlight  TodoMeta       ctermfg=Cyan guifg=#75B5AA
+highlight  TodoDone       ctermfg=LightGray guifg=#505050
+highlight  TodoPriorityA  ctermfg=Yellow cterm=bold guifg=#F4BF75 gui=bold
+highlight  TodoPriorityB  ctermfg=Green guifg=#90A959
+highlight  TodoPriorityC  ctermfg=LightBlue cterm=bold guifg=#6A9FB5 gui=bold
+highlight  TodoDate       ctermfg=Blue guifg=#6A9FB5
+highlight  TodoProject    ctermfg=Red guifg=#AC4142
+highlight  TodoContext    ctermfg=Red guifg=#AC4142
 
 let b:current_syntax = "todo"
 
