@@ -84,6 +84,7 @@ vim.cmd([[
 	augroup END
 ]])
 
+vim.opt.hlsearch = false;
 -- unicode characters in the file autoload/float.vim
 set_option('encoding', 'utf-8')
 -- TextEdit might fail if hidden is not set.
