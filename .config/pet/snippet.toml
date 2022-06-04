@@ -53,3 +53,7 @@
   command = "CMAKE_PREFIX_PATH=$HOME/Projects/xibo/xibo-linux/third-party/usr/local/ cmake -Bbuild . && cmake --build build/ --target install -- -j8"
   output = ""
 
+[[snippets]]
+  description = "Ledger Balance"
+  command = "ledger -f transactions.ledger --pedantic --explicit bal"
+  output = ""
