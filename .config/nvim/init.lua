@@ -8,28 +8,38 @@ require('common')
 require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 
-	use 'preservim/nerdtree'
-	use 'vim-airline/vim-airline'
+	use 'vim-airline/vim-airline' -- setup
 	use '907th/vim-auto-save'
-	use 'tpope/vim-surround'
-	use 'easymotion/vim-easymotion'
-	use 'tiagofumo/vim-nerdtree-syntax-highlight'
-	use 'ryanoasis/vim-devicons'
-	use 'fladson/vim-kitty'
 	use 'chriskempson/base16-vim'
 	use 'troydm/zoomwintab.vim'
- 	use 'tpope/vim-unimpaired'
+
+	-- editing
+	use 'tpope/vim-repeat'
+	use 'tpope/vim-surround'
+
+	-- navigation
+ 	use 'tpope/vim-unimpaired' -- learn
+	use 'easymotion/vim-easymotion' -- learn
+	use 'preservim/nerdtree' -- learn, setup
+	use 'tiagofumo/vim-nerdtree-syntax-highlight'
+
+	-- File-specific
+	use 'ledger/vim-ledger'
+	use 'fladson/vim-kitty'
+	use 'ryanoasis/vim-devicons'
+	use 'cdelledonne/vim-cmake' -- setup
 
 	-- Programming
+	-- use 'lukas-reineke/indent-blankline.nvim' -- setup
+	use 'windwp/nvim-autopairs'
 	use { 'neoclide/coc.nvim', branch = 'release' }
-
-	use 'chrisbra/NrrwRgn'
-	use 'ledger/vim-ledger'
 	use 'tpope/vim-commentary'
 	use {
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
 	}
+	use 'tpope/vim-fugitive' -- learn, setup
+	use 'airblade/vim-gitgutter' -- learn, setup
 
 	--Zettelkasten
 	use({
@@ -46,6 +56,8 @@ require('packer').startup(function(use)
 end)
 
 vim.cmd('filetype plugin on')
+
+require('nvim-autopairs').setup{}
 
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
