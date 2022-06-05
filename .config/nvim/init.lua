@@ -47,7 +47,7 @@ require('packer').startup(function(use)
 		run = function() vim.fn["mkdp#util#install"]() end,
 	})
 
-	-- Telescope
+	-- Telescope, setup
 	use 'nvim-lua/popup.nvim'
 	use 'nvim-lua/plenary.nvim'
 	use 'nvim-telescope/telescope.nvim'
