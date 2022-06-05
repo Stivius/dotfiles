@@ -206,14 +206,14 @@ nnoremap('<Leader>Q', ':qa<CR>')
 nnoremap('<Leader>w', ':w<CR>')
 
 -- disable arrows
-noremap('<up>', '<nop>')
-inoremap('<up>', '<nop>')
-noremap('<down>', '<nop>')
-inoremap('<down>', '<nop>')
-noremap('<left>', '<nop>')
-inoremap('<left>', '<nop>')
-noremap('<right>', '<nop>')
-inoremap('<right>', '<nop>')
+-- noremap('<up>', '<nop>')
+-- inoremap('<up>', '<nop>')
+-- noremap('<down>', '<nop>')
+-- inoremap('<down>', '<nop>')
+-- noremap('<left>', '<nop>')
+-- inoremap('<left>', '<nop>')
+-- noremap('<right>', '<nop>')
+-- inoremap('<right>', '<nop>')
 
 -- remap join lines to gj and visual line navigation to J/K
 nnoremap('J', 'gj')
