@@ -30,9 +30,6 @@ require('packer').startup(function(use)
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
 	}
-	-- use 'pangloss/vim-javascript'
-	-- use 'leafgarland/typescript-vim'
-	-- use 'HerringtonDarkholme/yats.vim'
 
 	--Zettelkasten
 	use({
