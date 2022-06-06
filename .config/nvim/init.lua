@@ -31,7 +31,7 @@ require('packer').startup(function(use)
 	use 'cdelledonne/vim-cmake' -- setup
 
 	-- Programming
-	-- use 'lukas-reineke/indent-blankline.nvim' -- setup
+	use 'lukas-reineke/indent-blankline.nvim' -- setup
 	use 'windwp/nvim-autopairs'
 	use { 'neoclide/coc.nvim', branch = 'release' }
 	use 'tpope/vim-commentary'
@@ -84,6 +84,15 @@ vim.api.nvim_create_autocmd({"VimEnter"}, {
 -- 	end
 -- })
 
+require("indent_blankline").setup {
+
+    -- for example, context is off by default, use this to turn it on
+    -- show_current_context = true,
+    -- show_current_context_start = true,
+}
+vim.opt.list = true
+vim.opt.listchars:append("space:⋅")
+
 require('nvim-autopairs').setup{}
 
 require'nvim-treesitter.configs'.setup {
@@ -134,6 +143,8 @@ vim.opt.cmdheight = 2;
 vim.opt.updatetime = 300;
 -- Column for diagnostic messages
 vim.opt.signcolumn = 'auto';
+-- space instead of tabs
+vim.opt.expandtab = true
 
 -- powerline
 vim.g.airline_powerline_fonts = 1 -- use powerline fonts
