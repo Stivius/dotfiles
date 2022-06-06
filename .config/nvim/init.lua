@@ -57,6 +57,32 @@ end)
 
 vim.cmd('filetype plugin on')
 
+vim.api.nvim_create_autocmd({"VimEnter"}, {
+	pattern = "*",
+	callback = function()
+		if vim.fn.argc() == 0 then
+			vim.api.nvim_command('NERDTree');
+			vim.api.nvim_command('wincmd p');
+		end
+	end
+})
+
+vim.api.nvim_create_autocmd({"BufEnter"}, {
+	pattern = "*",
+	callback = function()
+		local nerdName = 'NERD_tree_'
+		local current = vim.fn.bufname('%');
+		local alternate = vim.fn.bufname('#');
+		local lastWindowNumber = vim.fn.winnr('$');
+		if string.match(current, nerdName) and string.match(alternate, nerdName) and lastWindowNumber > 1 then
+			local bufferNumber = vim.fn.bufnr();
+			print(bufferNumber)
+			-- \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
+		end
+	end
+})
+
+
 require('nvim-autopairs').setup{}
 
 require'nvim-treesitter.configs'.setup {
