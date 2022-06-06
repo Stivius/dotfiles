@@ -20,7 +20,7 @@ require('packer').startup(function(use)
 	-- navigation
  	use 'tpope/vim-unimpaired' -- learn
 	use 'easymotion/vim-easymotion' -- learn
-	use 'preservim/nerdtree' -- learn, setup
+	use 'preservim/nerdtree'
 	use 'Xuyuanp/nerdtree-git-plugin'
 	use 'tiagofumo/vim-nerdtree-syntax-highlight'
 
@@ -58,20 +58,8 @@ end)
 
 vim.cmd('filetype plugin on')
 
-vim.cmd([[
-let g:NERDTreeGitStatusIndicatorMapCustom = {
-                \ 'Modified'  :'✹',
-                \ 'Staged'    :'✚',
-                \ 'Untracked' :'✭',
-                \ 'Renamed'   :'➜',
-                \ 'Unmerged'  :'═',
-                \ 'Deleted'   :'✖',
-                \ 'Dirty'     :'✗',
-                \ 'Ignored'   :'☒',
-                \ 'Clean'     :'✔︎',
-                \ 'Unknown'   :'?',
-                \ }
-]])
+vim.g.NERDTreeGitStatusUseNerdFonts = 1
+vim.g.NERDTreeIgnore = { 'node_modules', '.git', 'build' }
 
 vim.api.nvim_create_autocmd({"VimEnter"}, {
 	pattern = "*",
@@ -83,7 +71,7 @@ vim.api.nvim_create_autocmd({"VimEnter"}, {
 	end
 })
 
--- FIXME not workingwith telescope
+-- FIXME not working with telescope
 -- vim.api.nvim_create_autocmd({"BufEnter"}, {
 -- 	pattern = "*",
 -- 	callback = function()
@@ -134,18 +122,18 @@ vim.cmd([[
 
 vim.opt.hlsearch = false;
 -- unicode characters in the file autoload/float.vim
-set_option('encoding', 'utf-8')
+vim.opt.encoding = 'utf-8';
 -- TextEdit might fail if hidden is not set.
-set_option('hidden', true)
+vim.opt.hidden = true;
 -- Some servers have issues with backup files, see #649.
-set_option('backup', false)
-set_option('writebackup', false)
+vim.opt.backup = false;
+vim.opt.writebackup = false;
 -- Give more space for displaying messages.
-set_option('cmdheight', 2)
+vim.opt.cmdheight = 2;
 -- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable delays and poor user experience.
-set_option('updatetime', 300)
+vim.opt.updatetime = 300;
 -- Column for diagnostic messages
-set_win_option('signcolumn', 'auto')
+vim.opt.signcolumn = 'auto';
 
 -- powerline
 vim.g.airline_powerline_fonts = 1 -- use powerline fonts
@@ -153,31 +141,32 @@ vim.g.Powerline_symbols = 'unicode' -- support unicode
 
 -- colorscheme
 vim.cmd('colorscheme base16-tomorrow-night')
-set_option('termguicolors', true)
+vim.opt.termguicolors = true;
 
 -- fixes for highlight
-vim.cmd([[
-	hi! link typescriptTSKeywordOperator Keyword
-	hi! link typescriptTSRepeat Keyword
-	hi! link typescriptTSException Keyword
-]])
+function link_hl_group(linkedGroup, group)
+	local groupByName = vim.api.nvim_get_hl_by_name(group, true);
+	vim.api.nvim_set_hl(0, linkedGroup, groupByName);
+end
+link_hl_group('typescriptTSException', 'Keyword')
+link_hl_group('typescriptTSKeywordOperator', 'Keyword')
+link_hl_group('typescriptTSRepeat', 'Keyword')
 
 -- enable russian layout
 inoremap('<C-f>', '<C-^>')
 nnoremap('<C-f>', 'a<C-^><ESC>')
-set_option('keymap', 'russian-jcukenwin')
-set_option('iminsert', 0) -- english by default
-set_option('imsearch', 0) -- english by default
+vim.opt.keymap = 'russian-jcukenwin';
+vim.opt.iminsert = 0; -- english by default
+vim.opt.imsearch = 0; -- english by default
 
-set_option('wrap', true) -- wrap words
-set_option('linebreak', true) -- wrap words
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-set_option('encoding', 'UTF-8')
-set_option('autoindent', true)
-set_option('splitright', true) -- for vnew to work to the right
-set_win_option('relativenumber', true)
-set_win_option('number', true)
+vim.opt.wrap = true; -- wrap words
+vim.opt.linebreak = true; -- wrap words
+vim.opt.tabstop = 4;
+vim.opt.shiftwidth = 4;
+vim.opt.autoindent = true;
+vim.opt.splitright = true; -- for vnew to work to the right
+vim.opt.relativenumber = true;
+vim.opt.number = true;
 
 -- completion
 inoremap('<CR>', 'pumvisible() ? coc#_select_confirm() : "\\<C-g>u\\<CR>"', { expr = true })
@@ -252,16 +241,6 @@ nnoremap('<Leader>D', ":call delete(expand('%'))<CR>")
 nnoremap('<Leader>q', ':q<CR>')
 nnoremap('<Leader>Q', ':qa<CR>')
 nnoremap('<Leader>w', ':w<CR>')
-
--- disable arrows
--- noremap('<up>', '<nop>')
--- inoremap('<up>', '<nop>')
--- noremap('<down>', '<nop>')
--- inoremap('<down>', '<nop>')
--- noremap('<left>', '<nop>')
--- inoremap('<left>', '<nop>')
--- noremap('<right>', '<nop>')
--- inoremap('<right>', '<nop>')
 
 -- remap join lines to gj and visual line navigation to J/K
 nnoremap('J', 'gj')
