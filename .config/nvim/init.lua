@@ -88,30 +88,18 @@ vim.api.nvim_create_autocmd({"VimEnter"}, {
 vim.cmd('colorscheme base16-tomorrow-night')
 vim.opt.termguicolors = true;
 
-vim.cmd [[highlight IndentColour guifg=#3c3c3c gui=nocombine]]
+--FIXME rewrite in lua
+vim.cmd [[highlight IndentBlanklineSpaceChar guifg=#3c3c3c gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineSpaceCharBlankline guifg=#3c3c3c gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineChar guifg=#3c3c3c gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineContextChar guifg=#3c3c3c gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineContextStart guifg=#3c3c3c gui=nocombine]]
+vim.cmd [[highlight! link NonText IndentBlanklineSpaceChar]]
 
 vim.opt.list = true
 vim.opt.listchars:append("space:⋅")
 
-require("indent_blankline").setup {
-    char_highlight_list = {
-        "IndentColour",
-    },
-
-    space_char_highlight_list = {
-        "IndentColour",
-    },
-    -- space_char_blankline_highlight_list = {
-    --     "IndentColour",
-    -- },
-    -- context_highlight_list = {
-    --     "IndentColour",
-    -- },
-    -- context_pattern_highlight = {
-    --     "IndentColour",
-    -- },
-}
-
+require("indent_blankline").setup {}
 require('nvim-autopairs').setup{}
 
 require'nvim-treesitter.configs'.setup {
@@ -139,7 +127,7 @@ vim.g.maplocalleader = ' '
 
 require('coc')
 
--- autocommand (not yet supported in lua API)
+-- FIXME rewrite to lua
 vim.cmd([[
 	" open help vertically
 	augroup vimrc_help
