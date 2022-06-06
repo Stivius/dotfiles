@@ -20,9 +20,11 @@ alias vim=nvim
 alias vi=nvim
 alias ssh='TERM=xterm-256color ssh'
 alias xclip='xclip -sel clip'
-alias cat=bat
+alias cat=/usr/bin/bat
 alias pe='pet exec'
 alias ll='ls -alF'
+alias work='kitty --session ~/.config/kitty/sessions/work_session.conf & disown'
+alias main='kitty --session ~/.config/kitty/sessions/main_session.conf & disown'
 
 # Powerline configuration
 if [ -f /usr/share/powerline/bindings/bash/powerline.sh ]; then
