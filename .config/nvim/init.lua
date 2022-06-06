@@ -21,6 +21,7 @@ require('packer').startup(function(use)
  	use 'tpope/vim-unimpaired' -- learn
 	use 'easymotion/vim-easymotion' -- learn
 	use 'preservim/nerdtree' -- learn, setup
+	use 'Xuyuanp/nerdtree-git-plugin'
 	use 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 	-- File-specific
@@ -57,6 +58,21 @@ end)
 
 vim.cmd('filetype plugin on')
 
+vim.cmd([[
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+                \ 'Modified'  :'✹',
+                \ 'Staged'    :'✚',
+                \ 'Untracked' :'✭',
+                \ 'Renamed'   :'➜',
+                \ 'Unmerged'  :'═',
+                \ 'Deleted'   :'✖',
+                \ 'Dirty'     :'✗',
+                \ 'Ignored'   :'☒',
+                \ 'Clean'     :'✔︎',
+                \ 'Unknown'   :'?',
+                \ }
+]])
+
 vim.api.nvim_create_autocmd({"VimEnter"}, {
 	pattern = "*",
 	callback = function()
@@ -67,21 +83,18 @@ vim.api.nvim_create_autocmd({"VimEnter"}, {
 	end
 })
 
-vim.api.nvim_create_autocmd({"BufEnter"}, {
-	pattern = "*",
-	callback = function()
-		local nerdName = 'NERD_tree_'
-		local current = vim.fn.bufname('%');
-		local alternate = vim.fn.bufname('#');
-		local lastWindowNumber = vim.fn.winnr('$');
-		if string.match(current, nerdName) and string.match(alternate, nerdName) and lastWindowNumber > 1 then
-			local bufferNumber = vim.fn.bufnr();
-			print(bufferNumber)
-			-- \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
-		end
-	end
-})
-
+-- FIXME not workingwith telescope
+-- vim.api.nvim_create_autocmd({"BufEnter"}, {
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		local nerdName = 'NERD_tree_'
+-- 		local current = vim.fn.bufname('%');
+-- 		local alternate = vim.fn.bufname('#');
+-- 		local lastWindowNumber = vim.fn.winnr('$');
+-- 		if not string.match(current, nerdName) and string.match(alternate, nerdName) and lastWindowNumber > 1 then
+-- 		end
+-- 	end
+-- })
 
 require('nvim-autopairs').setup{}
 
