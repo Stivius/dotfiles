@@ -84,14 +84,33 @@ vim.api.nvim_create_autocmd({"VimEnter"}, {
 -- 	end
 -- })
 
-require("indent_blankline").setup {
+-- colorscheme
+vim.cmd('colorscheme base16-tomorrow-night')
+vim.opt.termguicolors = true;
 
-    -- for example, context is off by default, use this to turn it on
-    -- show_current_context = true,
-    -- show_current_context_start = true,
-}
+vim.cmd [[highlight IndentColour guifg=#3c3c3c gui=nocombine]]
+
 vim.opt.list = true
 vim.opt.listchars:append("space:⋅")
+
+require("indent_blankline").setup {
+    char_highlight_list = {
+        "IndentColour",
+    },
+
+    space_char_highlight_list = {
+        "IndentColour",
+    },
+    -- space_char_blankline_highlight_list = {
+    --     "IndentColour",
+    -- },
+    -- context_highlight_list = {
+    --     "IndentColour",
+    -- },
+    -- context_pattern_highlight = {
+    --     "IndentColour",
+    -- },
+}
 
 require('nvim-autopairs').setup{}
 
@@ -149,10 +168,6 @@ vim.opt.expandtab = true
 -- powerline
 vim.g.airline_powerline_fonts = 1 -- use powerline fonts
 vim.g.Powerline_symbols = 'unicode' -- support unicode
-
--- colorscheme
-vim.cmd('colorscheme base16-tomorrow-night')
-vim.opt.termguicolors = true;
 
 -- fixes for highlight
 function link_hl_group(linkedGroup, group)
