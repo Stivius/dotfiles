@@ -19,6 +19,7 @@ function ExecuteTodoCommand(opts, command)
 	local manyPrefix = #ids > 1 and 'many' or '';
 	local confirmCmd = opts['confirm'] and 'yes |' or '';
 	local cmdFormat = string.format('!%s todo.sh %s %s %s %s', confirmCmd, manyPrefix, command, idsStr, args);
+	print(cmdFormat)
 	vim.cmd(string.format('silent exec "%s"', cmdFormat));
 end
 

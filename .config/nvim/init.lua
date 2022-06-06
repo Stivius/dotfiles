@@ -8,31 +8,38 @@ require('common')
 require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 
-	use 'preservim/nerdtree'
-	use 'vim-airline/vim-airline'
+	use 'vim-airline/vim-airline' -- setup
 	use '907th/vim-auto-save'
-	use 'tpope/vim-surround'
-	use 'easymotion/vim-easymotion'
-	use 'tiagofumo/vim-nerdtree-syntax-highlight'
-	use 'ryanoasis/vim-devicons'
-	use 'fladson/vim-kitty'
 	use 'chriskempson/base16-vim'
 	use 'troydm/zoomwintab.vim'
- 	use 'tpope/vim-unimpaired'
+
+	-- editing
+	use 'tpope/vim-repeat'
+	use 'tpope/vim-surround'
+
+	-- navigation
+ 	use 'tpope/vim-unimpaired' -- learn
+	use 'easymotion/vim-easymotion' -- learn
+	use 'preservim/nerdtree' -- learn, setup
+	use 'tiagofumo/vim-nerdtree-syntax-highlight'
+
+	-- File-specific
+	use 'ledger/vim-ledger'
+	use 'fladson/vim-kitty'
+	use 'ryanoasis/vim-devicons'
+	use 'cdelledonne/vim-cmake' -- setup
 
 	-- Programming
+	-- use 'lukas-reineke/indent-blankline.nvim' -- setup
+	use 'windwp/nvim-autopairs'
 	use { 'neoclide/coc.nvim', branch = 'release' }
-
-	use 'chrisbra/NrrwRgn'
-	use 'ledger/vim-ledger'
 	use 'tpope/vim-commentary'
 	use {
 		'nvim-treesitter/nvim-treesitter',
 		run = ':TSUpdate'
 	}
-	-- use 'pangloss/vim-javascript'
-	-- use 'leafgarland/typescript-vim'
-	-- use 'HerringtonDarkholme/yats.vim'
+	use 'tpope/vim-fugitive' -- learn, setup
+	use 'airblade/vim-gitgutter' -- learn, setup
 
 	--Zettelkasten
 	use({
@@ -40,7 +47,7 @@ require('packer').startup(function(use)
 		run = function() vim.fn["mkdp#util#install"]() end,
 	})
 
-	-- Telescope
+	-- Telescope, setup
 	use 'nvim-lua/popup.nvim'
 	use 'nvim-lua/plenary.nvim'
 	use 'nvim-telescope/telescope.nvim'
@@ -49,6 +56,8 @@ require('packer').startup(function(use)
 end)
 
 vim.cmd('filetype plugin on')
+
+require('nvim-autopairs').setup{}
 
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
@@ -84,6 +93,7 @@ vim.cmd([[
 	augroup END
 ]])
 
+vim.opt.hlsearch = false;
 -- unicode characters in the file autoload/float.vim
 set_option('encoding', 'utf-8')
 -- TextEdit might fail if hidden is not set.
@@ -111,7 +121,6 @@ vim.cmd([[
 	hi! link typescriptTSKeywordOperator Keyword
 	hi! link typescriptTSRepeat Keyword
 	hi! link typescriptTSException Keyword
-	hi! link CocSemClass Type
 ]])
 
 -- enable russian layout
@@ -206,14 +215,14 @@ nnoremap('<Leader>Q', ':qa<CR>')
 nnoremap('<Leader>w', ':w<CR>')
 
 -- disable arrows
-noremap('<up>', '<nop>')
-inoremap('<up>', '<nop>')
-noremap('<down>', '<nop>')
-inoremap('<down>', '<nop>')
-noremap('<left>', '<nop>')
-inoremap('<left>', '<nop>')
-noremap('<right>', '<nop>')
-inoremap('<right>', '<nop>')
+-- noremap('<up>', '<nop>')
+-- inoremap('<up>', '<nop>')
+-- noremap('<down>', '<nop>')
+-- inoremap('<down>', '<nop>')
+-- noremap('<left>', '<nop>')
+-- inoremap('<left>', '<nop>')
+-- noremap('<right>', '<nop>')
+-- inoremap('<right>', '<nop>')
 
 -- remap join lines to gj and visual line navigation to J/K
 nnoremap('J', 'gj')
