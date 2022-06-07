@@ -169,23 +169,6 @@ link_hl_group('typescriptTSRepeat', 'Keyword')
 -- enable russian layout
 inoremap('<C-f>', '<C-^>')
 nnoremap('<C-f>', 'a<C-^><ESC>')
-<<<<<<< HEAD
-set_option('keymap', 'russian-jcukenwin')
-set_option('iminsert', 0) -- english by default
-set_option('imsearch', 0) -- english by default
-
-set_option('wrap', true) -- wrap words
-set_option('linebreak', true) -- wrap words
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.expandtab = true
-vim.opt.smarttab = true
-set_option('encoding', 'UTF-8')
-set_option('autoindent', true)
-set_option('splitright', true) -- for vnew to work to the right
-set_win_option('relativenumber', true)
-set_win_option('number', true)
-=======
 vim.opt.keymap = 'russian-jcukenwin';
 vim.opt.iminsert = 0; -- english by default
 vim.opt.imsearch = 0; -- english by default
@@ -197,8 +180,6 @@ vim.opt.shiftwidth = 4;
 vim.opt.autoindent = true;
 vim.opt.splitright = true; -- for vnew to work to the right
 vim.opt.relativenumber = true;
-vim.opt.number = true;
->>>>>>> 0f1c95ccb2aea223f5ffba5d970634c5f1c99269
 
 -- completion
 inoremap('<CR>', 'pumvisible() ? coc#_select_confirm() : "\\<C-g>u\\<CR>"', { expr = true })
