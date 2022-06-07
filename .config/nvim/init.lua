@@ -134,6 +134,8 @@ set_option('wrap', true) -- wrap words
 set_option('linebreak', true) -- wrap words
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.smarttab = true
 set_option('encoding', 'UTF-8')
 set_option('autoindent', true)
 set_option('splitright', true) -- for vnew to work to the right
