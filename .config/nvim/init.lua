@@ -20,7 +20,8 @@ require('packer').startup(function(use)
 	-- navigation
  	use 'tpope/vim-unimpaired' -- learn
 	use 'easymotion/vim-easymotion' -- learn
-	use 'preservim/nerdtree' -- learn, setup
+	use 'preservim/nerdtree'
+	use 'Xuyuanp/nerdtree-git-plugin'
 	use 'tiagofumo/vim-nerdtree-syntax-highlight'
 
 	-- File-specific
@@ -30,7 +31,7 @@ require('packer').startup(function(use)
 	use 'cdelledonne/vim-cmake' -- setup
 
 	-- Programming
-	-- use 'lukas-reineke/indent-blankline.nvim' -- setup
+	use 'lukas-reineke/indent-blankline.nvim' -- setup
 	use 'windwp/nvim-autopairs'
 	use { 'neoclide/coc.nvim', branch = 'release' }
 	use 'tpope/vim-commentary'
@@ -57,6 +58,48 @@ end)
 
 vim.cmd('filetype plugin on')
 
+vim.g.NERDTreeGitStatusUseNerdFonts = 1
+vim.g.NERDTreeIgnore = { 'node_modules', '.git', 'build' }
+
+vim.api.nvim_create_autocmd({"VimEnter"}, {
+	pattern = "*",
+	callback = function()
+		if vim.fn.argc() == 0 then
+			vim.api.nvim_command('NERDTree');
+			vim.api.nvim_command('wincmd p');
+		end
+	end
+})
+
+-- FIXME not working with telescope
+-- vim.api.nvim_create_autocmd({"BufEnter"}, {
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		local nerdName = 'NERD_tree_'
+-- 		local current = vim.fn.bufname('%');
+-- 		local alternate = vim.fn.bufname('#');
+-- 		local lastWindowNumber = vim.fn.winnr('$');
+-- 		if not string.match(current, nerdName) and string.match(alternate, nerdName) and lastWindowNumber > 1 then
+-- 		end
+-- 	end
+-- })
+
+-- colorscheme
+vim.cmd('colorscheme base16-tomorrow-night')
+vim.opt.termguicolors = true;
+
+--FIXME rewrite in lua
+vim.cmd [[highlight IndentBlanklineSpaceChar guifg=#3c3c3c gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineSpaceCharBlankline guifg=#3c3c3c gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineChar guifg=#3c3c3c gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineContextChar guifg=#3c3c3c gui=nocombine]]
+vim.cmd [[highlight IndentBlanklineContextStart guifg=#3c3c3c gui=nocombine]]
+vim.cmd [[highlight! link NonText IndentBlanklineSpaceChar]]
+
+vim.opt.list = true
+vim.opt.listchars:append("space:⋅")
+
+require("indent_blankline").setup {}
 require('nvim-autopairs').setup{}
 
 require'nvim-treesitter.configs'.setup {
@@ -84,7 +127,7 @@ vim.g.maplocalleader = ' '
 
 require('coc')
 
--- autocommand (not yet supported in lua API)
+-- FIXME rewrite to lua
 vim.cmd([[
 	" open help vertically
 	augroup vimrc_help
@@ -95,37 +138,38 @@ vim.cmd([[
 
 vim.opt.hlsearch = false;
 -- unicode characters in the file autoload/float.vim
-set_option('encoding', 'utf-8')
+vim.opt.encoding = 'utf-8';
 -- TextEdit might fail if hidden is not set.
-set_option('hidden', true)
+vim.opt.hidden = true;
 -- Some servers have issues with backup files, see #649.
-set_option('backup', false)
-set_option('writebackup', false)
+vim.opt.backup = false;
+vim.opt.writebackup = false;
 -- Give more space for displaying messages.
-set_option('cmdheight', 2)
+vim.opt.cmdheight = 2;
 -- Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable delays and poor user experience.
-set_option('updatetime', 300)
+vim.opt.updatetime = 300;
 -- Column for diagnostic messages
-set_win_option('signcolumn', 'auto')
+vim.opt.signcolumn = 'auto';
+-- space instead of tabs
+vim.opt.expandtab = true
 
 -- powerline
 vim.g.airline_powerline_fonts = 1 -- use powerline fonts
 vim.g.Powerline_symbols = 'unicode' -- support unicode
 
--- colorscheme
-vim.cmd('colorscheme base16-tomorrow-night')
-set_option('termguicolors', true)
-
 -- fixes for highlight
-vim.cmd([[
-	hi! link typescriptTSKeywordOperator Keyword
-	hi! link typescriptTSRepeat Keyword
-	hi! link typescriptTSException Keyword
-]])
+function link_hl_group(linkedGroup, group)
+	local groupByName = vim.api.nvim_get_hl_by_name(group, true);
+	vim.api.nvim_set_hl(0, linkedGroup, groupByName);
+end
+link_hl_group('typescriptTSException', 'Keyword')
+link_hl_group('typescriptTSKeywordOperator', 'Keyword')
+link_hl_group('typescriptTSRepeat', 'Keyword')
 
 -- enable russian layout
 inoremap('<C-f>', '<C-^>')
 nnoremap('<C-f>', 'a<C-^><ESC>')
+<<<<<<< HEAD
 set_option('keymap', 'russian-jcukenwin')
 set_option('iminsert', 0) -- english by default
 set_option('imsearch', 0) -- english by default
@@ -141,6 +185,20 @@ set_option('autoindent', true)
 set_option('splitright', true) -- for vnew to work to the right
 set_win_option('relativenumber', true)
 set_win_option('number', true)
+=======
+vim.opt.keymap = 'russian-jcukenwin';
+vim.opt.iminsert = 0; -- english by default
+vim.opt.imsearch = 0; -- english by default
+
+vim.opt.wrap = true; -- wrap words
+vim.opt.linebreak = true; -- wrap words
+vim.opt.tabstop = 4;
+vim.opt.shiftwidth = 4;
+vim.opt.autoindent = true;
+vim.opt.splitright = true; -- for vnew to work to the right
+vim.opt.relativenumber = true;
+vim.opt.number = true;
+>>>>>>> 0f1c95ccb2aea223f5ffba5d970634c5f1c99269
 
 -- completion
 inoremap('<CR>', 'pumvisible() ? coc#_select_confirm() : "\\<C-g>u\\<CR>"', { expr = true })
@@ -215,16 +273,6 @@ nnoremap('<Leader>D', ":call delete(expand('%'))<CR>")
 nnoremap('<Leader>q', ':q<CR>')
 nnoremap('<Leader>Q', ':qa<CR>')
 nnoremap('<Leader>w', ':w<CR>')
-
--- disable arrows
--- noremap('<up>', '<nop>')
--- inoremap('<up>', '<nop>')
--- noremap('<down>', '<nop>')
--- inoremap('<down>', '<nop>')
--- noremap('<left>', '<nop>')
--- inoremap('<left>', '<nop>')
--- noremap('<right>', '<nop>')
--- inoremap('<right>', '<nop>')
 
 -- remap join lines to gj and visual line navigation to J/K
 nnoremap('J', 'gj')
