@@ -12,7 +12,7 @@ touch locked
 
 current_date=`date +"%d-%m-%Y %T"`
 
-git pull origin master
+# git pull origin master
 git add .
 git commit -m "Automatic backup $current_date" 
 git push origin master
