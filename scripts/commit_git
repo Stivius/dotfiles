@@ -1,8 +1,19 @@
 #!/bin/bash
 
+exec >> $HOME/commit.out 2>&1
+
+echo $1
+if [ -f locked ]; then
+    echo 'file locked'
+    exit -1;
+fi
+
+touch locked
+
 current_date=`date +"%d-%m-%Y %T"`
 
-git pull origin master
+# git pull origin master
 git add .
 git commit -m "Automatic backup $current_date" 
 git push origin master
+rm -f locked

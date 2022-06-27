@@ -23,8 +23,9 @@ syntax  match  TodoContext    '\(^\|\W\)@[^[:blank:]]\+'  		contains=NONE
 highlight  TodoDate       ctermfg=Blue guifg=#6A9FB5
 highlight  TodoDone       ctermfg=LightGray guifg=#505050
 highlight  TodoPriorityA  ctermfg=Yellow cterm=bold guifg=#F4BF75 gui=bold
-highlight  TodoPriorityB  ctermfg=Green guifg=#90A959
+highlight  TodoPriorityB  ctermfg=Green cterm=bold guifg=#90A959 gui=bold
 highlight  TodoPriorityC  ctermfg=LightBlue cterm=bold guifg=#6A9FB5 gui=bold
+highlight  TodoPriorityD  cterm=bold gui=bold
 highlight  TodoProject    ctermfg=Red guifg=#AC4142
 highlight  TodoContext    ctermfg=Red guifg=#AC4142
 highlight  TodoMeta       ctermfg=Cyan guifg=#75B5AA
