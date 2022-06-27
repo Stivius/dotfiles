@@ -176,10 +176,11 @@ vim.opt.imsearch = 0; -- english by default
 vim.opt.wrap = true; -- wrap words
 vim.opt.linebreak = true; -- wrap words
 vim.opt.tabstop = 4;
-vim.opt.shiftwidth = 4;
+vim.opt.shiftwidth = 2;
 vim.opt.autoindent = true;
 vim.opt.splitright = true; -- for vnew to work to the right
 vim.opt.relativenumber = true;
+vim.opt.number = true;
 
 -- completion
 inoremap('<CR>', 'pumvisible() ? coc#_select_confirm() : "\\<C-g>u\\<CR>"', { expr = true })
