@@ -18,8 +18,16 @@ require('packer').startup(function(use)
 	use 'tpope/vim-surround'
 
 	-- navigation
+    use 'mhinz/vim-startify'
  	use 'tpope/vim-unimpaired' -- learn
-	use 'easymotion/vim-easymotion' -- learn
+    use {
+        'phaazon/hop.nvim', -- better than easymotion
+        branch = 'v1', 
+        config = function()
+            require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
+        end
+    }
+    use 'qpkorr/vim-bufkill'
 	use 'preservim/nerdtree'
 	use 'Xuyuanp/nerdtree-git-plugin'
 	use 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -58,18 +66,35 @@ end)
 
 vim.cmd('filetype plugin on')
 
+vim.g.NERDTreeChDirMode = 2
 vim.g.NERDTreeGitStatusUseNerdFonts = 1
 vim.g.NERDTreeIgnore = { 'node_modules', '.git', 'build' }
 
-vim.api.nvim_create_autocmd({"VimEnter"}, {
-	pattern = "*",
-	callback = function()
-		if vim.fn.argc() == 0 then
-			vim.api.nvim_command('NERDTree');
-			vim.api.nvim_command('wincmd p');
-		end
-	end
-})
+vim.g.startify_change_cmd = 'cd'
+vim.g.startify_change_to_vcs_root = 1
+vim.g.startify_lists = {
+    { type = 'sessions',  header = {'   Sessions'}       },
+    { type = 'bookmarks', header = {'   Bookmarks'}      },
+    { type = 'commands',  header = {'   Commands'}       },
+    { type = 'files',     header = {'   MRU'}            },
+    { type = 'dir',       header = {'   MRU ' .. vim.fn.getcwd()} },
+}
+vim.g.startify_bookmarks = {
+    '~/.todo/todo.txt',
+    '~/.productivity/productivity.txt',
+    '~/.finances/transactions.ledger',
+    '~/.finances/parsed.ledger',
+}
+
+-- vim.api.nvim_create_autocmd({"VimEnter"}, {
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		if vim.fn.argc() == 0 then
+-- 			vim.api.nvim_command('NERDTree');
+-- 			vim.api.nvim_command('wincmd p');
+-- 		end
+-- 	end
+-- })
 
 -- FIXME not working with telescope
 -- vim.api.nvim_create_autocmd({"BufEnter"}, {
@@ -83,6 +108,21 @@ vim.api.nvim_create_autocmd({"VimEnter"}, {
 -- 		end
 -- 	end
 -- })
+
+require('telescope').setup{
+  defaults = {
+    mappings = {
+      n = {
+    	  ['<C-d>'] = require('telescope.actions').delete_buffer
+      }, -- normal mode
+      i = {
+        ['<C-h>'] = 'which_key',
+        ['<C-d>'] = require('telescope.actions').delete_buffer
+      } -- insert mode
+    }
+  },
+}
+
 
 -- colorscheme
 vim.cmd('colorscheme base16-tomorrow-night')
@@ -101,6 +141,8 @@ vim.opt.listchars:append("space:⋅")
 
 require("indent_blankline").setup {}
 require('nvim-autopairs').setup{}
+
+require'hop'.setup()
 
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
@@ -181,6 +223,7 @@ vim.opt.autoindent = true;
 vim.opt.splitright = true; -- for vnew to work to the right
 vim.opt.relativenumber = true;
 vim.opt.number = true;
+vim.opt.virtualedit='onemore'
 
 -- completion
 inoremap('<CR>', 'pumvisible() ? coc#_select_confirm() : "\\<C-g>u\\<CR>"', { expr = true })
@@ -192,15 +235,12 @@ inoremap('<C-Space>', 'coc#refresh()', { expr = true, silent = true })
 noremap('<F9>', ':nohl<CR>')
 noremap('<F8>', ':set ignorecase! ignorecase?<CR>')
 
--- map <Leader> <Plug>(easymotion-prefix)
-nmap('f', '<Plug>(easymotion-fl)')
-nmap('F', '<Plug>(easymotion-Fl)')
-nmap('<Leader><Leader>f', '<Plug>(easymotion-f2)')
-nmap('<Leader><Leader>F', '<Plug>(easymotion-F2)')
-nmap('t', '<Plug>(easymotion-tl)')
-nmap('T', '<Plug>(easymotion-Tl)')
-nmap('<Leader><Leader>t', '<Plug>(easymotion-t2)')
-nmap('<Leader><Leader>T', '<Plug>(easymotion-T2)')
+vim.api.nvim_set_keymap('', '<Leader><Leader>f', ":HopWord<CR>", {})
+vim.api.nvim_set_keymap('o', 'f', "<CMD>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<CR>", {})
+vim.api.nvim_set_keymap('n', 'f', "<CMD>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<CR>", {})
+vim.api.nvim_set_keymap('', 'F', "<CMD>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<CR>", {})
+vim.api.nvim_set_keymap('', 't', "<CMD>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })<CR>", {})
+vim.api.nvim_set_keymap('', 'T', "<CMD>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })<CR>", {})
 
 -- coc
 imap('<C-l>', '<Plug>(coc-snippets-expand)')
@@ -236,6 +276,7 @@ nnoremap('<Leader>rr', ':NERDTreeFocus<cr>Ro')
 nnoremap('<Leader>h', '<cmd>Telescope oldfiles<cr>')
 nnoremap('<Leader>o', '<cmd>Telescope find_files<cr>')
 nnoremap('<Leader>ff', '<cmd>Telescope <cr>')
+nnoremap('<Leader>fm', '<cmd>lua require("telescope.builtin").grep_string({ search = "FIXME" })<cr>')
 nnoremap('<Leader>fg', '<cmd>Telescope live_grep<cr>')
 nnoremap('<Leader>fb', '<cmd>Telescope buffers<cr>')
 nnoremap('<Leader>fh', '<cmd>Telescope help_tags<cr>')
@@ -260,3 +301,9 @@ nnoremap('<Leader>w', ':w<CR>')
 nnoremap('J', 'gj')
 nnoremap('K', 'gk')
 nnoremap('gj', 'J')
+
+-- merge
+nmap_local('<Leader>mc', ':Gvdiffsplit!<CR>')
+nmap_local('<Leader>mf', ':only<CR>')
+nmap_local('gdh', ':diffget //2<CR>')
+nmap_local('gdl', ':diffget //3<CR>')

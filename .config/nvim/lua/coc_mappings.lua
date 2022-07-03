@@ -1,6 +1,8 @@
 -- Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap_local('[g', '<Plug>(coc-diagnostic-next)')
 nmap_local(']g', '<Plug>(coc-diagnostic-prev)')
+nmap_local('[e', '<Plug>(coc-diagnostic-next-error)')
+nmap_local(']e', '<Plug>(coc-diagnostic-prev-error)')
 
 -- GoTo code navigation.
 nmap_local('gd', '<Plug>(coc-definition)')
@@ -96,3 +98,4 @@ create_user_command(
 
 -- Don't pass messages to |ins-completion-menu|.
 vim.opt.shortmess:append({ c = true })
+
