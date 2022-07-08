@@ -20,13 +20,7 @@ require('packer').startup(function(use)
 	-- navigation
     use 'mhinz/vim-startify'
  	use 'tpope/vim-unimpaired' -- learn
-    use {
-        'phaazon/hop.nvim', -- better than easymotion
-        branch = 'v1', 
-        config = function()
-            require'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-        end
-    }
+    use 'ggandor/lightspeed.nvim'
     use 'qpkorr/vim-bufkill'
 	use 'preservim/nerdtree'
 	use 'Xuyuanp/nerdtree-git-plugin'
@@ -68,7 +62,7 @@ vim.cmd('filetype plugin on')
 
 vim.g.NERDTreeChDirMode = 2
 vim.g.NERDTreeGitStatusUseNerdFonts = 1
-vim.g.NERDTreeIgnore = { 'node_modules', '.git', 'build' }
+vim.g.NERDTreeIgnore = { 'node_modules', '.git', '^build' }
 
 vim.g.startify_change_cmd = 'cd'
 vim.g.startify_change_to_vcs_root = 1
@@ -141,8 +135,6 @@ vim.opt.listchars:append("space:⋅")
 
 require("indent_blankline").setup {}
 require('nvim-autopairs').setup{}
-
-require'hop'.setup()
 
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
@@ -223,7 +215,6 @@ vim.opt.autoindent = true;
 vim.opt.splitright = true; -- for vnew to work to the right
 vim.opt.relativenumber = true;
 vim.opt.number = true;
-vim.opt.virtualedit='onemore'
 
 -- completion
 inoremap('<CR>', 'pumvisible() ? coc#_select_confirm() : "\\<C-g>u\\<CR>"', { expr = true })
@@ -234,13 +225,6 @@ inoremap('<C-Space>', 'coc#refresh()', { expr = true, silent = true })
 -- search
 noremap('<F9>', ':nohl<CR>')
 noremap('<F8>', ':set ignorecase! ignorecase?<CR>')
-
-vim.api.nvim_set_keymap('', '<Leader><Leader>f', ":HopWord<CR>", {})
-vim.api.nvim_set_keymap('o', 'f', "<CMD>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<CR>", {})
-vim.api.nvim_set_keymap('n', 'f', "<CMD>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<CR>", {})
-vim.api.nvim_set_keymap('', 'F', "<CMD>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<CR>", {})
-vim.api.nvim_set_keymap('', 't', "<CMD>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })<CR>", {})
-vim.api.nvim_set_keymap('', 'T', "<CMD>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })<CR>", {})
 
 -- coc
 imap('<C-l>', '<Plug>(coc-snippets-expand)')

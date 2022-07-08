@@ -5,6 +5,11 @@
 	},
 	"semanticTokens.filetypes": ["*"],
 	"languageserver": {
+		"clangd": {
+			"command": "clangd-12",
+			"rootPatterns": ["compile_flags.txt", "compile_commands.json"],
+			"filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"]
+		},
 		"cmake": {
 			"command": "cmake-language-server",
 			"filetypes": ["cmake"],
@@ -21,6 +26,35 @@
 			"args": ["--stdio"]
 		}
   },
-  "Lua.telemetry.enable": false,
-  "clangd.path": "~/.config/coc/extensions/coc-clangd-data/install/14.0.3/clangd_14.0.3/bin/clangd"
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+  "eslint.autoFixOnSave": true,
+  "suggest.completionItemKindLabels": {
+      "keyword": "Keyword ",
+      "variable": "Variable ",
+      "value": "Value ",
+      "operator": "Operator ",
+      "constructor": "Constructor ",
+      "function": "Function ƒ",
+      "reference": "Reference ",
+      "constant": "Constant ",
+      "method": "Method ",
+      "struct": "Struct ",
+      "class": "Class ﴯ",
+      "interface": "Interface ﰮ",
+      "text": "Text ",
+      "enum": "Enum ",
+      "enumMember": "Enum Member ",
+      "module": "Module ",
+      "color": "Color ",
+      "property": "Property ﰠ",
+      "field": "Field 識",
+      "unit": "Unit ",
+      "event": "Event ",
+      "file": "File ",
+      "folder": "Folder ",
+      "snippet": "Snippet ",
+      "typeParameter": "Type Parameter ",
+      "default": "\uf29c"
+  },
+  "Lua.telemetry.enable": false
 }
