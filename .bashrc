@@ -42,6 +42,13 @@ function prev() {
   sh -c "pet new `printf %q "$PREV"`"
 }
 
+function pet-select() {
+  BUFFER=$(pet search --query "$READLINE_LINE")
+  READLINE_LINE=$BUFFER
+  READLINE_POINT=${#BUFFER}
+}
+bind -x '"\C-x\C-r": pet-select'
+
 ### END Custom configuration
 
 # don't put duplicate lines or lines starting with space in the history.

@@ -62,7 +62,7 @@ vim.cmd('filetype plugin on')
 
 vim.g.NERDTreeChDirMode = 2
 vim.g.NERDTreeGitStatusUseNerdFonts = 1
-vim.g.NERDTreeIgnore = { 'node_modules', '.git', 'build' }
+vim.g.NERDTreeIgnore = { 'node_modules', '.git', '^build' }
 
 vim.g.startify_change_cmd = 'cd'
 vim.g.startify_change_to_vcs_root = 1
@@ -210,7 +210,7 @@ vim.opt.imsearch = 0; -- english by default
 vim.opt.wrap = true; -- wrap words
 vim.opt.linebreak = true; -- wrap words
 vim.opt.tabstop = 4;
-vim.opt.shiftwidth = 4;
+vim.opt.shiftwidth = 2;
 vim.opt.autoindent = true;
 vim.opt.splitright = true; -- for vnew to work to the right
 vim.opt.relativenumber = true;

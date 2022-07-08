@@ -26,6 +26,10 @@
 			"args": ["--stdio"]
 		}
   },
+<<<<<<< HEAD
+=======
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+>>>>>>> 4c4beba22a4d4f3b7301a9e96220e31220adb916
   "eslint.autoFixOnSave": true,
   "suggest.completionItemKindLabels": {
       "keyword": "Keyword ",

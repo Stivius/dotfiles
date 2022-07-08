@@ -1,6 +1,6 @@
 [General]
-  snippetfile = "/home/stivius/.config/pet/snippet.toml"
-  editor = "vim"
+  snippetfile = "$HOME/.config/pet/snippet.toml"
+  editor = "nvim"
   column = 40
   selectcmd = "fzf"
 
