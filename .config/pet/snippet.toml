@@ -55,5 +55,5 @@
 
 [[snippets]]
   description = "Ledger Balance"
-  command = "ledger -f transactions.ledger --real --pedantic --explicit bal"
+  command = "../ledger/ledger -f transactions.ledger --real --pedantic --explicit bal"
   output = ""

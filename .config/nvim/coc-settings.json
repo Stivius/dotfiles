@@ -26,5 +26,34 @@
 			"args": ["--stdio"]
 		}
   },
+  "eslint.autoFixOnSave": true,
+  "suggest.completionItemKindLabels": {
+      "keyword": "Keyword ",
+      "variable": "Variable ",
+      "value": "Value ",
+      "operator": "Operator ",
+      "constructor": "Constructor ",
+      "function": "Function ƒ",
+      "reference": "Reference ",
+      "constant": "Constant ",
+      "method": "Method ",
+      "struct": "Struct ",
+      "class": "Class ﴯ",
+      "interface": "Interface ﰮ",
+      "text": "Text ",
+      "enum": "Enum ",
+      "enumMember": "Enum Member ",
+      "module": "Module ",
+      "color": "Color ",
+      "property": "Property ﰠ",
+      "field": "Field 識",
+      "unit": "Unit ",
+      "event": "Event ",
+      "file": "File ",
+      "folder": "Folder ",
+      "snippet": "Snippet ",
+      "typeParameter": "Type Parameter ",
+      "default": "\uf29c"
+  },
   "Lua.telemetry.enable": false
 }
