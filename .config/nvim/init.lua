@@ -8,19 +8,23 @@ require('common')
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
+  -- ui
   use {
     'nvim-lualine/lualine.nvim',
     requires = { 'kyazdani42/nvim-web-devicons', opt = true }
   }
   use 'chriskempson/base16-vim'
-  use 'troydm/zoomwintab.vim'
+  use 'ryanoasis/vim-devicons'
+  use 'lukas-reineke/indent-blankline.nvim'
 
   -- editing
   use 'tpope/vim-repeat'
   use 'tpope/vim-surround'
+  use 'windwp/nvim-autopairs'
 
   -- navigation
   use 'mhinz/vim-startify'
+  use 'troydm/zoomwintab.vim'
   use 'tpope/vim-unimpaired' -- learn
   use 'ggandor/lightspeed.nvim'
   use 'qpkorr/vim-bufkill'
@@ -31,12 +35,9 @@ require('packer').startup(function(use)
   -- File-specific
   use 'ledger/vim-ledger'
   use 'fladson/vim-kitty'
-  use 'ryanoasis/vim-devicons'
   use 'cdelledonne/vim-cmake' -- setup
 
   -- Programming
-  use 'lukas-reineke/indent-blankline.nvim'
-  use 'windwp/nvim-autopairs'
   use { 'neoclide/coc.nvim', branch = 'release' }
   use 'tpope/vim-commentary'
   use {
@@ -98,6 +99,13 @@ require('telescope').setup{
     find_files = {
       theme = 'dropdown',
       previewer = false
+    },
+    buffers = {
+      theme = 'dropdown',
+      previewer = false
+    },
+    jumplist = {
+      theme = 'dropdown',
     }
   },
   extensions = {
@@ -250,16 +258,15 @@ nnoremap('<C-Up>', ':resize +3<CR>', { silent = true })
 nnoremap('<C-Down>', ':resize -3<CR>', { silent = true })
 
 -- file tree
--- noremap <F4> <ESC>:NERDTree<CR>
 noremap('<F5>', '<ESC>:NERDTreeToggle<CR>')
 nnoremap('<Leader>rc', ':NERDTreeFocus<cr>R<c-w><c-p>')
 nnoremap('<Leader>rr', ':NERDTreeFocus<cr>Ro')
 
--- nnoremap <Leader>qc  <cmd>cclose<cr>
--- nnoremap <Leader>qo  <cmd>copen<cr>
-
 nnoremap('<Leader>o', '<cmd>Telescope find_files<cr>')
 nnoremap('<Leader>ff', '<cmd>Telescope <cr>')
+nnoremap('<Leader>fq', '<cmd>Telescope quickfix<cr>')
+nnoremap('<Leader>fj', '<cmd>Telescope jumplist<cr>')
+-- FIXME add to quickfix
 nnoremap('<Leader>fm', '<cmd>lua require("telescope.builtin").grep_string({ search = "FIXME" })<cr>')
 nnoremap('<Leader>fg', '<cmd>Telescope live_grep<cr>')
 nnoremap('<Leader>fb', '<cmd>Telescope buffers<cr>')
