@@ -18,34 +18,27 @@ nmap_local('<Leader>f', '<Plug>(coc-format-selected)')
 xmap_local('<Leader>f', '<Plug>(coc-format-selected)')
 
 -- Applying codeAction to the selected region.
--- Example: `<leader>cap` for current paragraph
 nmap_local('<Leader>ca', '<Plug>(coc-codeaction-selected)')
 xmap_local('<Leader>ca', '<Plug>(coc-codeaction-selected)')
-
 -- Remap keys for applying codeAction to the current buffer.
 nmap_local('<Leader>caa', '<Plug>(coc-codeaction)')
+-- Run the Code Lens action on the current line.
+nmap_local('<Leader>cal', '<Plug>(coc-codeaction-line')
 -- Apply AutoFix to problem on the current line.
 nmap_local('<Leader>fc', '<Plug>(coc-fix-current)')
--- Run the Code Lens action on the current line.
-nmap_local('<Leader>cal', '<Plug>(coc-codelens-action)')
 
 -- Convert selection to snippet
 xmap_local('<leader>snp', '<Plug>(coc-convert-snippet)')
 
--- Mappings for CoCList
--- Show all diagnostics.
+-- Mappings for CoCLis
+-- Show all diagnostics
 nnoremap_local('<Leader>ld', ':<C-u>CocList diagnostics<cr>', { silent = true, nowait = true })
 -- Manage extensions.
-nnoremap_local('<Leader>le', ':<C-u>CocList extensions<cr>', { silent = true, nowait = true })
--- Show commands.
-nnoremap_local('<Leader>lc', ':<C-u>CocList commands<cr>', { silent = true, nowait = true })
+nnoremap_local('<Leader>lc', ':<C-u>Telescope coc commands<cr>', { silent = true, nowait = true })
 -- Find symbol of current document.
-nnoremap_local('<Leader>lo', ':<C-u>CocList outline<cr>', { silent = true, nowait = true })
+nnoremap_local('<Leader>lo', ':<C-u>Telescope coc document_symbols<cr>', { silent = true, nowait = true })
 -- Search workspace symbols.
-nnoremap_local('<Leader>ls', ':<C-u>CocList -I symbols<cr>', { silent = true, nowait = true })
--- Do default action for next/prev item.
--- nnoremap_local('<Leader>j', ':<C-u>CocNext<CR>', { silent = true, nowait = true})
--- nnoremap_local('<Leader>k', ':<C-u>CocPrev<CR>', { silent = true, nowait = true})
+nnoremap_local('<Leader>ls', ':<C-u>Telescope coc workspace_symbols<cr>', { silent = true, nowait = true })
 
 function show_documentation()
    if vim.fn.CocAction('hasProvider', 'hover') then

@@ -6,56 +6,58 @@ end
 
 require('common')
 require('packer').startup(function(use)
-	use 'wbthomason/packer.nvim'
+  use 'wbthomason/packer.nvim'
 
-	use 'vim-airline/vim-airline' -- setup
-	use '907th/vim-auto-save'
-	use 'chriskempson/base16-vim'
-	use 'troydm/zoomwintab.vim'
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
+  use 'chriskempson/base16-vim'
+  use 'troydm/zoomwintab.vim'
 
-	-- editing
-	use 'tpope/vim-repeat'
-	use 'tpope/vim-surround'
+  -- editing
+  use 'tpope/vim-repeat'
+  use 'tpope/vim-surround'
 
-	-- navigation
-    use 'mhinz/vim-startify'
- 	use 'tpope/vim-unimpaired' -- learn
-    use 'ggandor/lightspeed.nvim'
-    use 'qpkorr/vim-bufkill'
-	use 'preservim/nerdtree'
-	use 'Xuyuanp/nerdtree-git-plugin'
-	use 'tiagofumo/vim-nerdtree-syntax-highlight'
+  -- navigation
+  use 'mhinz/vim-startify'
+  use 'tpope/vim-unimpaired' -- learn
+  use 'ggandor/lightspeed.nvim'
+  use 'qpkorr/vim-bufkill'
+  use 'preservim/nerdtree'
+  use 'Xuyuanp/nerdtree-git-plugin'
+  use 'tiagofumo/vim-nerdtree-syntax-highlight'
 
-	-- File-specific
-	use 'ledger/vim-ledger'
-	use 'fladson/vim-kitty'
-	use 'ryanoasis/vim-devicons'
-	use 'cdelledonne/vim-cmake' -- setup
+  -- File-specific
+  use 'ledger/vim-ledger'
+  use 'fladson/vim-kitty'
+  use 'ryanoasis/vim-devicons'
+  use 'cdelledonne/vim-cmake' -- setup
 
-	-- Programming
-	use 'lukas-reineke/indent-blankline.nvim' -- setup
-	use 'windwp/nvim-autopairs'
-	use { 'neoclide/coc.nvim', branch = 'release' }
-	use 'tpope/vim-commentary'
-	use {
-		'nvim-treesitter/nvim-treesitter',
-		run = ':TSUpdate'
-	}
-	use 'tpope/vim-fugitive' -- learn, setup
-	use 'airblade/vim-gitgutter' -- learn, setup
+  -- Programming
+  use 'lukas-reineke/indent-blankline.nvim'
+  use 'windwp/nvim-autopairs'
+  use { 'neoclide/coc.nvim', branch = 'release' }
+  use 'tpope/vim-commentary'
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate'
+  }
+  use 'tpope/vim-fugitive' -- learn, setup
+  use 'airblade/vim-gitgutter' -- learn, setup
 
-	--Zettelkasten
-	use({
-		"iamcco/markdown-preview.nvim",
-		run = function() vim.fn["mkdp#util#install"]() end,
-	})
+  --Zettelkasten
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  })
 
-	-- Telescope, setup
-	use 'nvim-lua/popup.nvim'
-	use 'nvim-lua/plenary.nvim'
-	use 'nvim-telescope/telescope.nvim'
-	use 'nvim-telescope/telescope-fzy-native.nvim'
-	use 'fannheyward/telescope-coc.nvim'
+  -- Telescope, setup
+  use 'nvim-lua/popup.nvim'
+  use 'nvim-lua/plenary.nvim'
+  use 'nvim-telescope/telescope.nvim'
+  use 'nvim-telescope/telescope-fzy-native.nvim'
+  use 'fannheyward/telescope-coc.nvim'
 end)
 
 vim.cmd('filetype plugin on')
@@ -80,29 +82,6 @@ vim.g.startify_bookmarks = {
     '~/.finances/parsed.ledger',
 }
 
--- vim.api.nvim_create_autocmd({"VimEnter"}, {
--- 	pattern = "*",
--- 	callback = function()
--- 		if vim.fn.argc() == 0 then
--- 			vim.api.nvim_command('NERDTree');
--- 			vim.api.nvim_command('wincmd p');
--- 		end
--- 	end
--- })
-
--- FIXME not working with telescope
--- vim.api.nvim_create_autocmd({"BufEnter"}, {
--- 	pattern = "*",
--- 	callback = function()
--- 		local nerdName = 'NERD_tree_'
--- 		local current = vim.fn.bufname('%');
--- 		local alternate = vim.fn.bufname('#');
--- 		local lastWindowNumber = vim.fn.winnr('$');
--- 		if not string.match(current, nerdName) and string.match(alternate, nerdName) and lastWindowNumber > 1 then
--- 		end
--- 	end
--- })
-
 require('telescope').setup{
   defaults = {
     mappings = {
@@ -115,8 +94,19 @@ require('telescope').setup{
       } -- insert mode
     }
   },
+  pickers = {
+    find_files = {
+      theme = 'dropdown',
+      previewer = false
+    }
+  },
+  extensions = {
+    coc = {
+      theme = 'dropdown'
+    }
+  }
 }
-
+require('telescope').load_extension('coc')
 
 -- colorscheme
 vim.cmd('colorscheme base16-tomorrow-night')
@@ -133,7 +123,19 @@ vim.cmd [[highlight! link NonText IndentBlanklineSpaceChar]]
 vim.opt.list = true
 vim.opt.listchars:append("space:⋅")
 
-require("indent_blankline").setup {}
+require('lualine').setup {
+  sections = {
+    lualine_x = {'filetype'},
+    lualine_c = {
+      {
+        'filename',
+        file_status = true,
+      }
+    }
+  }
+}
+
+require("indent_blankline").setup{}
 require('nvim-autopairs').setup{}
 
 require'nvim-treesitter.configs'.setup {
@@ -188,7 +190,6 @@ vim.opt.signcolumn = 'auto';
 vim.opt.expandtab = true
 
 -- powerline
-vim.g.airline_powerline_fonts = 1 -- use powerline fonts
 vim.g.Powerline_symbols = 'unicode' -- support unicode
 
 -- fixes for highlight
@@ -257,7 +258,6 @@ nnoremap('<Leader>rr', ':NERDTreeFocus<cr>Ro')
 -- nnoremap <Leader>qc  <cmd>cclose<cr>
 -- nnoremap <Leader>qo  <cmd>copen<cr>
 
-nnoremap('<Leader>h', '<cmd>Telescope oldfiles<cr>')
 nnoremap('<Leader>o', '<cmd>Telescope find_files<cr>')
 nnoremap('<Leader>ff', '<cmd>Telescope <cr>')
 nnoremap('<Leader>fm', '<cmd>lua require("telescope.builtin").grep_string({ search = "FIXME" })<cr>')

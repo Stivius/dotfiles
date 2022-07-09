@@ -69,20 +69,25 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  NrrwRgn = {
-    loaded = true,
-    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/NrrwRgn",
-    url = "https://github.com/chrisbra/NrrwRgn"
-  },
-  ["base16-vim"] = {
-    loaded = true,
-    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/base16-vim",
-    url = "https://github.com/chriskempson/base16-vim"
-  },
   ["coc.nvim"] = {
     loaded = true,
     path = "/home/stivius/.local/share/nvim/site/pack/packer/start/coc.nvim",
     url = "https://github.com/neoclide/coc.nvim"
+  },
+  ["indent-blankline.nvim"] = {
+    loaded = true,
+    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+    url = "https://github.com/lukas-reineke/indent-blankline.nvim"
+  },
+  ["lightspeed.nvim"] = {
+    loaded = true,
+    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/lightspeed.nvim",
+    url = "https://github.com/ggandor/lightspeed.nvim"
+  },
+  ["lualine.nvim"] = {
+    loaded = true,
+    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/lualine.nvim",
+    url = "https://github.com/nvim-lualine/lualine.nvim"
   },
   ["markdown-preview.nvim"] = {
     loaded = true,
@@ -93,6 +98,31 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/stivius/.local/share/nvim/site/pack/packer/start/nerdtree",
     url = "https://github.com/preservim/nerdtree"
+  },
+  ["nerdtree-git-plugin"] = {
+    loaded = true,
+    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/nerdtree-git-plugin",
+    url = "https://github.com/Xuyuanp/nerdtree-git-plugin"
+  },
+  ["nvim-autopairs"] = {
+    loaded = true,
+    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/nvim-autopairs",
+    url = "https://github.com/windwp/nvim-autopairs"
+  },
+  ["nvim-base16"] = {
+    loaded = true,
+    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/nvim-base16",
+    url = "https://github.com/RRethy/nvim-base16"
+  },
+  ["nvim-treesitter"] = {
+    loaded = true,
+    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
+    url = "https://github.com/nvim-treesitter/nvim-treesitter"
+  },
+  ["nvim-web-devicons"] = {
+    loaded = true,
+    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
+    url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
   ["packer.nvim"] = {
     loaded = true,
@@ -124,15 +154,20 @@ _G.packer_plugins = {
     path = "/home/stivius/.local/share/nvim/site/pack/packer/start/telescope.nvim",
     url = "https://github.com/nvim-telescope/telescope.nvim"
   },
-  ["vim-airline"] = {
-    loaded = true,
-    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/vim-airline",
-    url = "https://github.com/vim-airline/vim-airline"
-  },
   ["vim-auto-save"] = {
     loaded = true,
     path = "/home/stivius/.local/share/nvim/site/pack/packer/start/vim-auto-save",
     url = "https://github.com/907th/vim-auto-save"
+  },
+  ["vim-bufkill"] = {
+    loaded = true,
+    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/vim-bufkill",
+    url = "https://github.com/qpkorr/vim-bufkill"
+  },
+  ["vim-cmake"] = {
+    loaded = true,
+    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/vim-cmake",
+    url = "https://github.com/cdelledonne/vim-cmake"
   },
   ["vim-commentary"] = {
     loaded = true,
@@ -144,10 +179,15 @@ _G.packer_plugins = {
     path = "/home/stivius/.local/share/nvim/site/pack/packer/start/vim-devicons",
     url = "https://github.com/ryanoasis/vim-devicons"
   },
-  ["vim-easymotion"] = {
+  ["vim-fugitive"] = {
     loaded = true,
-    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/vim-easymotion",
-    url = "https://github.com/easymotion/vim-easymotion"
+    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+    url = "https://github.com/tpope/vim-fugitive"
+  },
+  ["vim-gitgutter"] = {
+    loaded = true,
+    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/vim-gitgutter",
+    url = "https://github.com/airblade/vim-gitgutter"
   },
   ["vim-kitty"] = {
     loaded = true,
@@ -163,6 +203,16 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/stivius/.local/share/nvim/site/pack/packer/start/vim-nerdtree-syntax-highlight",
     url = "https://github.com/tiagofumo/vim-nerdtree-syntax-highlight"
+  },
+  ["vim-repeat"] = {
+    loaded = true,
+    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/vim-repeat",
+    url = "https://github.com/tpope/vim-repeat"
+  },
+  ["vim-startify"] = {
+    loaded = true,
+    path = "/home/stivius/.local/share/nvim/site/pack/packer/start/vim-startify",
+    url = "https://github.com/mhinz/vim-startify"
   },
   ["vim-surround"] = {
     loaded = true,
