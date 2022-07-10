@@ -6,6 +6,6 @@ configuration {
 	padding: 15;
 	disable-history: false;
 	bw: 2;
-	width: 1500;
+	width: 78;
 	separator-style: "solid";
 }
