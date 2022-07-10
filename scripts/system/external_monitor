@@ -1,0 +1,32 @@
+#!/bin/bash 
+
+source /home/stivius/scripts/helpers/authority
+
+MONITOR=`xrandr | grep -P -o "^HDMI(-1)?-2"`
+LAPTOP=`xrandr | grep -P -o "^eDP(-1)?-1"`
+
+function ActivateHDMI {
+    echo "Switching to $MONITOR"
+    xrandr --output $LAPTOP --primary --auto --output $MONITOR --left-of $LAPTOP --auto
+}
+function DeactivateHDMI {
+    echo "Switching to $LAPTOP"
+    xrandr --output $LAPTOP --primary --auto --output $MONITOR --off
+}
+
+function HDMIConnected {
+	! xrandr | grep $MONITOR | grep disconnected
+}
+
+echo $DISPLAY
+echo $XAUTHORITY
+
+if HDMIConnected
+then
+	ActivateHDMI
+else
+	DeactivateHDMI
+fi
+
+sleep 1
+i3-msg restart
