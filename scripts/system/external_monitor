@@ -7,11 +7,7 @@ LAPTOP=`xrandr | grep -P -o "^eDP(-1)?-1"`
 
 function ActivateHDMI {
     echo "Switching to $MONITOR"
-    xrandr --output $MONITOR --primary --auto --output $MONITOR --of
-}
-function DeactivateHDMI {
-    echo "Switching to $LAPTOP"
-    xrandr --output $LAPTOP --primary --auto --output $MONITOR --off
+    xrandr --output $MONITOR --primary --auto --output $MONITOR --off
 }
 
 function HDMIConnected {
@@ -24,8 +20,6 @@ echo $XAUTHORITY
 if HDMIConnected
 then
 	ActivateHDMI
-else
-	DeactivateHDMI
 fi
 
 sleep 1
