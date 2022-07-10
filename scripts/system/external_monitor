@@ -7,7 +7,7 @@ LAPTOP=`xrandr | grep -P -o "^eDP(-1)?-1"`
 
 function ActivateHDMI {
     echo "Switching to $MONITOR"
-    xrandr --output $LAPTOP --primary --auto --output $MONITOR --left-of $LAPTOP --auto
+    xrandr --output $MONITOR --primary --auto --output $MONITOR --of
 }
 function DeactivateHDMI {
     echo "Switching to $LAPTOP"
