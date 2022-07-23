@@ -38,3 +38,8 @@ export ANKI_NOHIGHDPI=1
 if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
   exec startx   # remove the exec to remain logged in when your wm ends
 fi
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

@@ -57,3 +57,18 @@
   description = "Ledger Balance"
   command = "../ledger/ledger -f transactions.ledger --real --pedantic --explicit bal"
   output = ""
+
+[[snippets]]
+  description = "Ledger - Mono parsing"
+  command = "~/Projects/ledger-parsers/node_modules/.bin/ts-node ~/Projects/ledger-parsers/mono_parser.ts -l Kyiv -f ~/Downloads/Telegram\\ Desktop/report_23-07-22_14-01-45.csv >> transactions.ledger"
+  output = ""
+
+[[snippets]]
+  description = "Productivity Top-level 7 days"
+  command = "productivity report --range-type 5 --depth 1"
+  output = ""
+
+[[snippets]]
+  description = "Productivity Top-level 30 days"
+  command = "productivity report --range-type 7 --depth 1"
+  output = ""
