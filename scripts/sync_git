@@ -12,5 +12,6 @@ then
 else
   git pull origin master
   if IsUnmerged 
-  dunstify $(pwd) 'Sync finished with merged conflict'
+    dunstify $(pwd) 'Sync finished with merged conflict'
+  fi
 fi
