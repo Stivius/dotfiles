@@ -6,17 +6,13 @@ function IsUnmerged {
   git status | grep unmerged
 }
 
-if IsUnmerged
-then
+if IsUnmerged; then
   dunstify $(pwd) 'Sync failed: unmerged files'
 else
   git pull origin master
-  if IsUnmerged 
-  then
+  if IsUnmerged; then
     dunstify $(pwd) 'Sync finished with merged conflict'
   else
     git push origin master
-    code=$?
-    if [ "$code" -neq 0 ]; then 
   fi
 fi
