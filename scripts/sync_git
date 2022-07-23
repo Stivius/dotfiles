@@ -12,6 +12,7 @@ then
 else
   git pull origin master
   if IsUnmerged 
+  then
     dunstify $(pwd) 'Sync finished with merged conflict'
   fi
 fi
