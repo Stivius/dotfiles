@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+
 function IsUnmerged {
   git status | grep unmerged
 }
@@ -9,5 +11,6 @@ then
   dunstify $(pwd) 'Sync failed: unmerged files'
 else
   git pull origin master
+  if IsUnmerged 
   dunstify $(pwd) 'Sync finished with merged conflict'
 fi
