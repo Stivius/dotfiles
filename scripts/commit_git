@@ -6,7 +6,6 @@ function IsUnmerged {
 
 if IsUnmerged
 then
-  dunstify 
   dunstify Git 'Sync failed: unmerged files'
 else
   git add .
