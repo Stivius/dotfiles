@@ -16,5 +16,7 @@ else
     dunstify $(pwd) 'Sync finished with merged conflict'
   else
     git push origin master
+    code=$?
+    if [ "$code" -neq 0 ]; then 
   fi
 fi
