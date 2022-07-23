@@ -11,9 +11,9 @@ then
   dunstify $(pwd) 'Sync failed: unmerged files'
 else
   git pull origin master
-  git push origin master
   if IsUnmerged 
   then
     dunstify $(pwd) 'Sync finished with merged conflict'
   fi
+  git push origin master
 fi
