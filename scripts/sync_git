@@ -15,7 +15,6 @@ else
   then
     dunstify $(pwd) 'Sync finished with merged conflict'
   else
-
     git push origin master
   fi
 fi
