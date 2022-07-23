@@ -1,5 +1,7 @@
 #!/bin/bash
 
+current_date=`date +"%d-%m-%Y %T"`
+
 function IsUnmerged {
   git status | grep unmerged
 }
