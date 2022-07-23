@@ -6,7 +6,7 @@ function IsUnmerged {
 
 if IsUnmerged
 then
-  dunstify Git 'Sync failed: unmerged files'
+  dunstify $(pwd) 'Sync failed: unmerged files'
 else
   git add .
   git commit -m "Automatic backup $current_date" 
