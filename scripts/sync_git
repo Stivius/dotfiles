@@ -14,7 +14,8 @@ else
   if IsUnmerged 
   then
     dunstify $(pwd) 'Sync finished with merged conflict'
-    exit
+  else
+
+    git push origin master
   fi
-  git push origin master
 fi
