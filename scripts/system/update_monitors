@@ -3,7 +3,7 @@
 source /home/stivius/scripts/helpers/authority
 
 MONITOR=`xrandr | grep -P -o "^HDMI(-1)?-2"`
-LAPTOP=`xrandr | grep -P -o "^eDP(-1)?-1"`
+LAPTOP=`xrandr | grep -P -o "^e?DP(-1)?-1"`
 
 MODE="$1"
 
