@@ -5,6 +5,9 @@ source /home/stivius/scripts/helpers/authority
 MONITOR=`xrandr | grep -P -o "^HDMI(-1)?-2"`
 LAPTOP=`xrandr | grep -P -o "^e?DP(-1)?-1"`
 
+echo $MONITOR
+echo $LAPTOP
+
 MODE="$1"
 
 function HDMIConnected {
