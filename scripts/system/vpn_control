@@ -5,7 +5,7 @@ MODE="$1"
 function show_status() {
   local result=`sudo wg show wg0 | grep wg0`
   if [ ! "$result" ]; then
-
+  else
   fi
   echo "result $result"
 }
