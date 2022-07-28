@@ -3,8 +3,9 @@
 MODE="$1"
 
 case "$MODE" in
-  "external-only-normal" )
+  "on" )
 
+    dunstify VPN 'Enabled'
   *)
     dunstify VPN 'Unknown mode'
   ;;
