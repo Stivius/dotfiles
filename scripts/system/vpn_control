@@ -8,9 +8,9 @@ function vpn_enabled() {
 
 function show_status() {
   if vpn_enabled; then
-    dunstify VPN "Enabled"
+    dunstify --icon=vpn VPN "Enabled"
   else
-    dunstify VPN "Disabled"
+    dunstify --icon=vpn VPN "Disabled"
   fi
 }
 
@@ -28,6 +28,6 @@ case "$MODE" in
     fi
     ;;
   *)
-    dunstify VPN 'Unknown mode'
+    dunstify --icon=vpn VPN 'Unknown mode'
     ;;
 esac
