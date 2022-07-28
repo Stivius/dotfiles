@@ -14,3 +14,4 @@ case "$MODE" in
   *)
     dunstify VPN 'Unknown mode'
     ;;
+esac
