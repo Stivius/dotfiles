@@ -2,6 +2,9 @@
 
 MODE="$1"
 
+function show_status() {
+}
+
 case "$MODE" in
   "on")
     wg-quick up wg0
