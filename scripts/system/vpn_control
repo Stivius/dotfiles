@@ -8,6 +8,7 @@ case "$MODE" in
     dunstify VPN 'Enabled'
     ;;
   "off")
+    wg-quick down wg0
     dunstify VPN 'Disabled'
     ;;
   *)
