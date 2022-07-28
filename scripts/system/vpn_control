@@ -11,11 +11,9 @@ case "$MODE" in
   "on")
     wg-quick up wg0
     show_status
-    dunstify VPN 'Enabled'
     ;;
   "off")
     wg-quick down wg0
-    dunstify VPN 'Disabled'
     ;;
   *)
     dunstify VPN 'Unknown mode'
