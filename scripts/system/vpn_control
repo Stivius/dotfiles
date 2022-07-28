@@ -10,6 +10,7 @@ function show_status() {
 case "$MODE" in
   "on")
     wg-quick up wg0
+    show_status
     dunstify VPN 'Enabled'
     ;;
   "off")
