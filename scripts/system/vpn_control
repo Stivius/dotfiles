@@ -16,8 +16,10 @@ function show_status() {
 
 case "$MODE" in
   "on")
-    wg-quick up wg0
-    show_status
+    if vpn_enabled; then
+      wg-quick up wg0
+      show_status
+    fi
     ;;
   "off")
     wg-quick down wg0
