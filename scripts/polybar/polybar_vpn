@@ -3,8 +3,8 @@
 default_sink=`pulsemixer --list-sources | grep Default | awk -F[,:] '{print $3}'`
 vpn_enabled=`sudo wg show wg0 | grep wg0`
 
-if [ $mute_status ]; then
-	echo ""
+if [ $vpn_enabled ]; then
+	echo "爵 on"
 else
-	echo ""
+	echo "爵 off"
 fi
