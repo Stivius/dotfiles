@@ -25,7 +25,7 @@ case "$MODE" in
     ;;
   "off")
     if vpn_enabled; then
-      sudo wg-quick down wg0
+      sudo -u stivius wg-quick down wg0
       show_status
     fi
     ;;
