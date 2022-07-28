@@ -1,3 +1,10 @@
 #!/bin/bash
 
 MODE="$1"
+
+case "$MODE" in
+  "external-only-normal" )
+
+  *)
+    dunstify VPN 'Unknown mode'
+  ;;
