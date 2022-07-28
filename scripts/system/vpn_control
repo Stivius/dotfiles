@@ -14,6 +14,7 @@ case "$MODE" in
     ;;
   "off")
     wg-quick down wg0
+    show_status
     ;;
   *)
     dunstify VPN 'Unknown mode'
