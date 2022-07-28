@@ -1,0 +1,10 @@
+#!/bin/bash
+
+default_sink=`pulsemixer --list-sources | grep Default | awk -F[,:] '{print $3}'`
+mute_status=`pulsemixer --id $default_sink --get-mute`
+
+if [ $mute_status = 0 ]; then
+	echo ""
+else
+	echo ""
+fi
