@@ -22,9 +22,10 @@ case "$MODE" in
     fi
     ;;
   "off")
-    if ! bpnk
-    wg-quick down wg0
-    show_status
+    if vpn_enabled; then
+      wg-quick down wg0
+      show_status
+    fi
     ;;
   *)
     dunstify VPN 'Unknown mode'
