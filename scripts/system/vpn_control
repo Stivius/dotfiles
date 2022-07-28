@@ -1,5 +1,7 @@
 #!/bin/bash
 
+exec > /home/stivius/vpn.out 2>&1
+
 MODE="$1"
 
 function vpn_enabled() {

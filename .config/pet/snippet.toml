@@ -72,3 +72,8 @@
   description = "Productivity Top-level 30 days"
   command = "productivity report --range-type 7 --depth 1"
   output = ""
+
+[[snippets]]
+  description = "Change Image Background"
+  command = "convert source.png -fill '#d1d1d1' -opaque black vpn.png"
+  output = ""
