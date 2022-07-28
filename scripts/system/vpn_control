@@ -3,9 +3,12 @@
 MODE="$1"
 
 case "$MODE" in
-  "on" )
-
+  "on")
     dunstify VPN 'Enabled'
+    ;;
+  "off")
+    dunstify VPN 'Disabled'
+    ;;
   *)
     dunstify VPN 'Unknown mode'
-  ;;
+    ;;
