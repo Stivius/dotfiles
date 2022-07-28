@@ -9,7 +9,7 @@ function vpn_enabled() {
 }
 
 function show_status() {
-  polybar-msg hook backlight 1
+  polybar-msg hook vpn 1
   if vpn_enabled; then
     dunstify --icon=vpn VPN "Enabled"
   else
