@@ -3,7 +3,7 @@
 vpn_disabled=`sudo wg show wg0 | grep wg0`
 
 if [ $vpn_disabled ]; then
-	echo "爵 on"
-else
 	echo "爵 off"
+else
+	echo "爵 on"
 fi
