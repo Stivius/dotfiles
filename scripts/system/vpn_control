@@ -7,7 +7,7 @@ function vpn_enabled() {
 }
 
 function show_status() {
-  if vpn_enabled ; then
+  if vpn_enabled; then
     dunstify VPN "Enabled"
   else
     dunstify VPN "Disabled"
