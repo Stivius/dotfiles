@@ -3,6 +3,7 @@
 MODE="$1"
 
 function vpn_enabled() {
+  ! sudo wg show wg0 | grep wg0
 }
 
 function show_status() {
