@@ -158,6 +158,16 @@ bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
+set $mode_vpn toggle vpn: (e)nable, (d)isable
+bindsym $mod+v mode "$mode_vpn"
+mode "$mode_vpn" {
+	bindsym e exec --no-startup-id vpn_control on; mode "default"
+	bindsym d exec --no-startup-id vpn_control off; mode "default"
+
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+
 set $mode_volume toggle apps: (s)ound mute, (m)icro mute
 bindsym $mod+Shift+v mode "$mode_volume"
 mode "$mode_volume" {
@@ -218,9 +228,9 @@ bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
 # split in horizontal orientation
-bindsym $mod+semicolon split h
+# bindsym $mod+semicolon split h
 # split in vertical orientation
-bindsym $mod+v split v
+# bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -501,6 +511,6 @@ client.focused          $primary $primary $foreground $primary $primary
 client.focused_inactive $background $background $foreground $background $background
 client.unfocused        $background $background $foreground $background $background
 client.urgent           $urgent $urgent $foreground $urgent $urgent
-client.placeholder      $background $background $background $background $bacgkround
+client.placeholder      $background $background $background $background $background
 
 client.background       $background
