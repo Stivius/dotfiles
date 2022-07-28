@@ -3,7 +3,7 @@
 MODE="$1"
 
 function show_status() {
-  if `wg show wg0` | grep wg
+  if `wg show wg0` | grep wg0
 }
 
 case "$MODE" in
