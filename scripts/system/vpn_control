@@ -7,11 +7,10 @@ function vpn_enabled() {
 }
 
 function show_status() {
-  local result=`sudo wg show wg0 | grep wg0`
-  if [ ! "$result" ]; then
-    dunstify VPN "Disabled"
-  else
+  if vpn_enabled ; then
     dunstify VPN "Enabled"
+  else
+    dunstify VPN "Disabled"
   fi
 }
 
