@@ -3,7 +3,7 @@
 MODE="$1"
 
 function show_status() {
-  local result=`wg show wg0 | grep wg0`
+  local result=`sudo wg show wg0 | grep wg0`
   echo "result $result"
 }
 
