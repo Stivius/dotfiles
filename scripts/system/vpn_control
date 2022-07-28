@@ -19,7 +19,7 @@ function show_status() {
 case "$MODE" in
   "on")
     if ! vpn_enabled; then
-      sudo wg-quick up wg0
+      sudo -u stivius wg-quick up wg0
       show_status
     fi
     ;;
