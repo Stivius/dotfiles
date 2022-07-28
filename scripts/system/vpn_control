@@ -7,12 +7,12 @@ function vpn_enabled() {
 }
 
 function show_status() {
+  polybar-msg hook vpn 1
   if vpn_enabled; then
     dunstify --icon=vpn VPN "Enabled"
   else
     dunstify --icon=vpn VPN "Disabled"
   fi
-  polybar-msg hook vpn 1
 }
 
 case "$MODE" in
