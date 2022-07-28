@@ -4,6 +4,7 @@ MODE="$1"
 
 case "$MODE" in
   "on")
+    wg-quick up wg0
     dunstify VPN 'Enabled'
     ;;
   "off")
