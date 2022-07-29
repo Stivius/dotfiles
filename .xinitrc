@@ -1,6 +1,7 @@
 #!/bin/bash
 
 . /etc/X11/Xsession.d/20dbus_xdg-runtime
+. /etc/X11/Xsession.d/
 
 xset +fp /home/stivius/.local/share/fonts
 xset fp rehash
