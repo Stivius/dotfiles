@@ -25,9 +25,9 @@
 # 
 # m h  dom mon dow   command
 
-*/1 * * * * /home/stivius/scripts/system/check_battery_level
-*/30 * * * * cd /home/stivius/Projects/dotfiles && /home/stivius/scripts/commit_git
-*/30 * * * * cd /home/stivius/zettelkasten && /home/stivius/scripts/commit_git
-*/30 * * * * cd /home/stivius/.finances && /home/stivius/scripts/commit_git
-*/60 * * * * cd /home/stivius/.productivity && /home/stivius/scripts/commit_git
-*/2 * * * * cd /home/stivius/.todo && /home/stivius/scripts/commit_git
+*/1 * * * * check_battery_level
+*/30 * * * * cd $HOME/dotfiles && commit_git
+*/30 * * * * cd $HOME/zettelkasten && commit_git
+*/30 * * * * cd $HOME/.finances && commit_git
+*/60 * * * * cd $HOME/.productivity && commit_git
+*/2 * * * * cd $HOME/.todo && commit_git

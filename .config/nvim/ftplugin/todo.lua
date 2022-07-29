@@ -1,12 +1,12 @@
 require('common')
 
 vim.opt_local.complete:append('k')
-vim.opt_local.dictionary:append('$HOME/.todo/projects.txt')
-vim.opt_local.dictionary:append('$HOME/.todo/contexts.txt')
+vim.opt_local.dictionary:append('$TASKS/projects.txt')
+vim.opt_local.dictionary:append('$TASKS/contexts.txt')
 vim.opt_local.iskeyword:append('-')
 
 vim.cmd([[
-	autocmd BufWritePost * silent !todo.sh lsprj > $HOME/.todo/projects.txt && todo.sh lsc > $HOME/.todo/contexts.txt
+	autocmd BufWritePost * silent !todo.sh lsprj > $TASKS/projects.txt && todo.sh lsc > $TASKS/contexts.txt
 ]])
 
 function ExecuteTodoCommand(opts, command)

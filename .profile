@@ -26,20 +26,20 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-### BEGIN Custom configuration
-# Vars
+# vars
 export TERMINAL="kitty"
 export SHORTCUTS=$HOME/shortcuts
-export SCRIPTS=$HOME/Projects/dotfiles/scripts
-export PATH=$PATH:$SCRIPTS:$SCRIPTS/i3:$SCRIPTS/polybar:$SCRIPTS/rofi:$SCRIPTS/system
+export SCRIPTS=$HOME/scripts
 export ANKI_NOHIGHDPI=1
-### END Custom configuration
+export PROJECTS=$HOME/Projects
+export FINANCES=$HOME/.finances
+export PRODUCTIVITY=$HOME/.productivity
+export TASKS=$HOME/.todo
+export WALLPAPERS=$HOME/Pictures/Wallpapers
+export PATH=$HOME/.rvm/bin
 
 if [[ ! $DISPLAY && $XDG_VTNR -eq 1 ]]; then
   exec startx   # remove the exec to remain logged in when your wm ends
 fi
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

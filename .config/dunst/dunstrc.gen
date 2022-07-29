@@ -115,7 +115,7 @@
     max_icon_size = 48
 
     # Paths to default icons.
-    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/:/home/stivius/Pictures/Icons
+    icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/:$ICONS_PATH$
 
     # Should a notification popped up from history be sticky or timeout
     # as if it would normally do.

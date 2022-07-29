@@ -1,1 +1,1 @@
-ACTION=="change", SUBSYSTEM=="drm", RUN+="/home/stivius/scripts/system/update_monitors"
+ACTION=="change", SUBSYSTEM=="drm", RUN+="update_monitors"

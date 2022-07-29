@@ -2,13 +2,15 @@
 
 . /etc/X11/Xsession.d/20dbus_xdg-runtime
 
+# fonts reload
 xset +fp /home/stivius/.local/share/fonts
 xset fp rehash
+
+# merge in defaults and keymaps
 userresources=$HOME/.Xresources
 usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
-# merge in defaults and keymaps
 if [ -f $sysresources ]; then
     xrdb -merge $sysresources
 fi
@@ -21,4 +23,5 @@ fi
 if [ -f "$usermodmap" ]; then
     xmodmap "$usermodmap"
 fi
+
 exec i3
