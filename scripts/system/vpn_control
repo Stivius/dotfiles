@@ -1,0 +1,34 @@
+#!/bin/bash
+
+MODE="$1"
+
+function vpn_enabled() {
+  sudo wg show wg0 | grep wg0
+}
+
+function show_status() {
+  polybar-msg hook vpn 1
+  if vpn_enabled; then
+    dunstify --icon=vpn VPN "Enabled"
+  else
+    dunstify --icon=vpn VPN "Disabled"
+  fi
+}
+
+case "$MODE" in
+  "on")
+    if ! vpn_enabled; then
+      sudo wg-quick up wg0
+      show_status
+    fi
+    ;;
+  "off")
+    if vpn_enabled; then
+      sudo wg-quick down wg0
+      show_status
+    fi
+    ;;
+  *)
+    dunstify --icon=vpn VPN 'Unknown mode'
+    ;;
+esac

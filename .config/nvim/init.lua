@@ -1,7 +1,8 @@
 local fn = vim.fn
-local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+  packer_bootstrap = fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim',
+    install_path })
 end
 
 require('common')
@@ -39,20 +40,23 @@ require('packer').startup(function(use)
 
   -- Programming
   use { 'neoclide/coc.nvim', branch = 'release' }
-  use 'tpope/vim-commentary'
+  use 'numToStr/Comment.nvim'
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate'
   }
   use 'tpope/vim-fugitive' -- learn, setup
   use 'airblade/vim-gitgutter' -- learn, setup
+  use 'vim-test/vim-test'
+  use 'kana/vim-textobj-user'
+  use 'julian/vim-textobj-variable-segment'
 
   --Zettelkasten
   use({
     "iamcco/markdown-preview.nvim",
     run = function() vim.fn["mkdp#util#install"]() end,
   })
-  use 'preservim/vim-markdow '
+  use 'preservim/vim-markdown'
 
   -- Telescope, setup
   use 'nvim-lua/popup.nvim'
@@ -64,6 +68,8 @@ end)
 
 vim.cmd('filetype plugin on')
 
+require('Comment').setup()
+
 vim.g.NERDTreeChDirMode = 2
 vim.g.NERDTreeGitStatusUseNerdFonts = 1
 vim.g.NERDTreeIgnore = { 'node_modules', '.git', '^build' }
@@ -71,24 +77,24 @@ vim.g.NERDTreeIgnore = { 'node_modules', '.git', '^build' }
 vim.g.startify_change_cmd = 'cd'
 vim.g.startify_change_to_vcs_root = 1
 vim.g.startify_lists = {
-    { type = 'sessions',  header = {'   Sessions'}       },
-    { type = 'bookmarks', header = {'   Bookmarks'}      },
-    { type = 'commands',  header = {'   Commands'}       },
-    { type = 'files',     header = {'   MRU'}            },
-    { type = 'dir',       header = {'   MRU ' .. vim.fn.getcwd()} },
+  { type = 'sessions', header = { '   Sessions' } },
+  { type = 'bookmarks', header = { '   Bookmarks' } },
+  { type = 'commands', header = { '   Commands' } },
+  { type = 'files', header = { '   MRU' } },
+  { type = 'dir', header = { '   MRU ' .. vim.fn.getcwd() } },
 }
 vim.g.startify_bookmarks = {
-    '~/.todo/todo.txt',
-    '~/.productivity/productivity.txt',
-    '~/.finances/transactions.ledger',
-    '~/.finances/parsed.ledger',
+  '~/.todo/todo.txt',
+  '~/.productivity/productivity.txt',
+  '~/.finances/transactions.ledger',
+  '~/.finances/parsed.ledger',
 }
 
-require('telescope').setup{
+require('telescope').setup {
   defaults = {
     mappings = {
       n = {
-    	  ['<C-d>'] = require('telescope.actions').delete_buffer
+        ['<C-d>'] = require('telescope.actions').delete_buffer
       }, -- normal mode
       i = {
         ['<C-h>'] = 'which_key',
@@ -134,7 +140,7 @@ vim.opt.listchars:append("space:⋅")
 
 require('lualine').setup {
   sections = {
-    lualine_x = {'filetype'},
+    lualine_x = { 'filetype' },
     lualine_c = {
       {
         'filename',
@@ -144,10 +150,10 @@ require('lualine').setup {
   }
 }
 
-require("indent_blankline").setup{}
-require('nvim-autopairs').setup{}
+require("indent_blankline").setup {}
+require('nvim-autopairs').setup {}
 
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
   ensure_installed = "all",
 
@@ -205,9 +211,10 @@ vim.g.Powerline_symbols = 'unicode' -- support unicode
 
 -- fixes for highlight
 function link_hl_group(linkedGroup, group)
-	local groupByName = vim.api.nvim_get_hl_by_name(group, true);
-	vim.api.nvim_set_hl(0, linkedGroup, groupByName);
+  local groupByName = vim.api.nvim_get_hl_by_name(group, true);
+  vim.api.nvim_set_hl(0, linkedGroup, groupByName);
 end
+
 link_hl_group('typescriptTSException', 'Keyword')
 link_hl_group('typescriptTSKeywordOperator', 'Keyword')
 link_hl_group('typescriptTSRepeat', 'Keyword')
@@ -216,15 +223,15 @@ link_hl_group('typescriptTSRepeat', 'Keyword')
 inoremap('<C-f>', '<C-^>')
 nnoremap('<C-f>', 'a<C-^><ESC>')
 vim.opt.keymap = 'russian-jcukenwin';
-vim.opt.iminsert = 0; -- english by default
-vim.opt.imsearch = 0; -- english by default
+vim.opt.iminsert = 0;  -- english by default
+vim.opt.imsearch = 0;  -- english by default
 
-vim.opt.wrap = true; -- wrap words
-vim.opt.linebreak = true; -- wrap words
+vim.opt.wrap = true;  -- wrap words
+vim.opt.linebreak = true;  -- wrap words
 vim.opt.tabstop = 4;
 vim.opt.shiftwidth = 2;
 vim.opt.autoindent = true;
-vim.opt.splitright = true; -- for vnew to work to the right
+vim.opt.splitright = true;  -- for vnew to work to the right
 vim.opt.relativenumber = true;
 vim.opt.number = true;
 
@@ -275,6 +282,11 @@ nnoremap('<Leader>fg', '<cmd>Telescope live_grep<cr>')
 nnoremap('<Leader>fb', '<cmd>Telescope buffers<cr>')
 nnoremap('<Leader>fh', '<cmd>Telescope help_tags<cr>')
 nnoremap('<Leader>fw', '<cmd>Telescope grep_string<cr>')
+
+nnoremap('<Leader>tt', '<cmd>TestSuite<cr>')
+nnoremap('<Leader>tc', '<cmd>TestNearest<cr>')
+nnoremap('<Leader>tl', '<cmd>TestLast<cr>')
+tmap('<C-o>', '<C-\\><C-n>')
 
 -- copy/paste to system clipboard
 noremap('<Leader>p', '"+p')

@@ -14,8 +14,8 @@ nmap_local('gr', '<Plug>(coc-references)')
 nmap_local('<Leader>rn', '<Plug>(coc-rename)')
 
 -- Formatting selected code.
-nmap_local('<Leader>f', '<Plug>(coc-format-selected)')
-xmap_local('<Leader>f', '<Plug>(coc-format-selected)')
+nmap_local('<Leader>f', '<Plug>(coc-format)')
+xmap_local('=', '<Plug>(coc-format-selected)')
 
 -- Applying codeAction to the selected region.
 nmap_local('<Leader>ca', '<Plug>(coc-codeaction-selected)')

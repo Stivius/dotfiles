@@ -3,30 +3,55 @@
 source /home/stivius/scripts/helpers/authority
 
 MONITOR=`xrandr | grep -P -o "^HDMI(-1)?-2"`
-LAPTOP=`xrandr | grep -P -o "^eDP(-1)?-1"`
+LAPTOP=`xrandr | grep -P -o "^e?DP(-1)?-1"`
 
-function ActivateHDMI {
-    echo "Switching to $MONITOR"
-    xrandr --output $LAPTOP --primary --auto --output $MONITOR --left-of $LAPTOP --auto
-}
-function DeactivateHDMI {
-    echo "Switching to $LAPTOP"
-    xrandr --output $LAPTOP --primary --auto --output $MONITOR --off
-}
+echo $MONITOR
+echo $LAPTOP
+
+MODE="$1"
 
 function HDMIConnected {
 	! xrandr | grep $MONITOR | grep disconnected
 }
 
-echo $DISPLAY
-echo $XAUTHORITY
+# echo $DISPLAY
+# echo $XAUTHORITY
 
-if HDMIConnected
-then
-	ActivateHDMI
-else
-	DeactivateHDMI
-fi
+echo $MODE
+
+case "$MODE" in
+  "external-only-normal" )
+    if HDMIConnected
+    then
+      echo "[external-only-normal] switching to $MONITOR"
+      xrandr --output $MONITOR --primary --auto --rotate normal --output $LAPTOP --off
+    else
+      echo "[external-only-normal] HDMI not connected"
+    fi
+    ;;
+
+  "external-only-vertical" )
+    if HDMIConnected
+    then
+      echo "[extneral-only-vertical] switching to $MONITOR"
+      xrandr --output $MONITOR --primary --auto --rotate left --output $LAPTOP --off
+    else
+      echo "[external-only-vertical] HDMI not connected"
+    fi
+    ;;
+
+  *)
+    if HDMIConnected
+    then
+      echo "[normal] switching to $MONITOR"
+      xrandr --output $LAPTOP --primary --auto --output $MONITOR --left-of $LAPTOP --auto --rotate normal
+    else
+      echo "[normal] switching to $LAPTOP"
+      xrandr --output $LAPTOP --primary --auto --output $MONITOR --off
+    fi
+    ;;
+esac
+
 
 sleep 1
 i3-msg restart

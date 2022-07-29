@@ -1,0 +1,10 @@
+#!/bin/bash
+
+sudo wg show wg0 | grep wg0
+result=$?
+
+if [ $result -eq 0 ]; then
+	echo "爵 on"
+else
+	echo "爵 off"
+fi
