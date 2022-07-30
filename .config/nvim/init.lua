@@ -32,6 +32,7 @@ require('packer').startup(function(use)
   use 'preservim/nerdtree'
   use 'Xuyuanp/nerdtree-git-plugin'
   use 'tiagofumo/vim-nerdtree-syntax-highlight'
+  use 'liuchengxu/vim-which-key'
 
   -- File-specific
   use 'ledger/vim-ledger'
@@ -173,6 +174,9 @@ require 'nvim-treesitter.configs'.setup {
   },
 }
 
+vim.opt.foldlevelstart = 99
+vim.g.vim_markdown_frontmatter = 1
+
 -- change <Leader> key
 nnoremap('<Space>', '<Nop>')
 vim.g.mapleader = ' '
@@ -255,6 +259,12 @@ noremap('<C-j>', '<C-w>j')
 noremap('<C-h>', '<C-w>h')
 noremap('<C-l>', '<C-w>l')
 
+-- which_key
+nnoremap('<Leader>', ":WhichKey '<Space>' <CR>")
+nnoremap(']', ":WhichKey ']' <CR>")
+nnoremap('[', ":WhichKey '[' <CR>")
+nnoremap('g', ":WhichKey 'g' <CR>")
+
 -- splits
 nnoremap('<Leader>snv', ':vnew<CR>')
 nnoremap('<Leader>snh', ':new<CR>')
@@ -282,6 +292,8 @@ nnoremap('<Leader>fg', '<cmd>Telescope live_grep<cr>')
 nnoremap('<Leader>fb', '<cmd>Telescope buffers<cr>')
 nnoremap('<Leader>fh', '<cmd>Telescope help_tags<cr>')
 nnoremap('<Leader>fw', '<cmd>Telescope grep_string<cr>')
+nnoremap('<Leader>fvb', '<cmd>Telescope git_branches<cr>')
+nnoremap('<Leader>fvs', '<cmd>Telescope git_stash<cr>')
 
 nnoremap('<Leader>tt', '<cmd>TestSuite<cr>')
 nnoremap('<Leader>tc', '<cmd>TestNearest<cr>')
